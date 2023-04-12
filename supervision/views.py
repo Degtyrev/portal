@@ -33,9 +33,10 @@ def business_trip(request):
     )
 
 def trip(request, pk):
-
-    trip = BusinessTrip.objects.get(pk=pk)
     date_today = datetime.date.today()
+    trip = BusinessTrip.objects.get(pk=pk)
+
+
     return render(
         request,
         'supervision/business_trip_detail.html',
@@ -46,15 +47,13 @@ def trip(request, pk):
 
 def mismatch(request):
     mismatches = Mismatch.objects.all()
-    # for i in mismatches:
-    #     print(i)
-    # status = Status.objects.get(pk=mismatches.pk)
+    palce = Plaсe.objects.filter(status__exact='a')
 
     return render(
         request,
         'supervision/mismatch.html',
         context={
-            'title': 'Несоответствия', 'mismatches': mismatches
+            'title': 'Несоответствия', 'mismatches': mismatches, 'palce': palce
         },
     )
 

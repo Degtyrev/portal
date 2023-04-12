@@ -8,65 +8,104 @@
     {% block sidebar %}
         <div class="sidebar">
             <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="#">Создать </a></li>
-                <li class="sidebar__item"><a href="#">Продлить </a></li>
+                <li class="sidebar__item"><a href="#">какой-то пункт меню </a></li>
+                <li class="sidebar__item"><a href="#">еще один пунктменю </a></li>
             </ul>
+
             <hr>
-            <ul class="sidebar__list">
+            <div class="sidebar__filter">
+                <h2 class="sidebar__filter_title">Фильтр</h2>
 
-                <li class="sidebar__item"><a href="#">Планируемые </a></li>
-                <li class="sidebar__item"><a href="#">Завершенные </a></li>
-            </ul>
-            <hr>
-            <h2>Фильтр</h2>
-            <form action="" method="get" class="sidebar__list sidebar__filter" >
-                <div class="form_mismatch__search">
-                    <label>Найти:</label>
-                    <input type="text">
-                </div>
+                <form action="" method="get" class="sidebar__list sidebar__filter" >
+                    <div class="mismatch_filter__block">
+                        <div class="form_mismatch__search">
+                            <label class="mismatch_filter__label">Найти:</label>
+                            <input type="text">
+                        </div>
+                    </div>
 
-            <div class="form_mismatch__object">
-               <ladel >объект:</ladel>
-                <select id="object">
-                    <option>Гусанооозерская ТЭЦ</option>
-                    <option>Пермская ТЭЦ</option>
-                    <option>Ижеская ТЭЦ</option>
-                    <option>Мосэнерго ТЭЦ-22</option>
-                </select>
+                    <div class="mismatch_filter__block">
+                        <div class="form_mismatch__send">
+                            <label class="mismatch_filter__label">Тип несоответствия:</label>
+                            <p><input type="radio" name="type" value="all" checked>Все</p>
+                            <p><input type="radio" name="type" value="p">Конструкторское</p>
+                            <p><input type="radio" name="type" value="m">Производственное</p>
+                         </div>
+                    </div>
+
+                    <div class="mismatch_filter__block">
+                        <div class="form_mismatch__object">
+                        <ladel class="mismatch_filter__label">Объект:</ladel>
+                            <select id="object">
+                                {% if palce %}
+                                    {% for i in palce %}
+                                        <option>{{ i.name }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                             </select>
+                        </div>
+                    </div>
+
+                    <div class="mismatch_filter__block">
+                        <div class="form_mismatch__date">
+                            <p class="mismatch_filter__label">Дата:</p>
+                            <div class="form_mismatch__date">
+                                 <div class="form_mismatch__date_item">
+                                    <input type="radio" name="filfer_date">все:
+                                </div>
+
+                                 <div class="form_mismatch__date_item">
+                                    <input type="radio" name="filfer_date" value="">за месяц:
+                                </div>
+
+                                 <div class="form_mismatch__date_item">
+                                    <input type="radio" name="filfer_date" value="">за год:
+                                </div>
+
+                                 <div class="form_mismatch__date_item">
+                                    <input type="radio" name="filfer_date" value="">за период:
+
+                                     <div class="form_mismatch__period">
+                                          <div class="form_mismatch__period_item">
+                                            <label class="mismatch_filter__label_date">с:</label>
+                                            <input type="date">
+                                          </div>
+
+                                         <div class="form_mismatch__period_item">
+                                            <label class="mismatch_filter__label_date">по:</label>
+                                            <input type="date">
+                                         </div>
+                                     </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="form_mismatch__send">
+                        <input type="submit" value="Применить фильтр ">
+                    </div>
+                </form>
+
             </div>
-            <div class="form_mismatch__date">
-                    <label>Период:</label>
-                    с: <input type="date">
-                    по: <input type="date">
-            </div>
-
-
-            <div class="form_mismatch__send">
-                <label>Тип несоответствия:</label>
-                <p><input type="radio" name="type" value="all" checked>Все</p>
-                <p><input type="radio" name="type" value="p">Конструкторское</p>
-                <p><input type="radio" name="type" value="m">Производственное</p>
-            </div>
-
-            <div class="form_mismatch__send">
-                <input type="submit" value="Применить фильтр ">
-            </div>
-            </form>
-
 
         </div>
-
     {% endblock %}
 
     {% block content %}
         <section class="mismatch">
-        <div class="content_title">
-             <h1 class="title">Неоответствия</h1>
-            <div class="new_btn">
-                <a href="#" class="new_link">+ Добавить</a>
+            <div class="content_title">
+                 <h1 class="title">Неоответствия</h1>
+                <div class="new_btn">
+                    <a href="#" class="new_link">+ Добавить</a>
+                </div>
             </div>
-        </div>
-
             <hr>
             <div class="mismatches">
             {% if mismatches %}

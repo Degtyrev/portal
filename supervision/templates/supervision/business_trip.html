@@ -29,7 +29,7 @@
                 <h1 class="title">Командировки</h1>
                  <div class="new_btn">
                 <a href="#" class="new_link">+ Добавить</a>
-            </div>
+                 </div>
         </div>
 
         {% if trips_current %}
@@ -41,7 +41,7 @@
             {% for trip in trips_current %}
                 <div class="business-trip__block">
                     <div class="btc__item">
-                        <p class="bt__object"><a href="{{ trips_current.get_absolute_url  }}">{{ trip.plaсe.name }}</a></p>
+                        <p class="bt__object"><a href="{{ trip.get_absolute_url  }}">{{ trip.plaсe.name }}</a></p>
                         <div class="bt__date">
                             <p class="bt__date_start"> с {{ trip.start }}</p>
                             <p class="bt__date_end">по {{ trip.end }}</p>
@@ -65,7 +65,7 @@
 
             <div class="bt__item">
                 <p class="bt__num">{{ forloop.counter }}</p>
-                <p class="bt__object"><a href="#">{{ trip_c.plaсe.name }}</a></p>
+                <p class="bt__object"><a href="{{ trip_c.get_absolute_url }}">{{ trip_c.plaсe.name }}</a></p>
                 <div class="bt__date">
                     <p class="bt__date_start"> с {{ trip_c.start }}</p>
                     <p class="bt__date_end">по {{ trip_c.end }}</p>

@@ -27,11 +27,20 @@
         <section class="business-trip">
              <div class="content_title">
                 <h1 class="title">{{ title }}</h1>
-{#                 <div class="new_btn">#}
-{#                <a href="#" class="new_link">+ Добавить</a>#}
-{#            </div>#}
+             {% if trip.end > date_today %}
+                 {% if trip %}
+                 <div class="new_btn">
+                    <a href="#" class="new_link">Продлить</a>
+                </div>
+                 {% else %}
+                     <div class="new_btn">
+                        <a href="#" class="new_link">+ Добавить</a>
+                     </div>
+                 {% endif %}
+             {% endif %}
         </div>
 
+        {% if trip %}
             <div class="business-trip__current">
                 {% if trip.end > date_today %}
                 <h2 class="bt__title">Текущая командировка</h2>
@@ -40,22 +49,22 @@
                 {% endif %}
 
                 <div class="business-trip__block">
-                    <div class="bt__item">
-                        <p class="bt__object"><a href="#">{{ trip.objects.name}}</a></p>
+                    <div class="btc__item">
+                        <p class="bt__object">{{ trip.plaсe.name}}</p>
                         <div class="bt__date">
                             <p class="bt__date_start"> с {{ trip.start }}г</p>
                             <p class="bt__date_end">по {{ trip.end }}г</p>
                         </div>
 
-                    <a class="bt__link btn" href="#">Продлить</a>
                     </div>
-
 
                     <p class="bt__purpose"><span class="small">цель: </span>{{ trip.purpose}}</p>
                 </div>
 
             </div>
-
+        {% else %}
+            <p>У вас нет действующих командировок</p>
+        {% endif %}
 
         </section>
 

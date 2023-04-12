@@ -49,7 +49,13 @@ h1{
 .sidebar__item{
     margin-bottom: 10px;
 }
-
+.sidebar__filter{
+    font-size: 14px;
+}
+.sidebar__filter_title{
+    font-size: 16px;
+    text-align: center;
+}
 
 .main{
     padding-left: 10px;
@@ -217,10 +223,32 @@ td>input{
 .bt__date{
     display: grid;
     grid-template-columns: 50% 50%;
-
 }
 
 .bt__date_start{
     margin-right: 14px;
 }
-
+/*------------------ несоответстия фильтр------  */
+.mismatch_filter__block{
+    margin-top: 20px;
+}
+.form_mismatch__send{
+    margin-top: 20px;
+}
+.mismatch_filter__label{
+    font-size: 14px;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+ }
+.mismatch_filter__label_date{
+    display: inline-block;
+    width: 23px;
+}
+.form_mismatch__date_item{
+    margin-bottom: 5px;
+}
+.form_mismatch__period{
+    margin-top: 10px;
+    margin-left: 25px;
+}

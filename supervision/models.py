@@ -80,7 +80,7 @@ class BusinessTrip(models.Model):
         return f'{self.plaсe} {self.purpose}'
 
     def get_absolute_url(self):
-        return reverse('business_trip-detail', args=[str(self.id)])
+        return reverse('business_trip_detail', args=[str(self.id)])
 
 
 class Unit(models.Model):
