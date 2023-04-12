@@ -1,0 +1,75 @@
+{% extends "base_generic.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+    {% block sidebar %}
+        <div class="sidebar">
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="#">Создать командировку</a></li>
+                <li class="sidebar__item"><a href="#">Продлить командировку</a></li>
+            </ul>
+            <hr>
+            <ul class="sidebar__list">
+
+                <li class="sidebar__item"><a href="#">Планируемые командировки</a></li>
+                <li class="sidebar__item"><a href="#">Завершенные командировки</a></li>
+            </ul>
+
+
+        </div>
+
+    {% endblock %}
+
+    {% block content %}
+        <section class="business-trip">
+             <div class="content_title">
+                <h1 class="title">Командировки</h1>
+                 <div class="new_btn">
+                <a href="#" class="new_link">+ Добавить</a>
+            </div>
+        </div>
+
+            <div class="business-trip__current">
+                <h2 class="bt__title">Текущая командировка</h2>
+
+                <div class="business-trip__block">
+                    <div class="bt__item">
+                        <p class="bt__object"><a href="#">Гусоноозерская ГРЭС</a></p>
+                        <div class="bt__date">
+                            <p class="bt__date_start"> с 15.01.2023г</p>
+                            <p class="bt__date_end">по 26.06.2023г</p>
+                        </div>
+
+                    <a class="bt__link btn" href="#">Продлить</a>
+                    </div>
+
+
+                    <p class="bt__purpose"><span class="small">цель: </span>Обеспеченеи шефмонтажа котла</p>
+                </div>
+
+            </div>
+
+            <div class="business-trip__completed">
+                <h2 class="bt__title">Завершенные командировки</h2>
+
+                 <div class="business-trip__block">
+
+                     <div class="bt__item">
+                <p class="bt__num">1</p>
+                        <p class="bt__object"><a href="#">B;tdcrfz ГРЭС</a></p>
+                        <div class="bt__date">
+                            <p class="bt__date_start"> с 15.01.2023г</p>
+                            <p class="bt__date_end">по 26.06.2023г</p>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+
+        </section>
+
+
+
+    {% endblock %}

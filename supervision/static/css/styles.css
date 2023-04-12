@@ -1,0 +1,208 @@
+body{
+    font-family: "wf_segoe-ui_semilight", "Segoe UI Semilight", "Segoe WP Semilight", "Segoe UI", "Segoe WP", Tahoma, Arial, sans-serif;
+}
+h1{
+    font-size: 18px;
+    text-transform: uppercase;
+}
+.wrapper{
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-rows:50px 1fr ;
+    min-height: 100vh;
+
+}
+.nav{
+    display: flex;
+    background-color: #007264;
+    color: #fff;
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+}
+.nav__logo{
+    width: 100px;
+}
+.nav__menu{
+    width: 100%;
+}
+.nav__menu_list{
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.content{
+    color: #333;
+    display: grid;
+    grid-template-columns: 230px 1fr;
+}
+.sidebar{
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-top: 20px;
+    background-color: #f3f3f3;
+}
+.sidebar__list{
+
+}
+.sidebar__item{
+    margin-bottom: 10px;
+}
+
+
+.main{
+    padding-left: 10px;
+    padding-right: 20px;
+
+}
+.auth_user{
+    font-size: 12px;
+    width: 200px;
+}
+.auth_user__name{
+    margin-bottom: 5px;
+}
+.exit__link{
+
+}
+.footer{
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: mediumslateblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login__wrapper{
+    width: 100%;
+    height: 100vh;
+    background-color: #007264;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 150px;
+}
+.login__title{
+    text-align: center;
+    font-size: 22px;
+    text-transform: uppercase;
+    position: absolute;
+    top: 16%;
+}
+.login__form_wrappeer{
+     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+.login__form{
+
+}
+.login__error{
+    padding: 10px;
+    color: #FF7F50FF;
+}
+.small{
+    font-size: 12px;
+    justify-content: start;
+    opacity: 0.6;
+}
+.login__table{
+    margin-bottom: 20px;
+}
+.login__table_td{
+    padding: 0 10px 14px 0;
+}
+td>input{
+    border: none;
+    padding: 5px;
+}
+.login__btn{
+    border: none;
+    padding: 7px 0;
+    width: 100%;
+    border-radius: 8px;
+    background-color: #FF7F50FF;
+    color: white;
+    font-family: inherit;
+    font-size: 18px;
+    cursor: pointer;
+}
+.login__btn:hover{
+    background-color: rgb(246, 100, 52);
+}
+/*------------------ несоответствия------  */
+
+.mismatch{
+    /*position: relative;*/
+}
+.mismatch_h1{
+
+}
+.content_title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+
+}
+.new_btn{
+    /*position: absolute;*/
+    /*top: 23px;*/
+    /*right: 42px;*/
+    border-radius: 8px;
+    background-color: #FF7F50FF;
+    color: white;
+    padding: 5px 0 7px 0;
+    width: 150px;
+    text-align: center;
+}
+.new_btn:hover{
+    background-color: rgb(246, 100, 52);
+}
+.mismatch__block{
+
+}
+.mismatch__title{
+
+}
+.mismatch__type{
+
+}
+.mismatch__status{
+
+}
+
+
+/*------------------ командировки------  */
+.business-trip__current{
+
+}
+.bt__item{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.bt__title{
+    padding: 10px;
+    background-color: #eee;
+    margin-bottom: 10px;
+}
+.business-trip__block{
+    padding-left:20px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+}
+.bt__date{
+    display: flex;
+}
+
+.bt__date_start{
+    margin-right: 14px;
+}
+

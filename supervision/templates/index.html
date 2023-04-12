@@ -1,0 +1,24 @@
+{% extends "base_generic.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+    {% block sidebar %}
+        <div class="sidebar">
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="#">создать командировку</a></li>
+                <li class="sidebar__item"><a href="#">создать Несоответствие</a></li>
+            </ul>
+        </div>
+
+    {% endblock %}
+
+    {% block content %}
+        <div class="main__issues">
+
+            Список нерешенных вопросов
+
+        </div>
+    {% endblock %}

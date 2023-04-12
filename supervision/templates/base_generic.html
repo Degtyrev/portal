@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>
+
+<!-- Добавление дополнительного статического CSS файла -->
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+</head>
+<body>
+<div class="wrapper">
+
+    <section class="nav">
+        <!-- Блок панели навигации-->
+        {% block navigation %}
+            <div class="nav__logo">
+                <p class="logo__text"><a href="{% url 'index' %}">ОШМ</a></p>
+            </div>
+
+            <div class="nav__menu">
+                <ul class="nav__menu_list">
+                    <li class="nav__menu_item"><a class="nav__menu_link" href="{% url 'business_trip' %}">Командировка</a></li>
+                    <li class="nav__menu_item"><a class="nav__menu_link" href="{% url 'mismatch' %}">Несоответствия</a></li>
+                    <li class="nav__menu_item"><a class="nav__menu_link" href="#">Нерешенные вопросы</a></li>
+                </ul>
+            </div>
+
+            <div class="auth_user">
+                <div class="auth_user__name">
+                    <p>Вы вошли как: <span>Иван Иванов</span></p>
+                </div>
+                <a class="exit__link" href="#">Выйти</a>
+            </div>
+
+        {% endblock %}
+    </section>
+
+    <section class="content">
+        <!-- Блок левого меню -->
+        {% block sidebar %}
+
+        {% endblock %}
+
+        <!-- Блок контента -->
+        <div class="main">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    </section>
+
+{#    <div class="footer">#}
+{#        <!-- Блок подвала -->#}
+{#        {% block footer %}#}
+{#            <p>Здесь будет Блок подвала</p>#}
+{#        {% endblock %}#}
+{#    </div>#}
+
+
+
+</div>
+</body>
+</html>
