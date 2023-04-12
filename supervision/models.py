@@ -44,10 +44,10 @@ class Career(models.Model):
         return f'{self.user.first_name} {self.user.last_name} {self.position}'
 
 
-class Objects(models.Model):
+class Plaсe(models.Model):
     name = models.CharField(max_length=250, help_text="Название объекта")
-    object_model = models.CharField(max_length=250, help_text="Модель оборудования (котла)", null=True, blank=True)
-    object_type = models.CharField(max_length=250, help_text="Тип оборудования (котла)", null=True, blank=True)
+    equipment = models.CharField(max_length=250, help_text="Модель оборудования (котла)", null=True, blank=True)
+    equipment_type = models.CharField(max_length=250, help_text="Тип оборудования (котла)", null=True, blank=True)
     contract = models.CharField(max_length=250, help_text="номер договора", null=True, blank=True)
     project_manager = models.CharField(max_length=100, help_text='руководитель проекта', null=True, blank=True)
     chief_engineer = models.CharField(max_length=100, help_text='главный инженер проекта', null=True, blank=True)
@@ -64,19 +64,20 @@ class Objects(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('object-detail', args=[str(self.id)])
+        return reverse('plaсe-detail', args=[str(self.id)])
 
 
 
 class BusinessTrip(models.Model):
-    object_name = models.ForeignKey('Objects', on_delete=models.SET_NULL, null=True)
+    plaсe = models.ForeignKey('Plaсe', on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     start = models.DateField(help_text='Дата начала командировки', null=True, blank=True)
     end = models.DateField(help_text='Дата окончания командировки', null=True, blank=True)
     purpose = models.CharField(max_length=250, help_text='Цель командировки')
+    activ = models.BooleanField(help_text='Действующая, Завершенная', default=True)
 
     def __str__(self):
-        return f'{self.object_name} {self.purpose}'
+        return f'{self.plaсe} {self.purpose}'
 
     def get_absolute_url(self):
         return reverse('business_trip-detail', args=[str(self.id)])
@@ -112,7 +113,7 @@ class Element(models.Model):
         unique_together = ('number', 'name')
 
 class Mismatch(models.Model):
-    object = models.ForeignKey('Objects', on_delete=models.SET_NULL, null=True)
+    plaсe = models.ForeignKey('Plaсe', on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     unit = models.ForeignKey('Unit', on_delete=models.SET_NULL, null=True)
     status = models.ManyToManyField('Status', through='Tracking')

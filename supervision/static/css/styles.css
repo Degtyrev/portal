@@ -183,9 +183,24 @@ td>input{
 .business-trip__current{
 
 }
+.btc__item{
+    display: grid;
+    grid-template-columns: 2fr 3fr 90px;
+    margin-bottom: 10px;
+}
+.btc__link{
+    display: block;
+    padding-bottom: 3px;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    text-align: center;
+}
+.btc__btn{
+    width: 100px;
+}
 .bt__item{
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 20px 1fr 330px;
     margin-bottom: 10px;
 }
 .bt__title{
@@ -194,12 +209,15 @@ td>input{
     margin-bottom: 10px;
 }
 .business-trip__block{
+
     padding-left:20px;
     padding-right: 20px;
     margin-bottom: 20px;
 }
 .bt__date{
-    display: flex;
+    display: grid;
+    grid-template-columns: 50% 50%;
+
 }
 
 .bt__date_start{

@@ -32,44 +32,52 @@
             </div>
         </div>
 
+        {% if trips_current %}
+
             <div class="business-trip__current">
+
                 <h2 class="bt__title">Текущая командировка</h2>
 
+            {% for trip in trips_current %}
                 <div class="business-trip__block">
-                    <div class="bt__item">
-                        <p class="bt__object"><a href="#">Гусоноозерская ГРЭС</a></p>
+                    <div class="btc__item">
+                        <p class="bt__object"><a href="{{ trips_current.get_absolute_url  }}">{{ trip.plaсe.name }}</a></p>
                         <div class="bt__date">
-                            <p class="bt__date_start"> с 15.01.2023г</p>
-                            <p class="bt__date_end">по 26.06.2023г</p>
+                            <p class="bt__date_start"> с {{ trip.start }}</p>
+                            <p class="bt__date_end">по {{ trip.end }}</p>
+                        </div>
+                        <div class="btc__btn">
+                            <a class="btc__link btn" href="#">продлить</a>
                         </div>
 
-                    <a class="bt__link btn" href="#">Продлить</a>
                     </div>
+                    <p class="bt__purpose"><span class="small">цель: </span>{{ trip.purpose }}</p>
+                </div>
+            {% endfor%}
+            </div>
+        {% endif %}
 
+            {% if trips_completed %}
+            <div class="business-trip__completed">
+                <h2 class="bt__title">Завершенные командировки</h2>
+            <div class="business-trip__block">
+        {% for trip_c in trips_completed %}
 
-                    <p class="bt__purpose"><span class="small">цель: </span>Обеспеченеи шефмонтажа котла</p>
+            <div class="bt__item">
+                <p class="bt__num">{{ forloop.counter }}</p>
+                <p class="bt__object"><a href="#">{{ trip_c.plaсe.name }}</a></p>
+                <div class="bt__date">
+                    <p class="bt__date_start"> с {{ trip_c.start }}</p>
+                    <p class="bt__date_end">по {{ trip_c.end }}</p>
+                </div>
+            </div>
+
+        {% endfor%}
                 </div>
 
             </div>
-
-            <div class="business-trip__completed">
-                <h2 class="bt__title">Завершенные командировки</h2>
-
-                 <div class="business-trip__block">
-
-                     <div class="bt__item">
-                <p class="bt__num">1</p>
-                        <p class="bt__object"><a href="#">B;tdcrfz ГРЭС</a></p>
-                        <div class="bt__date">
-                            <p class="bt__date_start"> с 15.01.2023г</p>
-                            <p class="bt__date_end">по 26.06.2023г</p>
-                        </div>
-                    </div>
-                 </div>
-            </div>
-
+        {% endif %}
         </section>
-
 
 
     {% endblock %}
