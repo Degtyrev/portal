@@ -82,6 +82,8 @@ class BusinessTrip(models.Model):
     def get_absolute_url(self):
         return reverse('business_trip_detail', args=[str(self.id)])
 
+    class Meta:
+        permissions =(('can_extension','Может продливать командировку'),)
 
 class Unit(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)

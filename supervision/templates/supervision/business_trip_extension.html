@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+{% block sidebar %}
+fdsf
+{% endblock %}
+
+{% block content %}
+    <h1>Продление командировки {{ tripextens.name }}</h1>
+
+    <form action="" method="post">
+    {% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+        <input type="submit" value="Продлить">
+    </form>
+{% endblock %}

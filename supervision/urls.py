@@ -1,3 +1,4 @@
+
 from django.urls import path
 from . import views
 from django.urls import include
@@ -11,4 +12,9 @@ urlpatterns = [
     path('business_trip/<int:pk>', views.trip, name='business_trip_detail'),
     path('mismatch/', views.mismatch, name='mismatch'),
     path('mismatch/<int:pk>', views.mismatch_detail, name='mismatch_detail'),
+]
+
+from django.template.defaulttags import url
+urlpatterns += [
+    path('business_trip/<int:pk>/extension/', views.extension_business_trip, name='extension_business_trip'),
 ]

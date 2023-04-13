@@ -71,3 +71,36 @@ def mismatch_detail(request, pk):
                 'title': 'Карточка Неоответствия', 'mismatch': mismatch
             },
         )
+
+#---ФОРМЫ------
+from django.contrib.auth.decorators import permission_required
+
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+import datetime
+
+from .forms import ExtensionBusinessTripForm
+
+# @permission_required('catalog.can_mark_returned')
+
+# Обработка формы продления командировки
+
+def extension_business_trip(request, pk):
+    trip_extens = get_object_or_404(BusinessTrip, pk=pk)
+
+# If this is a POST request then process the Form data
+    if request.method == 'POST':
+        form = ExtensionBusinessTripForm(request.POST)
+        if form.is_valid():
+            # присваиваем значение их формы полю "end"
+            trip_extens.end = form.cleaned_data['extension_date']
+            trip_extens.save()
+            # redirect to a new URL:
+            return HttpResponseRedirect(reverse('business_trip'))
+    else:
+
+        form = ExtensionBusinessTripForm(initial={'extension_date': datetime.date.today()})
+
+    return render(request, 'supervision/business_trip_extension.html',
+                  {'form': form, 'tripextens': trip_extens,'title':'Продление командировки'})

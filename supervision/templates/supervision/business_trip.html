@@ -30,7 +30,7 @@
 
         <section class="business-trip">
              <div class="content_title">
-                <h1 class="title">Командировки</h1>
+                <h1 class="title">{{ title }}</h1>
                  <div class="new_btn">
                     <a href="#" class="new_link">+ Добавить</a>
                  </div>
@@ -50,10 +50,11 @@
                             <p class="bt__date_start"> с {{ trip.start|date:"d.m.Y" }}</p>
                             <p class="bt__date_end">по {{ trip.end|date:"d.m.Y" }}</p>
                         </div>
+                        {% if perm.supervision.can_extension %}
                         <div class="btc__btn">
-                            <a class="btc__link btn" href="#">продлить</a>
+                            <a class="btc__link btn" href="{% url 'extension_business_trip' trip.id %}">продлить</a>
                         </div>
-
+                        {% endif %}
                     </div>
                     <p class="bt__purpose"><span class="small">цель: </span>{{ trip.purpose }}</p>
                 </div>
@@ -120,7 +121,7 @@
                                 <div class="tad_row_item">{{ trip.user.last_name }}</div>
                                 <div class="tad_row_item">{{ trip.start|date:"d.m.Y"}}</div>
                                 <div class="tad_row_item">{{ trip.end|date:"d.m.Y" }}</div>
-                                <div class="tad_row_item"><a class="btc__link btn" href="#">продлить</a></div>
+                                <div class="tad_row_item"><a class="btc__link btn" href="{% url 'extension_business_trip' trip.id %}">продлить</a></div>
                             </div>
                             {% endfor %}
 
@@ -143,7 +144,7 @@
                         {% for trip_c in trips_completed %}
                          <div class="btc__table_row">
                             <div class="tad_row_item">{{ forloop.counter }}</div>
-                            <div class="tad_row_item"><a href="{{ trip.get_absolute_url  }}">{{ trip_c.plaсe.name }}</a></div>
+                            <div class="tad_row_item"><a href="{{ trip_c.get_absolute_url  }}">{{ trip_c.plaсe.name }}</a></div>
                             <div class="tad_row_item">{{ trip_c.user.last_name }}</div>
                             <div class="tad_row_item">{{ trip_c.start|date:"d.m.Y"}}</div>
                             <div class="tad_row_item">{{ trip_c.end|date:"d.m.Y" }}</div>
