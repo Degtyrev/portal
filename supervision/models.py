@@ -74,7 +74,7 @@ class BusinessTrip(models.Model):
     start = models.DateField(help_text='Дата начала командировки', null=True, blank=True)
     end = models.DateField(help_text='Дата окончания командировки', null=True, blank=True)
     purpose = models.CharField(max_length=250, help_text='Цель командировки')
-    activ = models.BooleanField(help_text='Действующая, Завершенная', default=True)
+    activ = models.BooleanField(help_text='Действующая', default=False)
 
     def __str__(self):
         return f'{self.plaсe} {self.purpose}'

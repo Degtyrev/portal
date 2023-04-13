@@ -19,8 +19,8 @@ def index(request):
 
 def business_trip(request):
     date_today = datetime.date.today()
-    trips_current = BusinessTrip.objects.filter(end__gt=date_today)
-    trips_completed = BusinessTrip.objects.filter(end__lt=date_today)
+    trips_current = BusinessTrip.objects.filter(activ__exact=True)
+    trips_completed = BusinessTrip.objects.filter(activ__exact=False)
 
 
     return render(

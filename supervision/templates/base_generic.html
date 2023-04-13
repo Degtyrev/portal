@@ -1,3 +1,4 @@
+{% if user.is_authenticated %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -35,9 +36,9 @@
 
             <div class="auth_user">
                 <div class="auth_user__name">
-                    <p>Вы вошли как: <span>Иван Иванов</span></p>
+                    <p>Вы вошли как: <span>{{ user.first_name }} {{ user.last_name }}</span></p>
                 </div>
-                <a class="exit__link" href="#">Выйти</a>
+                <a class="exit__link" href="{% url 'logout'%}">Выйти</a>
             </div>
 
         {% endblock %}
@@ -57,6 +58,7 @@
 
     </section>
 
+
 {#    <div class="footer">#}
 {#        <!-- Блок подвала -->#}
 {#        {% block footer %}#}
@@ -65,7 +67,8 @@
 {#    </div>#}
 
 
-
 </div>
 </body>
 </html>
+
+{% endif %}

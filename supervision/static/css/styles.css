@@ -186,8 +186,15 @@ td>input{
 
 
 /*------------------ командировки------  */
-.business-trip__current{
+.business-trip__block{
+    padding-left:20px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
 
+.business-trip__current{
+    margin-bottom: 30px;
 }
 .btc__item{
     display: grid;
@@ -195,11 +202,11 @@ td>input{
     margin-bottom: 10px;
 }
 .btc__link{
-    display: block;
-    padding-bottom: 3px;
-    border: 1px solid #333333;
-    border-radius: 8px;
-    text-align: center;
+    /*display: block;*/
+    /*padding-bottom: 3px;*/
+    /*border: 1px solid #333333;*/
+    /*border-radius: 8px;*/
+    /*text-align: center;*/
 }
 .btc__btn{
     width: 100px;
@@ -214,12 +221,7 @@ td>input{
     background-color: #eee;
     margin-bottom: 10px;
 }
-.business-trip__block{
 
-    padding-left:20px;
-    padding-right: 20px;
-    margin-bottom: 20px;
-}
 .bt__date{
     display: grid;
     grid-template-columns: 50% 50%;
@@ -251,4 +253,22 @@ td>input{
 .form_mismatch__period{
     margin-top: 10px;
     margin-left: 25px;
+}
+.row_head{
+}
+.bt__table_row{
+    display: grid;
+    grid-template-columns: 30px 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    padding: 1px 0px;
+}
+.btc__table_row{
+    display: grid;
+    grid-template-columns: 30px 1fr 1fr 1fr 1fr;
+    align-items: center;
+    padding: 1px 0px;
+}
+.tad_row_item{
+    border-bottom: 2px solid #eeeeee;
+    padding-bottom: 5px;
 }
