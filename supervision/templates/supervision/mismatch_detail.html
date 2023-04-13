@@ -26,34 +26,91 @@
     {% block content %}
         <section class="mismatch_detail">
             <div class="content_title">
-                 <h1 class="title">Карточка Неоответствия</h1>
+                 <h1 class="title">{{ title }} <span class="title_number">№ {{ mismatch.pk }}</span></h1>
             </div>
         <hr>
 
-
             <div class="mismatch_detail__block">
                 {% if mismatch %}
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">объект</div>
+                        <div class="mismatch_detail__plaсe">{{ mismatch.plaсe.name }}</div>
+                    </div>
 
-                        <div class="mismatch_detail__plaсe">На {{ mismatch.plaсe.name }}</div>
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">статус</div>
                         <div class="mismatch_detail__status">На проработке техрешения</div>
+                    </div>
+
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">тип</div>
                         <div class="mismatch_detail__type">{{ mismatch.get_type_display }}</div>
+                    </div>
+
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">описание</div>
                         <div class="mismatch_detail__title">{{ mismatch.title}}</div>
+                    </div>
+
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">подробное описание</div>
                         <div class="mismatch_detail__text">{{ mismatch.text}}</div>
-                        <div class="mismatch_detail__date">дата: {{ mismatch.date_finding}}</div>
+                    </div>
+
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">дата</div>
+                        <div class="mismatch_detail__date">{{ mismatch.date_finding}}</div>
+                    </div>
+
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">производитель</div>
                         <div class="mismatch_detail__factory">{{ mismatch.factory}} </div>
+                    </div>
+
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">узел</div>
                         <div class="mismatch_detail__unit">{{ mismatch.unit}}</div>
+                    </div>
+
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">чертеж</div>
                         <div class="mismatch_detail__drawing">{{ mismatch.element}} </div>
+                    </div>
+
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">количество</div>
                         <div class="mismatch_detail__amount">{{ mismatch.amount}}</div>
-                        <div class="mismatch_detail__fac_number">зав.номер </div>
-                        <div class="mismatch_detail__order">Заказ:</div>
-                        <div class="mismatch_detail__pack">грузовое место:{{ mismatch.pack}}</div>
+                    </div>
 
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">зав.номер</div>
+                        <div class="mismatch_detail__fac_number"> </div>
+                    </div>
 
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">заказ</div>
+                        <div class="mismatch_detail__order"></div>
+                    </div>
+
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">грузовое место</div>
+                        <div class="mismatch_detail__pack">{{ mismatch.pack}}</div>
+                    </div>
+
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">принятое решение</div>
                         <div class="mismatch_detail__correction">{{ mismatch.solution}}</div>
-                        <div class="mismatch_detail__image">фото, файлы</div>
+                    </div>
+
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">фото, файлы</div>
+                        <div class="mismatch_detail__image"></div>
+                    </div>
+
+                    <div class="mismatch_detail__item">
+                        <div class="mismatch_detail__ladel">кем устранено</div>
                         <div class="mismatch_detail__corrected">{{ mismatch.corrected}}</div>
-
-
+                    </div>
             {% else %}
                 <p>Несоответствие не составлялось</p>
             {% endif %}

@@ -31,12 +31,36 @@ h1{
     justify-content: space-around;
 }
 
-
 .content{
     color: #333;
     display: grid;
     grid-template-columns: 230px 1fr;
 }
+
+.content_title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+}
+.title_number{
+    font-weight: bolder;
+}
+.new_btn{
+    /*position: absolute;*/
+    /*top: 23px;*/
+    /*right: 42px;*/
+    border-radius: 8px;
+    background-color: #FF7F50FF;
+    color: white;
+    padding: 5px 0 7px 0;
+    width: 150px;
+    text-align: center;
+}
+.new_btn:hover{
+    background-color: rgb(246, 100, 52);
+}
+
 .sidebar{
     padding-left: 20px;
     padding-right: 10px;
@@ -60,7 +84,6 @@ h1{
 .main{
     padding-left: 10px;
     padding-right: 20px;
-
 }
 .auth_user{
     font-size: 12px;
@@ -142,37 +165,32 @@ td>input{
 .login__btn:hover{
     background-color: rgb(246, 100, 52);
 }
-/*------------------ несоответствия------  */
+/*------------------ несоответствия список------  */
 
 .mismatch{
     /*position: relative;*/
 }
-.mismatch_h1{
 
-}
-.content_title{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px;
-
-}
-.new_btn{
-    /*position: absolute;*/
-    /*top: 23px;*/
-    /*right: 42px;*/
-    border-radius: 8px;
-    background-color: #FF7F50FF;
-    color: white;
-    padding: 5px 0 7px 0;
-    width: 150px;
-    text-align: center;
-}
-.new_btn:hover{
-    background-color: rgb(246, 100, 52);
-}
 .mismatch__block{
-
+    border-bottom: 1px solid #007264;
+    margin-bottom: 10px;
+}
+.mismatch__block_title{
+    display: flex;
+    margin-bottom: 7px;
+}
+.mismatch__id{
+    margin-right: 20px;
+}
+.mismatch__block_status{
+    display: flex;
+    font-size: 10px;
+    justify-content: space-around;
+    align-items: center;
+    /*background-color: rgba(255, 127, 80, 0.15);*/
+    padding: 3px 0;
+    margin-bottom: 5px;
+    font-style: italic;
 }
 .mismatch__title{
 
@@ -184,7 +202,47 @@ td>input{
 
 }
 
+/*------------------ несоответстия фильтр------  */
+.mismatch_filter__block{
+    margin-top: 20px;
+}
+.form_mismatch__send{
+    margin-top: 20px;
+}
+.mismatch_filter__label{
+    font-size: 14px;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+ }
+.mismatch_filter__label_date{
+    display: inline-block;
+    width: 23px;
+}
+.form_mismatch__date_item{
+    margin-bottom: 5px;
+}
+.form_mismatch__period{
+    margin-top: 10px;
+    margin-left: 25px;
+}
 
+/*------------------ несоответствия детально------  */
+
+
+.mismatch_detail__block{
+font-size: 14px;
+}
+.mismatch_detail__item{
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    margin-bottom: 7px;
+}
+.mismatch_detail__ladel{
+    flex-basis: 200px;
+    margin-right: 10px;
+    font-size: 12px;
+ }
 /*------------------ командировки------  */
 .business-trip__block{
     padding-left:20px;
@@ -230,32 +288,6 @@ td>input{
 .bt__date_start{
     margin-right: 14px;
 }
-/*------------------ несоответстия фильтр------  */
-.mismatch_filter__block{
-    margin-top: 20px;
-}
-.form_mismatch__send{
-    margin-top: 20px;
-}
-.mismatch_filter__label{
-    font-size: 14px;
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
- }
-.mismatch_filter__label_date{
-    display: inline-block;
-    width: 23px;
-}
-.form_mismatch__date_item{
-    margin-bottom: 5px;
-}
-.form_mismatch__period{
-    margin-top: 10px;
-    margin-left: 25px;
-}
-.row_head{
-}
 .bt__table_row{
     display: grid;
     grid-template-columns: 30px 1fr 1fr 1fr 1fr 1fr;
@@ -272,3 +304,6 @@ td>input{
     border-bottom: 2px solid #eeeeee;
     padding-bottom: 5px;
 }
+
+
+

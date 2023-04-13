@@ -19,6 +19,8 @@ def index(request):
 
 def business_trip(request):
     date_today = datetime.date.today()
+    trips_current_user = BusinessTrip.objects.filter(activ__exact=True).filter(user_id__exact=request.user.pk)
+    trips_completed_user = BusinessTrip.objects.filter(activ__exact=False).filter(user_id__exact=request.user.pk)
     trips_current = BusinessTrip.objects.filter(activ__exact=True)
     trips_completed = BusinessTrip.objects.filter(activ__exact=False)
 
@@ -28,7 +30,9 @@ def business_trip(request):
         'supervision/business_trip.html',
         context={
             'title': 'Командировки', 'trips_current': trips_current,
-            'trips_completed': trips_completed
+            'trips_completed': trips_completed,
+            'trips_current_user': trips_current_user,
+            'trips_completed_user': trips_completed_user
         },
     )
 
@@ -53,7 +57,7 @@ def mismatch(request):
         request,
         'supervision/mismatch.html',
         context={
-            'title': 'Несоответствия', 'mismatches': mismatches, 'palce': palce
+            'title': 'Перечень несоответствий', 'mismatches': mismatches, 'palce': palce
         },
     )
 
@@ -64,6 +68,6 @@ def mismatch_detail(request, pk):
             request,
             'supervision/mismatch_detail.html',
             context={
-                'title': 'Несоответствие', 'mismatch': mismatch
+                'title': 'Карточка Неоответствия', 'mismatch': mismatch
             },
         )
