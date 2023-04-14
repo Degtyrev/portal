@@ -1,0 +1,80 @@
+{% extends "base_generic.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+    {% block sidebar %}
+        <div class="sidebar">
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="{% url 'place_list' %}">Все объекты </a></li>
+                <li class="sidebar__item"><a href="#">Создать </a></li>
+                <li class="sidebar__item"><a href="#">ХХХ</a></li>
+            </ul>
+            <hr>
+            <ul class="sidebar__list">
+
+                <li class="sidebar__item"><a href="#">Планируемые </a></li>
+                <li class="sidebar__item"><a href="#">Завершенные </a></li>
+            </ul>
+
+
+        </div>
+
+    {% endblock %}
+
+    {% block content %}
+        <section class="place_detail">
+            <div class="content_title">
+                 <h1 class="title">{{ title }} <span class="title_number"> {{ place.name }}</span></h1>
+            </div>
+        <hr>
+
+            <div class="place_detail__block">
+                {% if place_detail %}
+                    <div class="place_detail__item">
+                        <div class="place_detail__ladel">объект</div>
+                        <div class="place_detail__plaсe">{{ place_detail.name }}</div>
+                    </div>
+
+                    <div class="place_detail__item">
+                        <div class="place_detail__ladel">статус</div>
+                        <div class="place_detail__status">{{ place_detail.get_status_display }}</div>
+                    </div>
+
+                    <div class="place_detail__item">
+                        <div class="place_detail__ladel">Модель оборудовани</div>
+                        <div class="place_detail__equipment">{{ place_detail.equipment}}</div>
+                    </div>
+
+                    <div class="place_detail__item">
+                        <div class="place_detail__ladel">Тип оборудования</div>
+                        <div class="place_detail__equipment_type">{{ place_detail.equipment_type}}</div>
+                    </div>
+
+                    <div class="place_detail__item">
+                        <div class="place_detail__ladel">Договор №</div>
+                        <div class="place_detail__contract">{{ place_detail.contract}} </div>
+                    </div>
+
+                    <div class="place_detail__item">
+                        <div class="place_detail__ladel">Руководитель проекта</div>
+                        <div class="place_detail__project_manager">{{ place_detail.project_manager}}</div>
+                    </div>
+
+                    <div class="place_detail__item">
+                        <div class="place_detail__ladel">Главны инженер проекта</div>
+                        <div class="place_detail__chief_engineer">{{ place_detail.chief_engineer}} </div>
+                    </div>
+
+
+            {% else %}
+                <p>нет объекта</p>
+            {% endif %}
+            </div>
+        </section>
+
+
+
+    {% endblock %}

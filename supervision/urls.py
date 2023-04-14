@@ -5,12 +5,12 @@ from django.urls import include
 
 
 urlpatterns = [
-    # path('', views.login, name='login'),
+    path('', views.index, name='index'),
     path('', include('django.contrib.auth.urls')),
     path('main/', views.index, name='index'),
 ]
 
-urlpatterns = [
+urlpatterns += [
     path('mismatch/', views.mismatch, name='mismatch'),
     path('mismatch/<int:pk>', views.mismatch_detail, name='mismatch_detail'),
     path('mismatch/create/', views.MismatchCreate.as_view(), name='mismatch_create'),
@@ -28,24 +28,24 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path('place/', views.business_trip, name='place_list'),
-    path('place/<int:pk>', views.trip, name='place_detail'),
+    path('place/', views.place_list, name='place_list'),
+    path('place/<int:pk>', views.place_detail, name='place_detail'),
     path('place/create/', views.PlaсeCreate.as_view(), name='place_create'),
     path('place/<int:pk>/update/', views.PlaсeUpdate.as_view(), name='place_update'),
     path('place/<int:pk>/delete/', views.PlaсeDelete.as_view(), name='place_delete'),
 ]
 
 urlpatterns += [
-    path('unit/', views.business_trip, name='utin_list'),
-    path('unit/<int:pk>', views.trip, name='utin_detail'),
-    path('unit/create/', views.UnitCreate.as_view(), name='utin_create'),
-    path('unit/<int:pk>/update/', views.UnitUpdate.as_view(), name='utin_update'),
-    path('unit/<int:pk>/delete/', views.UnitDelete.as_view(), name='utin_delete'),
+    path('unit/', views.unit_list, name='unit_list'),
+    path('unit/<int:pk>', views.unit_detail, name='unit_detail'),
+    path('unit/create/', views.UnitCreate.as_view(), name='unit_create'),
+    path('unit/<int:pk>/update/', views.UnitUpdate.as_view(), name='unit_update'),
+    path('unit/<int:pk>/delete/', views.UnitDelete.as_view(), name='unit_delete'),
 ]
 
 urlpatterns += [
-    path('element/', views.business_trip, name='element_list'),
-    path('element/<int:pk>', views.trip, name='element_detail'),
+    path('element/', views.element_list, name='element_list'),
+    path('element/<int:pk>', views.element_detail, name='element_detail'),
     path('element/create/', views.ElementCreate.as_view(), name='element_create'),
     path('element/<int:pk>/update/', views.ElementUpdate.as_view(), name='element_update'),
     path('element/<int:pk>/delete/', views.ElementDelete.as_view(), name='element_delete'),
