@@ -14,7 +14,10 @@ urlpatterns = [
     path('mismatch/<int:pk>', views.mismatch_detail, name='mismatch_detail'),
 ]
 
-from django.template.defaulttags import url
+
 urlpatterns += [
     path('business_trip/<int:pk>/extension/', views.extension_business_trip, name='extension_business_trip'),
+    path('business_trip/create/', views.BusinessTripCreate.as_view(), name='business_trip_create'),
+    path('business_trip/<int:pk>/update/', views.BusinessTripUpdate.as_view(), name='business_trip_update'),
+    path('business_trip/<int:pk>/delete/', views.BusinessTripDelete.as_view(), name='business_trip_delete'),
 ]

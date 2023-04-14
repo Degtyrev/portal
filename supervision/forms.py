@@ -16,3 +16,16 @@ class ExtensionBusinessTripForm(forms.Form):
             raise ValidationError('Дата не может быть позже сегодняшней даты')
         # Помните, что всегда надо возвращать "очищенные" данные.
         return data
+
+from django.forms import ModelForm
+from .models import BusinessTrip
+
+class CreateBusinessTripModelForm(ModelForm):
+
+    class Meta:
+        model = BusinessTrip
+        fields = '__all__'
+        labels = {'plaсe':'Объект', 'user':'сотрудник',
+                  'start':'С', 'end':'По', 'purpose':'Цель',
+                  'activ':'дайствующая',}
+        help_texts = {'plaсe':'введите объект'}

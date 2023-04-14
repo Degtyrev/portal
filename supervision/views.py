@@ -43,7 +43,7 @@ def trip(request, pk):
 
     return render(
         request,
-        'supervision/business_trip_detail.html',
+        'supervision/businesstrip_detail.html',
         context={
             'title': 'Командировка', 'trip': trip, 'date_today': date_today
         },
@@ -104,3 +104,29 @@ def extension_business_trip(request, pk):
 
     return render(request, 'supervision/business_trip_extension.html',
                   {'form': form, 'tripextens': trip_extens,'title':'Продление командировки'})
+
+# Редактирование формы  командировки
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from .models import BusinessTrip
+
+class BusinessTripCreate(CreateView):
+    model = BusinessTrip
+    fields = '__all__'
+
+    class Meta:
+        labels = {'plaсe': 'Объект', 'user': 'сотрудник',
+                  'start': 'С', 'end': 'По', 'purpose': 'Цель',
+                  'activ': 'дайствующая', }
+
+    def get_absolute_url(self):
+        return reverse('business_trip_create')
+
+class BusinessTripUpdate(UpdateView):
+    model = BusinessTrip
+    fields = '__all__'
+
+class BusinessTripDelete(DeleteView):
+    model = BusinessTrip
+    success_url = reverse_lazy('business_trip')
+

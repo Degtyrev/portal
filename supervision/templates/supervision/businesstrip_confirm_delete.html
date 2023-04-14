@@ -1,0 +1,21 @@
+ {% block title %}
+     <title>{{ title }}</title>
+{% endblock %}
+
+
+{% block sidebar %}
+    1
+{% endblock %}
+
+{% block content %}
+
+<h1>Удаление командиовки</h1>
+
+<p>Подтвердите удаление командировки {{ business_trip }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="Удалить" />
+</form>
+
+{% endblock %}

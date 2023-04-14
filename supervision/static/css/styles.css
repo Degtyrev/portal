@@ -66,6 +66,7 @@ h1{
     padding-right: 10px;
     padding-top: 20px;
     background-color: #f3f3f3;
+    height: 100vh;
 }
 .sidebar__list{
 
@@ -304,6 +305,8 @@ font-size: 14px;
     border-bottom: 2px solid #eeeeee;
     padding-bottom: 5px;
 }
-
+.btc__link_icon{
+    width: 20px;
+}
 
 

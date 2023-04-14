@@ -1,5 +1,5 @@
 {% extends "base_generic.html" %}
-
+{% load static %}
     {% block title %}
         <title>{{ title }}</title>
     {% endblock %}
@@ -95,7 +95,7 @@
              <div class="content_title">
                 <h1 class="title">Командировки</h1>
                  <div class="new_btn">
-                    <a href="#" class="new_link">+ Добавить</a>
+                    <a href="{% url 'business_trip_create'%}" class="new_link">+ Добавить</a>
                  </div>
              </div>
 
@@ -112,17 +112,26 @@
                                 <div class="tad_row_item">Ф.И.О.</div>
                                 <div class="tad_row_item">Начало</div>
                                 <div class="tad_row_item">Окончание</div>
-                                <div class="tad_row_item">Продлить</div>
+                                <div class="tad_row_item"></div>
                             </div>
                             {% for trip in trips_current %}
                              <div class="bt__table_row">
                                 <div class="tad_row_item">{{ forloop.counter }}</div>
-                                <div class="tad_row_item"><a href="{{ trip.get_absolute_url  }}">{{ trip.plaсe.name }}</a></div>
+                                <div class="tad_row_item">
+                                    <a href="{{ trip.get_absolute_url  }}">{{ trip.plaсe.name }}</a>
+                                </div>
                                 <div class="tad_row_item">{{ trip.user.last_name }}</div>
                                 <div class="tad_row_item">{{ trip.start|date:"d.m.Y"}}</div>
                                 <div class="tad_row_item">{{ trip.end|date:"d.m.Y" }}</div>
-                                <div class="tad_row_item"><a class="btc__link btn" href="{% url 'extension_business_trip' trip.id %}">продлить</a></div>
-                            </div>
+                                <div class="tad_row_item">
+                                    <a class="btc__link btn" href="{% url 'extension_business_trip' trip.id %}">
+                                        <img class="btc__link_icon" src="{% static 'icon/Time_icon.png' %}" alt="продлить" title="продлить">
+                                    </a>
+                                    <a class="btc__link btn" href="{% url 'business_trip_update' trip.id %}">
+                                        <img class="btc__link_icon" src="{% static 'icon/edit_icon1.png' %}" alt="редактировать" title="редактировать">
+                                    </a>
+                                </div>
+                             </div>
                             {% endfor %}
 
                         </div>

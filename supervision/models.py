@@ -69,12 +69,12 @@ class Plaсe(models.Model):
 
 
 class BusinessTrip(models.Model):
-    plaсe = models.ForeignKey('Plaсe', on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    start = models.DateField(help_text='Дата начала командировки', null=True, blank=True)
-    end = models.DateField(help_text='Дата окончания командировки', null=True, blank=True)
-    purpose = models.CharField(max_length=250, help_text='Цель командировки')
-    activ = models.BooleanField(help_text='Действующая', default=False)
+    plaсe = models.ForeignKey('Plaсe', on_delete=models.SET_NULL, null=True, verbose_name='Оъект')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='сотрудник')
+    start = models.DateField(help_text='Дата начала командировки', null=True, blank=True, verbose_name='дата начала')
+    end = models.DateField(help_text='Дата окончания командировки', null=True, blank=True, verbose_name='дата окончания')
+    purpose = models.CharField(max_length=250, help_text='Цель командировки', verbose_name='Цель')
+    activ = models.BooleanField(help_text='Действующая', default=False, verbose_name='статус')
 
     def __str__(self):
         return f'{self.plaсe} {self.purpose}'
