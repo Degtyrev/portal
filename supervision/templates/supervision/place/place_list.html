@@ -30,7 +30,7 @@
                         <div class="place__block_title">
                             <div class="place__id">{{ place.pk}}</div>
                             <div class="place__title">
-                                <a href="{% url 'place_detail' place.pk %}">{{ place.name}}</a>
+                                <a href="{{place.get_absolute_url}}">{{ place.name}}</a>
                             </div>
                         </div>
                         <div class="place__block_status">

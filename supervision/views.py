@@ -235,10 +235,27 @@ class UnitDelete(DeleteView):
 
 #--------------- Детали----------------
 def element_list(request):
-    pass
+    element_list = Element.objects.all()
 
-def element_detail(request):
-    pass
+    return render(
+        request,
+        'supervision/element/element_list.html',
+        context={
+            'title': 'Список Деталей', 'element_list': element_list
+        },
+    )
+
+def element_detail(request, pk):
+    element_detail = Element.objects.get(pk=pk)
+
+    return render(
+        request,
+        'supervision/element/element_detail.html',
+        context={
+            'title': 'Чертёж', 'element_detail': element_detail
+        },
+    )
+
 # --------- Редактирование, обновление, удаление  формы чертеж
 class ElementCreate(CreateView):
     model = Element

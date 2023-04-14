@@ -1,0 +1,74 @@
+{% extends "base_generic.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+    {% block sidebar %}
+        <div class="sidebar">
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="{% url 'element_list' %}">Список чертежей </a></li>
+                <li class="sidebar__item"><a href="#">Добавить чертёж</a></li>
+                <li class="sidebar__item"><a href="#">Редактировать чертёж</a></li>
+            </ul>
+
+
+
+        </div>
+
+    {% endblock %}
+
+    {% block content %}
+        <section class="element_detail">
+            <div class="content_title">
+                 <h1 class="title">{{ title }} <span class="title_number"> {{ element_detail.number }} {{ element_detail.name }}</span></h1>
+            </div>
+        <hr>
+
+            <div class="element_detail__block">
+                {% if element_detail %}
+                                  <div class="element__item">
+                            <div class="element__ladel">Узел</div>
+                            <div class="element__parent">{{ element_detail.unit.number }} {{ element_detail.unit.name }}</div>
+                        </div>
+                        <div class="element__item">
+                            <div class="element__ladel">Чертёж</div>
+                            <div class="element__title" >
+                                {{ element_detail.number }} {{ element_detail.name}}                           </div>
+                        </div>
+                        {% if element.fac_number %}
+                        <div class="element__item">
+                             <div class="element__ladel">заводской номер</div>
+                            <div class="element__title" >{{ element_detail.fac_number }}</div>
+                        </div>
+                        {% endif %}
+
+                        {% if element.order %}
+                        <div class="element__item">
+                            <div class="element__ladel">номер заказа</div>
+                            <div class="element__title" >{{ element_detail.order }}</div>
+                        </div>
+                        {% endif %}
+                        {% if element.mass %}
+                        <div class="element__item">
+
+                             <div class="element__ladel">масса</div>
+                            <div class="element__title" >{{ element_detail.mass }}</div>
+
+                        </div>
+                        {% endif %}
+                        {% if element.steel %}
+                        <div class="element__item">
+                            <div class="element__ladel">сталь</div>
+                            <div class="element__title" >{{ element_detail.steel }}</div>
+                        </div>
+                        {% endif %}
+
+            {% else %}
+                <p>нет чертежа</p>
+            {% endif %}
+            </div>
+        </section>
+
+    {% endblock %}

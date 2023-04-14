@@ -1,0 +1,60 @@
+{% extends "base_generic.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+    {% block sidebar %}
+        <div class="sidebar">
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="#">создать Чертёж</a></li>
+
+            </ul>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <section class="element">
+            <div class="content_title">
+                 <h1 class="title">{{ title }}</h1>
+                <div class="new_btn">
+                    <a href="#" class="new_link">+ Добавить</a>
+                </div>
+            </div>
+            <hr>
+            <div class="element_list">
+            {% if element_list %}
+                {% for element in element_list %}
+                    <div class="element__block">
+
+                        <div class="element__item">
+                            <div class="element__ladel">Узел</div>
+                            <div class="element__parent">{{ element.unit.number }} {{ element.unit.name }}</div>
+                        </div>
+
+                        <div class="element__item">
+                            <div class="element__ladel">Чертёж</div>
+                            <div class="element__title" >
+                                <a href="{{ element.get_absolute_url }}">{{ element.number }} {{ element.name}}</a>
+                            </div>
+                        </div>
+
+                        {% if element.mass %}
+                        <div class="element__item">
+                            <div class="element__ladel">масса</div>
+                            <div class="element__title" >{{ element.mass }}</div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Нет Черетжей</p>
+            {% endif %}
+            </div>
+        </section>
+
+
+
+    {% endblock %}

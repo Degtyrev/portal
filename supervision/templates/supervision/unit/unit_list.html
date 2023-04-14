@@ -32,7 +32,7 @@
                           </div>
 
                             <div class="unit__title" >
-                                <a href="{% url 'unit_detail' unit.pk %}">{{ unit.number }} {{ unit.name}}</a>
+                                <a href="{{unit.get_absolute_url}}">{{ unit.number }} {{ unit.name}}</a>
                             </div>
 
                     </div>

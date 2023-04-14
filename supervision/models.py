@@ -109,7 +109,7 @@ class Element(models.Model):
         return f'{self.number} {self.name}'
 
     def get_absolute_url(self):
-        return reverse('element-detail', args=[str(self.id)])
+        return reverse('element_detail', args=[str(self.id)])
 
     class Meta:
         unique_together = ('number', 'name')
