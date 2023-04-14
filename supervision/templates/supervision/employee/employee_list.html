@@ -1,0 +1,52 @@
+{% extends "base_generic.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+    {% block sidebar %}
+        <div class="sidebar">
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="#">Добавить сотрудника</a></li>
+
+            </ul>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <section class="employee">
+            <div class="content_title">
+                 <h1 class="title">{{ title }}</h1>
+                <div class="new_btn">
+                    <a href="#" class="new_link">+ Добавить</a>
+                </div>
+            </div>
+            <hr>
+            <div class="employee_list">
+            {% if employee_list %}
+                {% for employee in employee_list %}
+                    <div class="employee__block">
+                            <div class="employee__count" >
+                                {{ forloop.counter }}
+                            </div>
+                          <div class="employee__name">
+                                      <a href="{{employee.get_absolute_url}}">{{ employee.user.first_name }}
+                              {{ employee.user.last_name}} {{ employee.surname}}</a>
+                          </div>
+
+                            <div class="employee__position" >
+                                {{employee.position.get_position_display}}
+                            </div>
+
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Нет сотрудников</p>
+            {% endif %}
+            </div>
+        </section>
+
+
+
+    {% endblock %}

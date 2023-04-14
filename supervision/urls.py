@@ -50,3 +50,11 @@ urlpatterns += [
     path('element/<int:pk>/update/', views.ElementUpdate.as_view(), name='element_update'),
     path('element/<int:pk>/delete/', views.ElementDelete.as_view(), name='element_delete'),
 ]
+
+urlpatterns += [
+    path('employee/', views.employee_list, name='employee_list'),
+    path('employee/<int:pk>', views.employee_detail, name='employee_detail'),
+    path('employee/create/', views.EmployeeCreate.as_view(), name='employee_create'),
+    path('employee/<int:pk>/update/', views.EmployeeUpdate.as_view(), name='employee_update'),
+    path('employee/<int:pk>/delete/', views.EmployeeDelete.as_view(), name='employee_delete'),
+]

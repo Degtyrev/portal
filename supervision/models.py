@@ -11,19 +11,23 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     surname = models.CharField(max_length=50, help_text="Отчество", null=True, blank=True)
     birth_date = models.DateField(verbose_name='Дата рождения', null=True, blank=True)
+    death_date = models.DateField(verbose_name='Дата смерти', null=True, blank=True)
     position = models.ForeignKey('Career', on_delete=models.SET_NULL, null=True, blank=True)
 
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
-
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
+    # @receiver(post_save, sender=User)
+    # def create_user_profile(sender, instance, created, **kwargs):
+    #     if created:
+    #         Profile.objects.create(user=instance)
+    #
+    # @receiver(post_save, sender=User)
+    # def save_user_profile(sender, instance, **kwargs):
+    #     instance.profile.save()
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
+
+    def get_absolute_url(self):
+        return reverse('employee_detail', args=[str(self.user.id)])
 
 # Дата рождения: {{ user.profile.birth_date }}
 
@@ -31,10 +35,10 @@ class Career(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     POSITION = (
-        ('3', '3 категория'),
-        ('2', '2 категория'),
-        ('1', '1 категория'),
-        ('ld', 'Ведущий'),
+        ('3', 'Шеф-инженер 3-й категории'),
+        ('2', 'Шеф-инженер 2-й категории'),
+        ('1', 'Шеф-инженер 1-й категории'),
+        ('ld', 'Ведущий шеф-инженер'),
     )
     position = models.CharField(max_length=5, choices=POSITION, default='ld')
     start_date = models.DateField(help_text="Дата приёма")
@@ -64,7 +68,7 @@ class Plaсe(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('plaсe-detail', args=[str(self.id)])
+        return reverse('plaсe_detail', args=[str(self.id)])
 
 
 
@@ -142,7 +146,7 @@ class Mismatch(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('mismatch-detail', args=[str(self.id)])
+        return reverse('mismatch_detail', args=[str(self.id)])
 
 
 class Status(models.Model):

@@ -268,3 +268,41 @@ class ElementUpdate(UpdateView):
 class ElementDelete(DeleteView):
     model = Element
     success_url = reverse_lazy('element_list')
+
+#--------------- Сотрудники----------------
+def employee_list(request):
+    employee_list = Profile.objects.all()
+
+    return render(
+        request,
+        'supervision/employee/employee_list.html',
+        context={
+            'title': 'Список Сотрудников', 'employee_list': employee_list
+        },
+    )
+
+def employee_detail(request, pk):
+    employee_detail = Profile.objects.get(user_id=pk)
+    career_list = Career.objects.filter(user_id=pk)
+
+    return render(
+        request,
+        'supervision/employee/employee_detail.html',
+        context={
+            'title': 'Сотрудник', 'employee_detail': employee_detail,
+            'career_list': career_list
+        },
+    )
+
+# --------- Редактирование, обновление, удаление  формы чертеж
+class EmployeeCreate(CreateView):
+    model = Profile
+    fields = '__all__'
+
+class EmployeeUpdate(UpdateView):
+    model = Profile
+    fields = '__all__'
+
+class EmployeeDelete(DeleteView):
+    model = Profile
+    success_url = reverse_lazy('employee_list')
