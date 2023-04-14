@@ -1,0 +1,48 @@
+{% extends "base_generic.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+    {% block sidebar %}
+        <div class="sidebar">
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="#">создать Узел</a></li>
+
+            </ul>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <section class="unit">
+            <div class="content_title">
+                 <h1 class="title">{{ title }}</h1>
+                <div class="new_btn">
+                    <a href="#" class="new_link">+ Добавить</a>
+                </div>
+            </div>
+            <hr>
+            <div class="unit_list">
+            {% if unit_list %}
+                {% for unit in unit_list %}
+                    <div class="unit__block">
+                          <div class="unit__block_parent">
+{#                              <div class="unit__parent">{{ unit.parent }}</div>#}
+                          </div>
+
+                            <div class="unit__title" >
+                                <a href="{% url 'unit_detail' unit.pk %}">{{ unit.number }} {{ unit.name}}</a>
+                            </div>
+
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Нет Узлов</p>
+            {% endif %}
+            </div>
+        </section>
+
+
+
+    {% endblock %}

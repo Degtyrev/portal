@@ -197,10 +197,26 @@ class PlaсeDelete(DeleteView):
 
 #--------------- Узлы----------------
 def unit_list(request):
-    pass
+    unit_list = Unit.objects.all()
 
-def unit_detail(request):
-    pass
+    return render(
+        request,
+        'supervision/unit/unit_list.html',
+        context={
+            'title': 'Список Узлов', 'unit_list': unit_list
+        },
+    )
+
+def unit_detail(request, pk):
+    unit_detail = Unit.objects.get(pk=pk)
+
+    return render(
+        request,
+        'supervision/unit/unit_detail.html',
+        context={
+            'title': 'Узел', 'unit_detail': unit_detail
+        },
+    )
 
 # --------- Редактирование, обновление, удаление  формы Узла
 class UnitCreate(CreateView):
