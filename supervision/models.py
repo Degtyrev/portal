@@ -45,12 +45,12 @@ class Career(models.Model):
 
 
 class Plaсe(models.Model):
-    name = models.CharField(max_length=250, help_text="Название объекта")
-    equipment = models.CharField(max_length=250, help_text="Модель оборудования (котла)", null=True, blank=True)
-    equipment_type = models.CharField(max_length=250, help_text="Тип оборудования (котла)", null=True, blank=True)
-    contract = models.CharField(max_length=250, help_text="номер договора", null=True, blank=True)
-    project_manager = models.CharField(max_length=100, help_text='руководитель проекта', null=True, blank=True)
-    chief_engineer = models.CharField(max_length=100, help_text='главный инженер проекта', null=True, blank=True)
+    name = models.CharField(max_length=250, help_text="Название объекта", verbose_name='Модель оборудования (котла)')
+    equipment = models.CharField(max_length=250, help_text="Модель оборудования (котла)", null=True, blank=True, verbose_name='Модель оборудования (котла)')
+    equipment_type = models.CharField(max_length=250, help_text="Тип оборудования (котла)", null=True, blank=True, verbose_name='Тип оборудования (котла)')
+    contract = models.CharField(max_length=250, help_text="номер договора", null=True, blank=True, verbose_name='номер договора')
+    project_manager = models.CharField(max_length=100, help_text='руководитель проекта', null=True, blank=True, verbose_name='руководитель проекта')
+    chief_engineer = models.CharField(max_length=100, help_text='главный инженер проекта', null=True, blank=True, verbose_name='главный инженер проекта')
 
     STATUS_OBJ = (
         ('p', 'Перспективный'),
@@ -58,7 +58,7 @@ class Plaсe(models.Model):
         ('c', 'Завершенный'),
         ('d', 'Отмененный'),
     )
-    status = models.CharField(max_length=2, choices=STATUS_OBJ, default='a')
+    status = models.CharField(max_length=2, choices=STATUS_OBJ, default='a', verbose_name='Статус')
 
     def __str__(self):
         return self.name
