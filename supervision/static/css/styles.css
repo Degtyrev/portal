@@ -346,3 +346,31 @@ font-size: 14px;
     box-sizing: border-box;
     padding: 5px;
 }
+.intup_activ>input{
+    width: 20px;
+    height: 20px;
+}
+
+.business_trip__form_extens{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 16px;
+    padding: 20px;
+    align-items: center;
+}
+
+/*----------------Узлы-----------*/
+.unit__block{
+    margin-bottom: 7px;
+}
+.unit__title:hover{
+    color: #007264;
+}
+
+.unit_detail__block{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 16px;
+    padding: 20px;
+    align-items: center;
+}

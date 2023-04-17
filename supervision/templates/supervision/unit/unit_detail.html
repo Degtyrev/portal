@@ -9,8 +9,8 @@
         <div class="sidebar">
             <ul class="sidebar__list">
                 <li class="sidebar__item"><a href="{% url 'unit_list' %}">Список узлов </a></li>
-                <li class="sidebar__item"><a href="#">Создать узел</a></li>
-                <li class="sidebar__item"><a href="#">Редактировать узел</a></li>
+                <li class="sidebar__item"><a href="{% url 'unit_create' %}">Создать узел</a></li>
+                <li class="sidebar__item"><a href="{% url 'unit_update' %}">Редактировать узел</a></li>
             </ul>
 
 
@@ -23,28 +23,31 @@
         <section class="unit_detail">
             <div class="content_title">
                  <h1 class="title">{{ title }} <span class="title_number"> {{ unit_detail.number }} {{ unit_detail.name }}</span></h1>
+                 <div class="new_btn">
+                    <a href="{% url 'unit_update' unit_detail.pk  %}" class="new_link">Редактировать</a>
+                 </div>
             </div>
         <hr>
 
             <div class="unit_detail__block">
                 {% if unit_detail %}
-                    <div class="unit_detail__item">
+{#                    <div class="unit_detail__item">#}
                         <div class="unit_detail__ladel">Родительский узел</div>
                         <div class="unit_detail__parent">{{ unit_detail.parent }}</div>
-                    </div>
+{#                    </div>#}
 
-                    <div class="unit_detail__item">
+{#                    <div class="unit_detail__item">#}
                         <div class="unit_detail__ladel">номер узла</div>
                         <div class="unit_detail__number">{{ unit_detail.number}}</div>
-                    </div>
+{#                    </div>#}
 
-                    <div class="unit_detail__item">
+{#                    <div class="unit_detail__item">#}
                         <div class="unit_detail__ladel">Наименование узла</div>
                         <div class="unit_detail__name">{{ unit_detail.name}}</div>
-                    </div>
+{#                    </div>#}
 
             {% else %}
-                <p>нет объекта</p>
+                <p>нет узлов</p>
             {% endif %}
             </div>
         </section>

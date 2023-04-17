@@ -17,7 +17,7 @@ class ExtensionBusinessTripForm(forms.Form):
         # Помните, что всегда надо возвращать "очищенные" данные.
         return data
 
-from django.forms import ModelForm, Textarea,DateField, Select,CheckboxSelectMultiple,\
+from django.forms import ModelForm, Textarea, DateField, Select,CheckboxSelectMultiple,\
     CheckboxInput
 from .models import BusinessTrip
 

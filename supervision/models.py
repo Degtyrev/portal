@@ -98,7 +98,7 @@ class Unit(models.Model):
         return f'{self.number} {self.name}'
 
     def get_absolute_url(self):
-        return reverse('unit-detail', args=[str(self.id)])
+        return reverse('unit_detail', args=[str(self.id)])
 
 class Element(models.Model):
     unit = models.ForeignKey('Unit', on_delete=models.SET_NULL, null=True, blank=True)

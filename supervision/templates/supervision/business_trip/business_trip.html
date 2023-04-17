@@ -124,10 +124,10 @@
                                 <div class="tad_row_item">{{ trip.start|date:"d.m.Y"}}</div>
                                 <div class="tad_row_item">{{ trip.end|date:"d.m.Y" }}</div>
                                 <div class="tad_row_item">
-                                    <a class="btc__link btn" href="{% url 'extension_business_trip' trip.id %}">
+                                    <a class="btc__link btn_icon" href="{% url 'extension_business_trip' trip.id %}">
                                         <img class="btc__link_icon" src="{% static 'icon/Time_icon.png' %}" alt="продлить" title="продлить">
                                     </a>
-                                    <a class="btc__link btn" href="{% url 'business_trip_update' trip.id %}">
+                                    <a class="btc__link btn_icon" href="{% url 'business_trip_update' trip.id %}">
                                         <img class="btc__link_icon" src="{% static 'icon/edit_icon1.png' %}" alt="редактировать" title="редактировать">
                                     </a>
                                 </div>

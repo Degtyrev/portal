@@ -114,7 +114,7 @@ def extension_business_trip(request, pk):
         form = ExtensionBusinessTripForm(initial={'extension_date': datetime.date.today()})
 
     return render(request, 'supervision/business_trip/business_trip_extension.html',
-                  {'form': form, 'tripextens': trip_extens,'title':'Продление командировки'})
+                  {'form': form, 'tripextens': trip_extens, 'title':'Продление командировки'})
 
 # ----------------Редактирование, обновление, удаление формы  командировки
 
