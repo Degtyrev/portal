@@ -17,15 +17,20 @@ class ExtensionBusinessTripForm(forms.Form):
         # Помните, что всегда надо возвращать "очищенные" данные.
         return data
 
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea,DateField, Select,CheckboxSelectMultiple,\
+    CheckboxInput
 from .models import BusinessTrip
 
 class CreateBusinessTripModelForm(ModelForm):
-
     class Meta:
         model = BusinessTrip
-        fields = '__all__'
+        fields = ('plaсe', 'user', 'start', 'end', 'purpose', 'activ')
         labels = {'plaсe':'Объект', 'user':'сотрудник',
                   'start':'С', 'end':'По', 'purpose':'Цель',
-                  'activ':'дайствующая',}
+                  'activ':'дайствующая'}
+        widgets = {
+            'start': DateField(),
+            'end': DateField(),
+            'purpose': Textarea(attrs={'cols': 80, 'rows': 20}),
+        }
         help_texts = {'plaсe':'введите объект'}

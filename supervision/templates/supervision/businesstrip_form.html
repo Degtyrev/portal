@@ -1,0 +1,66 @@
+{% extends "base_generic.html" %}
+ {% block title %}
+     <title>{{ title }}</title>
+{% endblock %}
+
+
+{% block sidebar %}
+   <div class="sidebar">
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="#">Добавить сотрудника</a></li>
+
+            </ul>
+        </div>
+{% endblock %}
+
+{% block content %}
+
+
+            <div class="content_title">
+                 <h1 class="title">Создание новой командировки</h1>
+{#                <div class="new_btn">#}
+{#                    <a href="#" class="new_link">+ Добавить</a>#}
+{#                </div>#}
+            </div>
+            <hr>
+
+
+
+<form action="" method="post" class="business_trip__form_create">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+{#    <table>#}
+{#    {{ form.as_table }}#}
+{#    </table>'plaсe':'Объект', 'user':'сотрудник',#}
+    {# 'start':'С', 'end':'По', 'purpose':'Цель',#}
+    {# 'activ':'дайствующая'#}
+
+    {{ form.plaсe.errors }}
+    <label class="form_add_lable" for="{{ form.plaсe.id_for_label }}">Объект:</label>
+    <div class="plaсe form_add_intput">{{ form.plaсe }}</div>
+
+    {{ form.user.errors }}
+    <label class="form_add_lable" for="{{ form.user.id_for_label }}">сотрудник:</label>
+    <div class="user form_add_intput">{{ form.user }}</div>
+
+    {{ form.start.errors }}
+    <label class="form_add_lable" for="{{ form.start.id_for_label }}">с:</label>
+    <div class="start form_add_intput">{{ form.start }}</div>
+
+    {{ form.end.errors }}
+    <label class="form_add_lable" for="{{ form.end.id_for_label }}">по:</label>
+    <div class="end form_add_intput">{{ form.end }}</div>
+
+    {{ form.purpose.errors }}
+     <label class="form_add_lable" for="{{ form.purpose.id_for_label }}">цель:</label>
+    <div class="purpose form_add_intput">{{ form.purpose }}</div>
+
+    {{ form.activ.errors }}
+    <label class="form_add_lable" for="{{ form.activ.id_for_label }}">сатус:</label>
+    <div class="activ form_add_intput">{{ form.activ }}</div>
+
+<biv></biv>
+    <input type="submit" value="Submit" class="btn create_trip"/>
+
+</form>
+{% endblock %}
