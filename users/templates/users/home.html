@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <title>Supervision</title>
+</head>
+<body>
+<section class="login__wrapper">
+
+    <div class="login__title">
+        <h1>Добро пожаловать в  "Supervision"</h1>
+    </div>
+
+    <div class="login__form_wrappeer">
+
+            <a class="login__in" href="{% url 'login' %}">Войти</a>
+
+            <p class="small">* Если у Вас нет логина и пароля, обратитесь к администратору ресурса</p>
+
+        </div>
+    </section>
+</body>
+</html>

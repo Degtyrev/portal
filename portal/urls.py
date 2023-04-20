@@ -21,14 +21,23 @@ urlpatterns = [
 ]
 from django.urls import include
 
-urlpatterns += [
-    path('supervision/', include('supervision.urls')),
-
-]
 from django.views.generic import RedirectView
 urlpatterns += [
+    # редирект при пустом адресе
     path('', RedirectView.as_view(url='/supervision/', permanent=True)),
 ]
+
+urlpatterns += [
+#станица приветствия
+    path('supervision/', include('users.urls')),
+#станица аутентификации
+    path('accounts/', include('django.contrib.auth.urls')),
+#станица домашняя
+    path('home/', include('supervision.urls')),
+
+]
+
+
 from django.conf.urls.static import static
 from django.conf import settings
 urlpatterns += static(settings.STATIC_URL,

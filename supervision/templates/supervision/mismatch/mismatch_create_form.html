@@ -1,0 +1,28 @@
+{% extends "base_generic.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+{% block sidebar %}
+fdsf
+{% endblock %}
+
+{% block content %}
+    <div class="content_title">
+    <h1>Несоответствие</h1>
+    </div>
+    <hr>
+    <form action="" method="post" class="business_trip__form_extens">
+    {% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+         {{ form.extension_date.errors }}
+{#        <label class="form_add_lable" for="{{ form.extension_date.id_for_label }}">Продлить до:</label>#}
+{#        <div class="intup_end form_add_intput">{{ form.extension_date }}</div>#}
+{##}
+{#        <biv></biv>#}
+        <input type="submit" value="Создать" class="btn create_trip">
+    </form>
+{% endblock %}

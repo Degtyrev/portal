@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'supervision.apps.SupervisionConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -131,5 +132,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = 'index'
+# страница перенаправления при успешной аутентифакации
+LOGIN_REDIRECT_URL = '/home/'
+LOGOUT_REDIRECT_URL = "login"
 LOGIN_URL = 'login'

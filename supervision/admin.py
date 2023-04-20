@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Profile, Career, Plaсe, BusinessTrip, Unit, Element, Mismatch, Status, Tracking
+from .models import Profile, Career, Place, BusinessTrip, Unit, Element, Mismatch, Status, Tracking
 
 admin.site.register(Profile)
 admin.site.register(Career)
-admin.site.register(Plaсe)
+admin.site.register(Place)
 admin.site.register(BusinessTrip)
 admin.site.register(Unit)
 admin.site.register(Mismatch)

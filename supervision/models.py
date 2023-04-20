@@ -48,7 +48,7 @@ class Career(models.Model):
         return f'{self.user.first_name} {self.user.last_name} {self.position}'
 
 
-class Plaсe(models.Model):
+class Place(models.Model):
     name = models.CharField(max_length=250, help_text="Название объекта", verbose_name='Модель оборудования (котла)')
     equipment = models.CharField(max_length=250, help_text="Модель оборудования (котла)", null=True, blank=True, verbose_name='Модель оборудования (котла)')
     equipment_type = models.CharField(max_length=250, help_text="Тип оборудования (котла)", null=True, blank=True, verbose_name='Тип оборудования (котла)')
@@ -68,12 +68,12 @@ class Plaсe(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('plaсe_detail', args=[str(self.id)])
+        return reverse('place_detail', args=[str(self.id)])
 
 
 
 class BusinessTrip(models.Model):
-    plaсe = models.ForeignKey('Plaсe', on_delete=models.SET_NULL, null=True, verbose_name='Оъект')
+    place = models.ForeignKey('Place', on_delete=models.SET_NULL, null=True, verbose_name='Оъект')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='сотрудник')
     start = models.DateField(help_text='Дата начала командировки', null=True, blank=True, verbose_name='дата начала')
     end = models.DateField(help_text='Дата окончания командировки', null=True, blank=True, verbose_name='дата окончания')
@@ -81,7 +81,7 @@ class BusinessTrip(models.Model):
     activ = models.BooleanField(help_text='Действующая', default=False, verbose_name='статус')
 
     def __str__(self):
-        return f'{self.plaсe} {self.purpose}'
+        return f'{self.place} {self.purpose}'
 
     def get_absolute_url(self):
         return reverse('business_trip_detail', args=[str(self.id)])
@@ -119,7 +119,7 @@ class Element(models.Model):
         unique_together = ('number', 'name')
 
 class Mismatch(models.Model):
-    plaсe = models.ForeignKey('Plaсe', on_delete=models.SET_NULL, null=True)
+    place = models.ForeignKey('Place', on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     unit = models.ForeignKey('Unit', on_delete=models.SET_NULL, null=True)
     status = models.ManyToManyField('Status', through='Tracking')

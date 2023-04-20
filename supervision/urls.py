@@ -6,14 +6,13 @@ from django.urls import include
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('', include('django.contrib.auth.urls')),
     path('main/', views.index, name='index'),
 ]
 
 urlpatterns += [
     path('mismatch/', views.mismatch, name='mismatch'),
     path('mismatch/<int:pk>', views.mismatch_detail, name='mismatch_detail'),
-    path('mismatch/create/', views.MismatchCreate.as_view(), name='mismatch_create'),
+    path('mismatch/create/', views.mismatch_create, name='mismatch_create'),
     path('mismatch/<int:pk>/update/', views.MismatchUpdate.as_view(), name='mismatch_update'),
     path('mismatch/<int:pk>/delete/', views.MismatchDelete.as_view(), name='mismatch_delete'),
 ]
@@ -30,9 +29,9 @@ urlpatterns += [
 urlpatterns += [
     path('place/', views.place_list, name='place_list'),
     path('place/<int:pk>', views.place_detail, name='place_detail'),
-    path('place/create/', views.PlaсeCreate.as_view(), name='place_create'),
-    path('place/<int:pk>/update/', views.PlaсeUpdate.as_view(), name='place_update'),
-    path('place/<int:pk>/delete/', views.PlaсeDelete.as_view(), name='place_delete'),
+    path('place/create/', views.PlaceCreate.as_view(), name='place_create'),
+    path('place/<int:pk>/update/', views.PlaceUpdate.as_view(), name='place_update'),
+    path('place/<int:pk>/delete/', views.PlaceDelete.as_view(), name='place_delete'),
 ]
 
 urlpatterns += [

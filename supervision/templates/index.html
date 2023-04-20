@@ -9,18 +9,17 @@
         <div class="sidebar">
             <ul class="sidebar__list">
                 <li class="sidebar__item"><a href="{% url 'mismatch' %}">Несоответствия</a></li>
-                <li class="sidebar__item"><a href="#">создать Несоответствие</a></li>
+                <li class="sidebar__item"><a href="{% url 'mismatch_create' %}">создать Несоответствие</a></li>
             </ul>
             <hr>
             <ul class="sidebar__list">
                 <li class="sidebar__item"><a href="{% url 'place_list' %}">Объекты</a></li>
-                <li class="sidebar__item"><a href="#">создать Объект</a></li>
-                <li class="sidebar__item"><a href="#">создать Командировку</a></li>
+                <li class="sidebar__item"><a href="{% url 'place_create' %}">создать Объект</a></li>
             </ul>
             <hr>
             <ul class="sidebar__list">
                 <li class="sidebar__item"><a href="{% url 'business_trip' %}">Командировки</a></li>
-                <li class="sidebar__item"><a href="#">создать Командировку</a></li>
+                <li class="sidebar__item"><a href="{% url 'business_trip_create' %}">создать Командировку</a></li>
             </ul>
             <hr>
             <ul class="sidebar__list">
@@ -31,12 +30,12 @@
             <hr>
             <ul class="sidebar__list">
                 <li class="sidebar__item"><a href="{% url 'unit_list' %}">Узелы</a></li>
-                <li class="sidebar__item"><a href="#">создать Узел</a></li>
+                <li class="sidebar__item"><a href="{% url 'unit_create' %}">создать Узел</a></li>
             </ul>
             <hr>
             <ul class="sidebar__list">
                 <li class="sidebar__item"><a href="{% url 'element_list' %}">Чертежи</a></li>
-                <li class="sidebar__item"><a href="#">создать Чертёж</a></li>
+                <li class="sidebar__item"><a href="{% url 'employee_create' %}">создать Чертёж</a></li>
             </ul>
         </div>
 

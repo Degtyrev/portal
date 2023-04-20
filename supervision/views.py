@@ -1,7 +1,9 @@
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render
-from .models import Profile, Career, Plaсe, BusinessTrip, Unit, Element, Mismatch, Status
+from .models import Profile, Career, Place, BusinessTrip, Unit, Element, Mismatch, Status, User
 import datetime
+
+from django.urls import include
 
 #----------- Главная Main -----------
 def index(request):
@@ -58,13 +60,13 @@ def trip(request, pk):
 
 def mismatch(request):
     mismatches = Mismatch.objects.all()
-    palce = Plaсe.objects.filter(status__exact='a')
+    place = Place.objects.filter(status__exact='a')
 
     return render(
         request,
-        'supervision/mismatch.html',
+        'supervision/mismatch/mismatch.html',
         context={
-            'title': 'Перечень несоответствий', 'mismatches': mismatches, 'palce': palce
+            'title': 'Перечень несоответствий', 'mismatches': mismatches, 'place': place
         },
     )
 
@@ -76,7 +78,7 @@ def mismatch_detail(request, pk):
 
     return render(
             request,
-            'supervision/mismatch_detail.html',
+        'supervision/mismatch/mismatch_detail.html',
             context={
                 'title': 'Карточка Неоответствия', 'mismatch': mismatch
             },
@@ -84,18 +86,19 @@ def mismatch_detail(request, pk):
 
 
 
-#---ФОРМЫ------
+#--- ФОРМЫ------
 from django.contrib.auth.decorators import permission_required
 
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 import datetime
-from .forms import ExtensionBusinessTripForm
+
 
 # @permission_required('catalog.can_mark_returned')
 
 # Обработка формы продления командировки
+from .forms import ExtensionBusinessTripForm
 
 def extension_business_trip(request, pk):
     trip_extens = get_object_or_404(BusinessTrip, pk=pk)
@@ -141,9 +144,44 @@ class BusinessTripDelete(DeleteView):
 
 
 # --------- Редактирование, обновление, удаление  формы  несоответствия
-class MismatchCreate(CreateView):
-    model = Mismatch
-    fields = '__all__'
+
+from .forms import MismatchForm
+
+def mismatch_create(request):
+
+    mismatch = Mismatch.objects.all()
+
+    if request.method == 'POST':
+        form = MismatchForm(request.POST)
+
+        if form.is_valid():
+            mismatch.place = form.cleaned_data['place']
+            mismatch.user = form.cleaned_data['user']
+            mismatch.unit = form.cleaned_data['unit']
+            mismatch.status = form.cleaned_data['status']
+            mismatch.element = form.cleaned_data['element']
+            mismatch.title = form.cleaned_data['title']
+            mismatch.text = form.cleaned_data['text']
+            mismatch.type = form.cleaned_data['type']
+            mismatch.letter = form.cleaned_data['letter']
+            mismatch.answer = form.cleaned_data['answer']
+            mismatch.solution = form.cleaned_data['solution']
+            mismatch.corrected = form.cleaned_data['corrected']
+            mismatch.date_finding = form.cleaned_data['date_finding']
+            mismatch.factory = form.cleaned_data['factory']
+            mismatch.pack = form.cleaned_data['pack']
+            mismatch.amount = form.cleaned_data['amount']
+
+            mismatch.save()
+
+        return HttpResponseRedirect(reverse('mismatch'))
+    else:
+        place = BusinessTrip.objects.filter(user_id__exact=request.user.pk)
+        # user = User.objects.filter(user_id__exact=request.user.pk)
+        form = MismatchForm(initial={'place': place})
+
+    return render(request, 'supervision/mismatch/mismatch_create_form.html',
+                      {'form': form, 'place': place, 'title': 'Несоответстиве'})
 
 class MismatchUpdate(UpdateView):
     model = Mismatch
@@ -158,7 +196,7 @@ class MismatchDelete(DeleteView):
 
 
 def place_list(request):
-    place_list = Plaсe.objects.all()
+    place_list = Place.objects.all()
 
     return render(
         request,
@@ -169,7 +207,7 @@ def place_list(request):
     )
 
 def place_detail(request, pk):
-    place_detail = Plaсe.objects.get(pk=pk)
+    place_detail = Place.objects.get(pk=pk)
 
     return render(
         request,
@@ -180,18 +218,17 @@ def place_detail(request, pk):
     )
 
 # --------- Редактирование, обновление, удаление  формы Объекта
-class PlaсeCreate(CreateView):
-    model = Plaсe
+class PlaceCreate(CreateView):
+    model = Place
     fields = '__all__'
 
-class PlaсeUpdate(UpdateView):
-    model = Plaсe
+class PlaceUpdate(UpdateView):
+    model = Place
     fields = '__all__'
 
-class PlaсeDelete(DeleteView):
-    model = Plaсe
+class PlaceDelete(DeleteView):
+    model = Place
     success_url = reverse_lazy('place_list')
-
 
 
 
@@ -257,6 +294,8 @@ def element_detail(request, pk):
     )
 
 # --------- Редактирование, обновление, удаление  формы чертеж
+
+
 class ElementCreate(CreateView):
     model = Element
     fields = '__all__'
@@ -294,7 +333,7 @@ def employee_detail(request, pk):
         },
     )
 
-# --------- Редактирование, обновление, удаление  формы чертеж
+# --------- Редактирование, обновление, удаление  формы сотрудники
 class EmployeeCreate(CreateView):
     model = Profile
     fields = '__all__'
