@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(help_text='Наименование детали', max_length=250)),
                 ('mass', models.DecimalField(blank=True, decimal_places=3, help_text='масса', max_digits=11, null=True)),
                 ('steel', models.CharField(help_text='Марка стали', max_length=250)),
-                ('unit', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='supervision.unit')),
+                ('group', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='supervision.group')),
             ],
         ),
     ]

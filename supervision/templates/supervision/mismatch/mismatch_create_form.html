@@ -5,7 +5,19 @@
     {% endblock %}
 
 {% block sidebar %}
-fdsf
+      <div class="sidebar">
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="{% url 'mismatch' %}">список несоответствий </a></li>
+                <li class="sidebar__item"><a href="#">Продлить </a></li>
+            </ul>
+            <hr>
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="#">Планируемые </a></li>
+                <li class="sidebar__item"><a href="#">Завершенные </a></li>
+            </ul>
+
+
+        </div>
 {% endblock %}
 
 {% block content %}
@@ -15,14 +27,30 @@ fdsf
     <hr>
     <form action="" method="post" class="business_trip__form_extens">
     {% csrf_token %}
-    <table>
-        {{ form }}
-    </table>
+{#    <table>#}
+{#        {{ form }}#}
+{#    </table>#}
          {{ form.extension_date.errors }}
-{#        <label class="form_add_lable" for="{{ form.extension_date.id_for_label }}">Продлить до:</label>#}
-{#        <div class="intup_end form_add_intput">{{ form.extension_date }}</div>#}
-{##}
-{#        <biv></biv>#}
+
+        <label class="form_add_lable" for="">Объект</label>
+        <select name="" id="">
+            {% for i in place %}
+                <option>{{ i.name }}</option>
+            {% endfor %}
+        </select>
+
+        <div class="intup_end form_add_intput">{{ form.user }}</div>
+        <div class="intup_end form_add_intput">{{ form.user }}</div>
+        <div class="intup_end form_add_intput">{{ form.status }}</div>
+        <div class="intup_end form_add_intput">{{ form.element }}</div>
+        <div class="intup_end form_add_intput">{{ form.type }}</div>
+        <div class="intup_end form_add_intput">{{ form.letter }}</div>
+        <div class="intup_end form_add_intput">{{ form.answer }}</div>
+        <div class="intup_end form_add_intput">{{ form.solution }}</div>
+        <div class="intup_end form_add_intput">{{ form.corrected }}</div>
+        <div class="intup_end form_add_intput">{{ form.date_finding }}</div>
+
+        <biv></biv>
         <input type="submit" value="Создать" class="btn create_trip">
     </form>
 {% endblock %}

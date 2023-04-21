@@ -10,9 +10,10 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('mismatch/', views.mismatch, name='mismatch'),
+    path('mismatch/', views.mismatch_list, name='mismatch_list'),
     path('mismatch/<int:pk>', views.mismatch_detail, name='mismatch_detail'),
     path('mismatch/create/', views.mismatch_create, name='mismatch_create'),
+    # path('mismatch/create/', views.MismatchCreate.as_view(), name='mismatch_create'),
     path('mismatch/<int:pk>/update/', views.MismatchUpdate.as_view(), name='mismatch_update'),
     path('mismatch/<int:pk>/delete/', views.MismatchDelete.as_view(), name='mismatch_delete'),
 ]
@@ -35,19 +36,27 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path('unit/', views.unit_list, name='unit_list'),
-    path('unit/<int:pk>', views.unit_detail, name='unit_detail'),
-    path('unit/create/', views.UnitCreate.as_view(), name='unit_create'),
-    path('unit/<int:pk>/update/', views.UnitUpdate.as_view(), name='unit_update'),
-    path('unit/<int:pk>/delete/', views.UnitDelete.as_view(), name='unit_delete'),
+    path('group/', views.group_list, name='group_list'),
+    path('group/<int:pk>', views.group_detail, name='group_detail'),
+    path('group/create/', views.GroupCreate.as_view(), name='group_create'),
+    path('group/<int:pk>/update/', views.GroupUpdate.as_view(), name='group_update'),
+    path('group/<int:pk>/delete/', views.GroupDelete.as_view(), name='group_delete'),
 ]
 
 urlpatterns += [
-    path('element/', views.element_list, name='element_list'),
-    path('element/<int:pk>', views.element_detail, name='element_detail'),
-    path('element/create/', views.ElementCreate.as_view(), name='element_create'),
-    path('element/<int:pk>/update/', views.ElementUpdate.as_view(), name='element_update'),
-    path('element/<int:pk>/delete/', views.ElementDelete.as_view(), name='element_delete'),
+    path('drawing/', views.drawing_list, name='drawing_list'),
+    path('drawing/<int:pk>', views.drawing_detail, name='drawing_detail'),
+    path('drawing/create/', views.DrawingCreate.as_view(), name='drawing_create'),
+    path('drawing/<int:pk>/update/', views.DrawingUpdate.as_view(), name='drawing_update'),
+    path('drawing/<int:pk>/delete/', views.DrawingDelete.as_view(), name='drawing_delete'),
+]
+
+urlpatterns += [
+    path('detail/', views.detail_list, name='detail_list'),
+    path('detail/<int:pk>', views.detail_detail, name='detail_detail'),
+    path('detail/create/', views.DetailCreate.as_view(), name='detail_create'),
+    path('detail/<int:pk>/update/', views.DetailUpdate.as_view(), name='detail_update'),
+    path('detail/<int:pk>/delete/', views.DetailDelete.as_view(), name='detail_delete'),
 ]
 
 urlpatterns += [
@@ -56,4 +65,12 @@ urlpatterns += [
     path('employee/create/', views.EmployeeCreate.as_view(), name='employee_create'),
     path('employee/<int:pk>/update/', views.EmployeeUpdate.as_view(), name='employee_update'),
     path('employee/<int:pk>/delete/', views.EmployeeDelete.as_view(), name='employee_delete'),
+]
+
+urlpatterns += [
+    path('letter/', views.letter_list, name='letter_list'),
+    path('letter/<int:pk>', views.letter_detail, name='letter_detail'),
+    path('letter/create/', views.LetterCreate.as_view(), name='letter_create'),
+    path('letter/<int:pk>/update/', views.LetterUpdate.as_view(), name='letter_update'),
+    path('letter/<int:pk>/delete/', views.LetterDelete.as_view(), name='letter_delete'),
 ]

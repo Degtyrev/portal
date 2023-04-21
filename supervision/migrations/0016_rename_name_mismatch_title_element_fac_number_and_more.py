@@ -17,12 +17,12 @@ class Migration(migrations.Migration):
             new_name='title',
         ),
         migrations.AddField(
-            model_name='element',
+            model_name='drawing',
             name='fac_number',
             field=models.IntegerField(blank=True, help_text='Заводской номер', null=True),
         ),
         migrations.AddField(
-            model_name='element',
+            model_name='drawing',
             name='order',
             field=models.IntegerField(blank=True, help_text='Номер Заказа', null=True),
         ),
@@ -58,8 +58,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='mismatch',
-            name='unit',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='supervision.unit'),
+            name='group',
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='supervision.group'),
         ),
         migrations.AlterField(
             model_name='businesstrip',
@@ -77,7 +77,7 @@ class Migration(migrations.Migration):
             field=models.CharField(choices=[('3', '3 категория'), ('2', '2 категория'), ('1', '1 категория'), ('ld', 'Ведущий')], default='ld', max_length=5),
         ),
         migrations.AlterField(
-            model_name='element',
+            model_name='drawing',
             name='mass',
             field=models.DecimalField(blank=True, decimal_places=3, help_text='Масса', max_digits=11, null=True),
         ),

@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='element',
+            model_name='drawing',
             name='steel',
             field=models.CharField(blank=True, help_text='Марка стали', max_length=250, null=True),
         ),

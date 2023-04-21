@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='unit',
+            model_name='group',
             name='name',
             field=models.CharField(help_text='наименование узла/подузла', max_length=200),
         ),

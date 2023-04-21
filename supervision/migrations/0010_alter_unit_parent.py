@@ -12,8 +12,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='unit',
+            model_name='group',
             name='parent',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='supervision.unit'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='supervision.group'),
         ),
     ]

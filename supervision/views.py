@@ -1,6 +1,6 @@
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render
-from .models import Profile, Career, Place, BusinessTrip, Unit, Element, Mismatch, Status, User
+from .models import *
 import datetime
 
 from django.urls import include
@@ -58,15 +58,15 @@ def trip(request, pk):
 
 #----------- Список Наосоответствий  -----------
 
-def mismatch(request):
+def mismatch_list(request):
     mismatches = Mismatch.objects.all()
-    place = Place.objects.filter(status__exact='a')
+    place = Place.objects.filter(status__exact='prs')
 
     return render(
         request,
         'supervision/mismatch/mismatch.html',
         context={
-            'title': 'Перечень несоответствий', 'mismatches': mismatches, 'place': place
+            'title': 'Список несоответствий', 'mismatches': mismatches, 'place': place
         },
     )
 
@@ -75,18 +75,20 @@ def mismatch(request):
 
 def mismatch_detail(request, pk):
     mismatch = Mismatch.objects.get(pk=pk)
+    status = Tracking.objects.filter(mismatch=mismatch.pk)
 
     return render(
             request,
         'supervision/mismatch/mismatch_detail.html',
             context={
-                'title': 'Карточка Неоответствия', 'mismatch': mismatch
+                'title': 'Карточка Неоответствия', 'mismatch': mismatch, 'status': status
             },
         )
 
 
 
 #--- ФОРМЫ------
+
 from django.contrib.auth.decorators import permission_required
 
 from django.shortcuts import get_object_or_404
@@ -145,21 +147,24 @@ class BusinessTripDelete(DeleteView):
 
 # --------- Редактирование, обновление, удаление  формы  несоответствия
 
-from .forms import MismatchForm
+from .forms import CreateMismatchForm
+# class MismatchCreate(CreateView):
+#     model = Mismatch
+#     fields = '__all__'
 
 def mismatch_create(request):
 
     mismatch = Mismatch.objects.all()
 
     if request.method == 'POST':
-        form = MismatchForm(request.POST)
+        form = CreateMismatchForm(request.POST)
 
         if form.is_valid():
             mismatch.place = form.cleaned_data['place']
             mismatch.user = form.cleaned_data['user']
-            mismatch.unit = form.cleaned_data['unit']
+            mismatch.group = form.cleaned_data['group']
             mismatch.status = form.cleaned_data['status']
-            mismatch.element = form.cleaned_data['element']
+            mismatch.drawing = form.cleaned_data['drawing']
             mismatch.title = form.cleaned_data['title']
             mismatch.text = form.cleaned_data['text']
             mismatch.type = form.cleaned_data['type']
@@ -176,9 +181,10 @@ def mismatch_create(request):
 
         return HttpResponseRedirect(reverse('mismatch'))
     else:
-        place = BusinessTrip.objects.filter(user_id__exact=request.user.pk)
+        # place = BusinessTrip.objects.filter(user_id__exact=request.user.pk)
+        place = Place.objects.all()
         # user = User.objects.filter(user_id__exact=request.user.pk)
-        form = MismatchForm(initial={'place': place})
+        form = CreateMismatchForm()
 
     return render(request, 'supervision/mismatch/mismatch_create_form.html',
                       {'form': form, 'place': place, 'title': 'Несоответстиве'})
@@ -218,6 +224,7 @@ def place_detail(request, pk):
     )
 
 # --------- Редактирование, обновление, удаление  формы Объекта
+
 class PlaceCreate(CreateView):
     model = Place
     fields = '__all__'
@@ -233,80 +240,120 @@ class PlaceDelete(DeleteView):
 
 
 #--------------- Узлы----------------
-def unit_list(request):
-    unit_list = Unit.objects.all()
+def group_list(request):
+    group_list = Group.objects.all()
 
     return render(
         request,
-        'supervision/unit/unit_list.html',
+        'supervision/group/group_list.html',
         context={
-            'title': 'Список Узлов', 'unit_list': unit_list
+            'title': 'Список Узлов', 'group_list': group_list
         },
     )
 
-def unit_detail(request, pk):
-    unit_detail = Unit.objects.get(pk=pk)
+def group_detail(request, pk):
+    group_detail = Group.objects.get(pk=pk)
 
     return render(
         request,
-        'supervision/unit/unit_detail.html',
+        'supervision/group/group_detail.html',
         context={
-            'title': 'Узел', 'unit_detail': unit_detail
+            'title': 'Узел', 'group_detail': group_detail
         },
     )
 
 # --------- Редактирование, обновление, удаление  формы Узла
-class UnitCreate(CreateView):
-    model = Unit
+class GroupCreate(CreateView):
+    model = Group
     fields = '__all__'
 
-class UnitUpdate(UpdateView):
-    model = Unit
+class GroupUpdate(UpdateView):
+    model = Group
     fields = '__all__'
 
-class UnitDelete(DeleteView):
-    model = Unit
-    success_url = reverse_lazy('utin_list')
+class GroupDelete(DeleteView):
+    model = Group
+    success_url = reverse_lazy('group_list')
 
 
 
-#--------------- Детали----------------
-def element_list(request):
-    element_list = Element.objects.all()
+#--------------- Чертежи----------------
+
+def drawing_list(request):
+    drawing_list = Drawing.objects.all()
 
     return render(
         request,
-        'supervision/element/element_list.html',
+        'supervision/drawing/drawing_list.html',
         context={
-            'title': 'Список Деталей', 'element_list': element_list
+            'title': 'Список Чертежей', 'drawing_list': drawing_list
         },
     )
 
-def element_detail(request, pk):
-    element_detail = Element.objects.get(pk=pk)
+def drawing_detail(request, pk):
+    drawing_detail = Drawing.objects.get(pk=pk)
 
     return render(
         request,
-        'supervision/element/element_detail.html',
+        'supervision/drawing/drawing_detail.html',
         context={
-            'title': 'Чертёж', 'element_detail': element_detail
+            'title': 'Чертёж', 'drawing_detail': drawing_detail
         },
     )
 
 # --------- Редактирование, обновление, удаление  формы чертеж
 
-
-class ElementCreate(CreateView):
-    model = Element
+class DrawingCreate(CreateView):
+    model = Drawing
     fields = '__all__'
 
-class ElementUpdate(UpdateView):
-    model = Element
+class DrawingUpdate(UpdateView):
+    model = Drawing
     fields = '__all__'
 
-class ElementDelete(DeleteView):
-    model = Element
-    success_url = reverse_lazy('element_list')
+class DrawingDelete(DeleteView):
+    model = Drawing
+    success_url = reverse_lazy('drawing_list')
+
+
+#--------------- Детали----------------
+
+def detail_list(request):
+    detail_list = Detail.objects.all()
+
+    return render(
+        request,
+        'supervision/detail/detail_list.html',
+        context={
+            'title': 'Список Деталей', 'detail_list': detail_list
+        },
+    )
+
+def detail_detail(request, pk):
+    detail_detail = Detail.objects.get(pk=pk)
+
+    return render(
+        request,
+        'supervision/detail/detail_detail.html',
+        context={
+            'title': 'Деталь', 'detail_detail': detail_detail
+        },
+    )
+
+# --------- Редактирование, обновление, удаление  формы чертеж
+
+class DetailCreate(CreateView):
+    model = Detail
+    fields = '__all__'
+
+class DetailUpdate(UpdateView):
+    model = Detail
+    fields = '__all__'
+
+class DetailDelete(DeleteView):
+    model = Detail
+    success_url = reverse_lazy('detail_list')
+
 
 #--------------- Сотрудники----------------
 def employee_list(request):
@@ -345,3 +392,81 @@ class EmployeeUpdate(UpdateView):
 class EmployeeDelete(DeleteView):
     model = Profile
     success_url = reverse_lazy('employee_list')
+
+
+#--------------- Служебные письма----------------
+
+def letter_list(request):
+    letter_list = Letter.objects.all()
+
+    return render(
+        request,
+        'supervision/letter/letter_list.html',
+        context={
+            'title': 'Список Служебных писем', 'letter_list': letter_list
+        },
+    )
+
+def letter_detail(request, pk):
+    letter_detail = Letter.objects.get(pk=pk)
+
+    return render(
+        request,
+        'supervision/letter/letter_detail.html',
+        context={
+            'title': 'Служебное письмо', 'letter_detail': letter_detail
+        },
+    )
+
+# --------- Редактирование, обновление, удаление  формы служебных писем
+
+class LetterCreate(CreateView):
+    model = Letter
+    fields = '__all__'
+
+class LetterUpdate(UpdateView):
+    model = Letter
+    fields = '__all__'
+
+class LetterDelete(DeleteView):
+    model = Letter
+    success_url = reverse_lazy('letter_list')
+
+
+#--------------- Технические решения----------------
+
+def solution_list(request):
+    solution_list = Solution.objects.all()
+
+    return render(
+        request,
+        'supervision/solution/solution_list.html',
+        context={
+            'title': 'Список Технических решений', 'solution_list': solution_list
+        },
+    )
+
+def solution_detail(request, pk):
+    solution_detail = Solution.objects.get(pk=pk)
+
+    return render(
+        request,
+        'supervision/solution/solution_detail.html',
+        context={
+            'title': 'Техническое решение', 'solution_detail': solution_detail
+        },
+    )
+
+# --------- Редактирование, обновление, удаление  формы чертеж
+
+class SolutionCreate(CreateView):
+    model = Solution
+    fields = '__all__'
+
+class SolutionUpdate(UpdateView):
+    model = Solution
+    fields = '__all__'
+
+class SolutionDelete(DeleteView):
+    model = Solution
+    success_url = reverse_lazy('solution_list')

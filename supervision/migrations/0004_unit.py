@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('number', models.CharField(help_text='номер узла/подузла', max_length=20)),
                 ('name', models.CharField(help_text='наименование узла/подузла', max_length=20)),
-                ('parent', models.ForeignKey(default='0', null=True, on_delete=django.db.models.deletion.CASCADE, to='supervision.unit')),
+                ('parent', models.ForeignKey(default='0', null=True, on_delete=django.db.models.deletion.CASCADE, to='supervision.group')),
             ],
         ),
     ]

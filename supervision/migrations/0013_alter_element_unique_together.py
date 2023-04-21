@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='element',
+            name='drawing',
             unique_together={('number', 'name')},
         ),
     ]

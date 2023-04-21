@@ -3,7 +3,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 # from django.utils.translation import ugettext_lazy as _
 import datetime
-
+from .models import *
 
 class ExtensionBusinessTripForm(forms.Form):
 
@@ -20,7 +20,7 @@ class ExtensionBusinessTripForm(forms.Form):
 
 from django.forms import ModelForm, Textarea, DateField, Select,CheckboxSelectMultiple,\
     CheckboxInput
-from .models import BusinessTrip
+
 
 class CreateBusinessTripModelForm(forms.ModelForm):
     class Meta:
@@ -37,7 +37,7 @@ class CreateBusinessTripModelForm(forms.ModelForm):
         help_texts = {'place': 'введите объект'}
 
 
-class MismatchForm(forms.Form):
+class CreateMismatchForm(forms.Form):
     place = forms.ChoiceField()
     user = forms.ChoiceField()
     unit = forms.ChoiceField()

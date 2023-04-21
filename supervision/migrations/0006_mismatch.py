@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('answer', models.CharField(help_text='Ответ служебное письмо', max_length=150)),
                 ('solution', models.CharField(help_text='Принятое решени', max_length=150)),
                 ('date_finding', models.DateField(help_text='Дата')),
-                ('element', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='supervision.element')),
+                ('drawing', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='supervision.drawing')),
                 ('object', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='supervision.objects')),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
             ],
