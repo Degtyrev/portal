@@ -89,10 +89,8 @@ class BusinessTrip(models.Model):
     class Meta:
         permissions =(('can_extension', 'Может продливать командировку'),)
 
-class Group(models.Model):
-    pass
 
-class Unit(models.Model):
+class Group(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     number = models.PositiveIntegerField(help_text='номер узла без родителя')
     suffix = models.CharField(max_length=10, help_text='суфикс номера', null=True, blank=True)
@@ -103,9 +101,6 @@ class Unit(models.Model):
 
     def get_absolute_url(self):
         return reverse('group_detail', args=[str(self.id)])
-
-
-
 
 
 class Drawing(models.Model):
