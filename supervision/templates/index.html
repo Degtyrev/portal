@@ -1,5 +1,5 @@
 {% extends "base_generic.html" %}
-
+{% load static %}
     {% block title %}
         <title>{{ title }}</title>
     {% endblock %}
@@ -8,7 +8,7 @@
     {% block sidebar %}
         <div class="sidebar">
             <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'mismatch' %}">Несоответствия</a></li>
+                <li class="sidebar__item"><a href="{% url 'mismatch_list' %}">Несоответствия</a></li>
                 <li class="sidebar__item"><a href="{% url 'mismatch_create' %}">создать Несоответствие</a></li>
             </ul>
             <hr>
@@ -29,13 +29,13 @@
             </ul>
             <hr>
             <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'unit_list' %}">Узелы</a></li>
-                <li class="sidebar__item"><a href="{% url 'unit_create' %}">создать Узел</a></li>
+                <li class="sidebar__item"><a href="{% url 'group_list' %}">Узелы</a></li>
+                <li class="sidebar__item"><a href="{% url 'group_create' %}">создать Узел</a></li>
             </ul>
             <hr>
             <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'element_list' %}">Чертежи</a></li>
-                <li class="sidebar__item"><a href="{% url 'employee_create' %}">создать Чертёж</a></li>
+                <li class="sidebar__item"><a href="{% url 'drawing_list' %}">Чертежи</a></li>
+                <li class="sidebar__item"><a href="{% url 'drawing_create' %}">создать Чертёж</a></li>
             </ul>
         </div>
 

@@ -96,8 +96,14 @@ class Group(models.Model):
     suffix = models.CharField(max_length=10, help_text='суфикс номера', null=True, blank=True)
     name = models.CharField(max_length=200, help_text='наименование узла/подузла')
 
+
+    def check_parent(self):
+        if not self.parent:
+            return ""
+
+
     def __str__(self):
-        return f'{self.number} {self.name}'
+        return f'{self.parent} -> {self.number} {self.name}'
 
     def get_absolute_url(self):
         return reverse('group_detail', args=[str(self.id)])
@@ -139,11 +145,11 @@ class Mismatch(models.Model):
     place = models.ForeignKey('Place', on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=400, help_text=' Краткое описание')
     text = models.TextField(help_text=' Полное описание')
-    TYPE = (
+    TYPE = [
         ('p', 'Конструкторское'),
         ('m', 'Производстенное'),
-    )
-    type = models.CharField(max_length=2, choices=TYPE)
+    ]
+    type = models.CharField(max_length=2, choices=TYPE, help_text='Тип несоответствия')
     file = models.FileField(upload_to='media/mismatch/', null=True, blank=True)
     image = models.ImageField(upload_to='media/mismatch/images/', null=True, blank=True)
     details = models.ManyToManyField('Detail', through='Irrelevant')

@@ -38,24 +38,21 @@ class CreateBusinessTripModelForm(forms.ModelForm):
 
 
 class CreateMismatchForm(forms.Form):
-    place = forms.ChoiceField()
-    user = forms.ChoiceField()
-    unit = forms.ChoiceField()
-    status = forms.ChoiceField()
-    element = forms.ChoiceField()
-    title = forms.CharField(help_text=' Краткое описание')
-    text = forms.CharField(help_text=' Полное описание')
-    type = forms.CharField()
-    letter = forms.CharField(help_text='Номер служебного письма')
-    answer = forms.CharField(help_text='Ответ служебное письмо')
-    solution = forms.CharField(help_text='Принятое решени')
-    corrected = forms.CharField(help_text='Кем устранено')
-    date_finding = forms.DateField(help_text='Дата')
-    factory = forms.CharField(help_text='Изготовитель')
-    pack = forms.CharField(help_text='Грузовое место')
-    amount = forms.IntegerField(help_text='Количество')
-    file = forms.FileField()
-    image = forms.ImageField()
+    place = forms.ModelChoiceField(queryset=Place.objects.filter(status__exact='act'),
+                                   label='объект', empty_label='выберите объект',
+                                   widget=forms.Select(attrs={'class': 'form_input', 'autocomplete': 'on'}))
+    type = forms.ChoiceField(label='тип несоответстия', widget=forms.RadioSelect(attrs={'class': 'form_input'}))
+    status = forms.ModelChoiceField(queryset=Status.objects.all(), label='статус',
+                                    widget=forms.Select(attrs={'class': 'form_input'}),
+                                    empty_label=None)
+    details = forms.ModelChoiceField(queryset=Detail.objects.all(), label='детали',
+                                     widget=forms.Select(attrs={'class': 'form_input'}),
+                                     empty_label='выберите деталь', required=False)
+    title = forms.CharField(label='кратко', widget=forms.TextInput(attrs={'class': 'form_input'}))
+    text = forms.CharField(label='описание', widget=forms.Textarea(attrs={'class': 'form_input'}))
+    quantity = forms.IntegerField(label='количество', widget=forms.NumberInput(attrs={'class': 'form_input'}))
+    file = forms.FileField(label='файлы', widget=forms.FileInput(attrs={'class': 'form_input'}), required=False)
+    image = forms.ImageField(label='фото', widget=forms.FileInput(attrs={'class': 'form_input'}), required=False)
 
 
 

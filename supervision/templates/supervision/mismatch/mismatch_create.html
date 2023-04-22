@@ -1,0 +1,140 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+{% block sidebar %}
+      <div class="sidebar">
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="{% url 'mismatch_list' %}">список несоответствий </a></li>
+                <li class="sidebar__item"><a href="#">Продлить </a></li>
+            </ul>
+            <hr>
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="#">Планируемые </a></li>
+                <li class="sidebar__item"><a href="#">Завершенные </a></li>
+            </ul>
+
+
+        </div>
+{% endblock %}
+
+{% block content %}
+{#    <div class="content_title">#}
+{#        <h1>Несоответствие</h1>#}
+{#    </div>#}
+{#    <hr>#}
+
+    <form action="{% url 'mismatch_create' %}" method="post" class="form_wrap">
+    {% csrf_token %}
+
+    <div class="form_title">
+        <h2>Несоответствие</h2>
+    </div>
+    <div class="form_error">
+        {{ form.non_field_errors }}
+    </div>
+
+    <div class="form_section">
+        <div class="form_section_name">
+            <h2>общие данные</h2>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.place.id_for_label }}">{{ form.place.label }}</label>
+                {{ form.place }}
+            </div>
+            <div class="form_error">{{ form.place.errors }}</div>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.type.id_for_label }}">{{ form.type.label }}</label>
+                {{ form.type }}
+            </div>
+            <div class="form_error">{{ form.type.errors }}</div>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+                {{ form.status }}
+            </div>
+            <div class="form_error">{{ form.status.errors }}</div>
+        </div>
+    </div>
+
+    <div class="form_section">
+        <div class="form_section_name">
+            <h2></h2>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.details.id_for_label }}">{{ form.details.label }}</label>
+                {{ form.details }}
+            </div>
+            <div class="form_error">{{ form.details.errors }}</div>
+        </div>
+
+        <a href="#">Добавить деталь</a>
+     </div>
+
+        <div class="form_section">
+            <div class="form_section_name">
+                <h2>описание</h2>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+                    {{ form.title }}
+                </div>
+                <div class="form_error">{{ form.title.errors }}</div>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.text.id_for_label }}">{{ form.text.label }}</label>
+                    {{ form.text }}
+                </div>
+                <div class="form_error">{{ form.text.errors }}</div>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.quantity.id_for_label }}">{{ form.quantity.label }}</label>
+                    {{ form.quantity }}
+                </div>
+                <div class="form_error">{{ form.quantity.errors }}</div>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.file.id_for_label }}">{{ form.file.label }}</label>
+                    {{ form.file }}
+                </div>
+                <div class="form_error">{{ form.file.errors }}</div>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.image.id_for_label }}">{{ form.image.label }}</label>
+                    {{ form.image }}
+                </div>
+                <div class="form_error">{{ form.image.errors }}</div>
+            </div>
+
+         </div>
+
+
+    <biv class="form_btn">
+      <input type="submit" value="Сохранить" id="create_mismatch" class="btn ">
+    </biv>
+
+    </form>
+{% endblock %}

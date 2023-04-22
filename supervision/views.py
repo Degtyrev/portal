@@ -1,5 +1,5 @@
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 import datetime
 
@@ -88,6 +88,7 @@ def mismatch_detail(request, pk):
 
 
 #--- ФОРМЫ------
+from .forms import *
 
 from django.contrib.auth.decorators import permission_required
 
@@ -100,7 +101,7 @@ import datetime
 # @permission_required('catalog.can_mark_returned')
 
 # Обработка формы продления командировки
-from .forms import ExtensionBusinessTripForm
+
 
 def extension_business_trip(request, pk):
     trip_extens = get_object_or_404(BusinessTrip, pk=pk)
@@ -147,47 +148,31 @@ class BusinessTripDelete(DeleteView):
 
 # --------- Редактирование, обновление, удаление  формы  несоответствия
 
-from .forms import CreateMismatchForm
+
 # class MismatchCreate(CreateView):
 #     model = Mismatch
 #     fields = '__all__'
 
 def mismatch_create(request):
 
-    mismatch = Mismatch.objects.all()
+    form = CreateMismatchForm()
 
     if request.method == 'POST':
         form = CreateMismatchForm(request.POST)
 
         if form.is_valid():
-            mismatch.place = form.cleaned_data['place']
-            mismatch.user = form.cleaned_data['user']
-            mismatch.group = form.cleaned_data['group']
-            mismatch.status = form.cleaned_data['status']
-            mismatch.drawing = form.cleaned_data['drawing']
-            mismatch.title = form.cleaned_data['title']
-            mismatch.text = form.cleaned_data['text']
-            mismatch.type = form.cleaned_data['type']
-            mismatch.letter = form.cleaned_data['letter']
-            mismatch.answer = form.cleaned_data['answer']
-            mismatch.solution = form.cleaned_data['solution']
-            mismatch.corrected = form.cleaned_data['corrected']
-            mismatch.date_finding = form.cleaned_data['date_finding']
-            mismatch.factory = form.cleaned_data['factory']
-            mismatch.pack = form.cleaned_data['pack']
-            mismatch.amount = form.cleaned_data['amount']
-
-            mismatch.save()
-
-        return HttpResponseRedirect(reverse('mismatch'))
+            # print(form.cleaned_data)
+            try:
+                Mismatch.objects.create(**form.cleaned_data)
+                return redirect('mismatch_list')
+            except:
+                form.add_error(None, "ошибка добавления несоответстия")
+        # return HttpResponseRedirect(reverse('mismatch'))
     else:
-        # place = BusinessTrip.objects.filter(user_id__exact=request.user.pk)
-        place = Place.objects.all()
-        # user = User.objects.filter(user_id__exact=request.user.pk)
         form = CreateMismatchForm()
 
-    return render(request, 'supervision/mismatch/mismatch_create_form.html',
-                      {'form': form, 'place': place, 'title': 'Несоответстиве'})
+    return render(request, 'supervision/mismatch/mismatch_create.html',
+                      {'form': form, 'title': 'Несоответстиве'})
 
 class MismatchUpdate(UpdateView):
     model = Mismatch
