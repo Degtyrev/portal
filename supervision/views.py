@@ -24,6 +24,7 @@ def business_trip(request):
     date_today = datetime.date.today()
     trips_current_user = BusinessTrip.objects.filter(activ__exact=True).filter(user_id__exact=request.user.pk)
     trips_completed_user = BusinessTrip.objects.filter(activ__exact=False).filter(user_id__exact=request.user.pk)
+
     trips_current = BusinessTrip.objects.filter(activ__exact=True)
     trips_completed = BusinessTrip.objects.filter(activ__exact=False)
 

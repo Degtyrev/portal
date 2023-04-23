@@ -55,7 +55,7 @@ class Place(models.Model):
     contract = models.CharField(max_length=250, help_text="номер договора", null=True, blank=True, verbose_name='номер договора')
     project_manager = models.CharField(max_length=100, help_text='руководитель проекта', null=True, blank=True, verbose_name='руководитель проекта')
     chief_engineer = models.CharField(max_length=100, help_text='главный инженер проекта', null=True, blank=True, verbose_name='главный инженер проекта')
-
+    order = models.IntegerField(help_text='Номер Заказа', null=True, blank=True)
     STATUS_OBJ = (
         ('prs', 'Перспективный'),
         ('act', 'Действующий'),
@@ -91,6 +91,7 @@ class BusinessTrip(models.Model):
 
 
 class Group(models.Model):
+    place = models.ForeignKey('Place', on_delete=models.SET_NULL, null=True, verbose_name='Оъект')
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     number = models.PositiveIntegerField(help_text='номер узла без родителя')
     suffix = models.CharField(max_length=10, help_text='суфикс номера', null=True, blank=True)
@@ -110,10 +111,9 @@ class Group(models.Model):
 
 
 class Drawing(models.Model):
-    unit = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True, blank=True)
+    group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True, blank=True)
     number = models.CharField(max_length=50, help_text='Обозначение детали')
     name = models.CharField(max_length=250, help_text='Наименование детали')
-    order = models.IntegerField(help_text='Номер Заказа', null=True, blank=True)
     mass = models.DecimalField(help_text='Масса', max_digits=11, decimal_places=3, null=True, blank=True)
     steel = models.CharField(max_length=250, help_text='Марка стали', null=True, blank=True)
     file = models.FileField(upload_to='media/detail/', null=True, blank=True)

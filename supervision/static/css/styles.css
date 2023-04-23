@@ -77,7 +77,7 @@ h1{
 }
 /*================== FORMS ======================*/
 .form_wrap{
-
+    padding-left: 20px;
 }
 .form_title{
     margin: 15px 0;
@@ -102,7 +102,7 @@ h1{
 .form_section_name{
     background: #eee;
     margin-bottom: 7px;
-    padding: 5px 10px;
+    padding: 7px 10px;
     font-weight: bolder;
     border-radius: 10px;
 }
@@ -125,7 +125,95 @@ text-align: right;
 .form_btn{
     margin-left: 195px;
 }
-/*================== FORMS end======================*/
+/*================== FORMS end ======================*/
+
+/*================ Стили списков таблицы  =========  */
+.list__section{
+    padding-left:20px;
+    margin-bottom: 20px;
+}
+.list_section_name{
+    background: #028770;
+    color: #fff;
+    /*margin-bottom: 7px;*/
+    padding: 7px 10px;
+    font-weight: bolder;
+    /*border-radius: 10px;*/
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.list__block{
+    padding: 5px 25px;
+    width: 100%;
+}
+.list__row{
+
+}
+.list__head{
+    vertical-align: middle;
+    height: 33px;
+    font-weight: 500;
+    color: #006266;
+    text-align: left;
+    border-bottom: 2px solid #006266;
+}
+.list__data{
+    padding: 4px 0;
+    color: #028770;
+    border-bottom: 1px solid #ccc;
+}
+tr:hover td {
+  /*color: #6699ff;*/
+    color: coral;
+}
+.list__action_icon{
+}
+.list__action{
+    padding: 0;
+    width: 90px;
+
+}
+
+.list__link{
+    display: inline-block;
+    line-height: 0;
+}
+.list__icon{
+    width: 20px;
+    object-fit: cover;
+}
+/*================ Стили списков таблицы end =========  */
+
+/*================ Стили фильтра списков =========  */
+.list__filter{
+    margin-bottom: 20px;
+}
+.list__filter_list{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.list__filter_item{
+    padding: 5px 15px;
+    border: 1px solid #007264;
+    border-radius: 10px;
+    color: #007264;
+}
+.list__filter_link{
+
+}
+.activ_item{
+    color: coral;
+    border-color: coral;
+
+}
+.activ_item>a{
+    cursor: auto;
+}
+.list__filter_link:hover{
+    color: coral;
+}
+/*================ Стили фильтра списков end =========  */
 
 
 .sidebar{
@@ -150,7 +238,6 @@ text-align: right;
 }
 
 .main{
-    padding-left: 10px;
     padding-right: 20px;
 }
 .auth_user{
@@ -308,70 +395,6 @@ font-size: 14px;
     margin-right: 10px;
     font-size: 12px;
  }
-/*------------------ командировки------  */
-.business-trip__block{
-    padding-left:20px;
-    padding-right: 20px;
-    margin-bottom: 20px;
-    font-size: 14px;
-}
-
-.business-trip__current{
-    margin-bottom: 30px;
-}
-.btc__item{
-    display: grid;
-    grid-template-columns: 2fr 3fr 90px;
-    margin-bottom: 10px;
-}
-.btc__link{
-    /*display: block;*/
-    /*padding-bottom: 3px;*/
-    /*border: 1px solid #333333;*/
-    /*border-radius: 8px;*/
-    /*text-align: center;*/
-}
-.btc__btn{
-    width: 100px;
-}
-.bt__item{
-    display: grid;
-    grid-template-columns: 20px 1fr 330px;
-    margin-bottom: 10px;
-}
-.bt__title{
-    padding: 10px;
-    background-color: #eee;
-    margin-bottom: 10px;
-}
-
-.bt__date{
-    display: grid;
-    grid-template-columns: 50% 50%;
-}
-
-.bt__date_start{
-    margin-right: 14px;
-}
-.bt__table_row{
-    display: grid;
-    grid-template-columns: 30px 1fr 1fr 1fr 1fr 1fr;
-    align-items: center;
-    padding: 1px 0px;
-}
-.btc__table_row{
-    display: grid;
-    grid-template-columns: 30px 1fr 1fr 1fr 1fr;
-    align-items: center;
-    padding: 1px 0px;
-}
-.tad_row_item{
-    border-bottom: 2px solid #eeeeee;
-    padding-bottom: 5px;
-}
-.btc__link_icon{
-    width: 20px;
-}
 
 /*----------------Узлы-----------*/
 .unit__block{

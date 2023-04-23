@@ -15,14 +15,24 @@
     {% endblock %}
 
     {% block content %}
-        <section class="place">
+        {% if user.is_staff %}
+
+        <section class="section">
             <div class="content_title">
                  <h1 class="title">{{ title }}</h1>
                 <div class="new_btn">
                     <a href="#" class="new_link">+ Добавить</a>
                 </div>
             </div>
-            <hr>
+           <div class="list__filter">
+               <ul class="list__filter_list">
+                   <li class="list__filter_item"><a class="list__filter_link" href="#">Перспективный</a></li>
+                   <li class="list__filter_item activ_item"><a class="list__filter_link " href="#">Действующий</a></li>
+                   <li class="list__filter_item"><a class="list__filter_link" href="#">Завершенный</a></li>
+                   <li class="list__filter_item"><a class="list__filter_link" href="#">Отмененный</a></li>
+               </ul>
+           </div>
+
             <div class="place_list">
             {% if place_list %}
                 {% for place in place_list %}
@@ -50,5 +60,5 @@
         </section>
 
 
-
+        {% endif %}
     {% endblock %}
