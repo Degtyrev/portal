@@ -8,7 +8,7 @@
     {% block sidebar %}
         <div class="sidebar">
             <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="#">создать Объект</a></li>
+                <li class="sidebar__item"><a href="{% url 'place_create' %}">создать Объект</a></li>
 
             </ul>
         </div>
@@ -21,7 +21,7 @@
             <div class="content_title">
                  <h1 class="title">{{ title }}</h1>
                 <div class="new_btn">
-                    <a href="#" class="new_link">+ Добавить</a>
+                    <a href="{% url 'place_create' %}" class="new_link">+ Добавить</a>
                 </div>
             </div>
            <div class="list__filter">
@@ -33,23 +33,40 @@
                </ul>
            </div>
 
-            <div class="place_list">
+            <div class="list__card">
             {% if place_list %}
                 {% for place in place_list %}
-                    <div class="place__block">
-                        <div class="place__block_title">
-                            <div class="place__id">{{ place.pk}}</div>
-                            <div class="place__title">
-                                <a href="{{place.get_absolute_url}}">{{ place.name}}</a>
+                    <div class="card__block">
+                        <div class="card__head">
+                            <div class="card__title">
+                                <a href="{{place.get_absolute_url}}">{{ place.name}}  (заказ. {{ place.order }})</a>
+                            </div>
+                            <div class="card__extra">
+                                <p class="">{{ place.status}}</p>
                             </div>
                         </div>
-                        <div class="place__block_status">
-                          <div class="place__equipment">{{ place.equipment }}</div>
-                          <div class="place__equipment_type">{{ place.equipment_type }}</div>
-                            <div class="place__contract">{{ place.contract}}</div>
-                            <div class="place__status">{{ place.status.get_type_display}}</div>
-                            <div class="place__project_manager">Менеджер проекта {{ place.project_manager}}</div>
-                            <div class="place__chief_engineer">Гл.инженер проекта {{ place.chief_engineer}}</div>
+                        <div class="card__info">
+                            <div class="card__item">
+                                <p class="card__label">номер Договора</p>
+                                <p class="card__text">{{ place.contract}}</p>
+                            </div>
+                            <div class="card__item">
+                                <p class="card__label">Модель оборудования</p>
+                                <p class="card__text">{{ place.equipment }}</p>
+                            </div>
+                            <div class="card__item">
+                                <p class="card__label">Тип оборудования</p>
+                                <p class="card__text">{{ place.equipment_type }}</p>
+                            </div>
+
+                            <div class="card__item">
+                                <p class="card__label">Менеджер проекта</p>
+                                <p class="card__text"> {{ place.project_manager}}</p>
+                            </div>
+                            <div class="card__item">
+                                <p class="card__label">Гл.инженер проекта</p>
+                                <p class="card__text"> {{ place.chief_engineer}}</p>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}

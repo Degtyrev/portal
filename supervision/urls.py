@@ -30,15 +30,15 @@ urlpatterns += [
 urlpatterns += [
     path('place/', views.place_list, name='place_list'),
     path('place/<int:pk>', views.place_detail, name='place_detail'),
-    path('place/create/', views.PlaceCreate.as_view(), name='place_create'),
+    path('place/create/', views.place_create, name='place_create'),
     path('place/<int:pk>/update/', views.PlaceUpdate.as_view(), name='place_update'),
     path('place/<int:pk>/delete/', views.PlaceDelete.as_view(), name='place_delete'),
 ]
 
 urlpatterns += [
-    path('group/', views.group_list, name='group_list'),
+    path('group/plase/<int:pk>', views.group_list, name='group_list'),
     path('group/<int:pk>', views.group_detail, name='group_detail'),
-    path('group/create/', views.GroupCreate.as_view(), name='group_create'),
+    path('group/create/<int:pk>', views.GroupCreate.as_view(), name='group_create'),
     path('group/<int:pk>/update/', views.GroupUpdate.as_view(), name='group_update'),
     path('group/<int:pk>/delete/', views.GroupDelete.as_view(), name='group_delete'),
 ]

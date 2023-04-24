@@ -119,7 +119,7 @@ text-align: right;
 }
 .form_content{
     display: grid;
-    grid-template-columns: 150px 1fr;
+    grid-template-columns: 1fr 3fr;
     gap: 20px;
 }
 .form_btn{
@@ -215,7 +215,85 @@ tr:hover td {
 }
 /*================ Стили фильтра списков end =========  */
 
+/*================ Списоки =========  */
+.list__card{
+    padding-left: 20px;
+}
+.card__block{
+    margin-bottom: 20px;
+    /*width: 70%;*/
+}
+.card__head{
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    background-color: #eee;
+    padding: 10px 20px;
+}
+.card__title{
+    font-size: 18px;
+    font-weight: 500;
+}
+.card__extra{
+    font-style: italic;
+    font-size: 12px;
+    color: #007264;
+}
+.card__info{
 
+}
+.card__item{
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    margin-bottom: 6px;
+    margin-left: 20px;
+}
+.card__label{
+    font-size: 12px;
+}
+.card__text{
+
+}
+/*================ Списоки элементовend ========= */
+
+
+/*================ Катрочка элемента =========  */
+.detail__block{
+    margin-top: 20px;
+    /*width: 70%;*/
+}
+.detail__head{
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    background-color: #eee;
+    padding: 10px 20px;
+}
+.detail__title{
+    font-size: 18px;
+    font-weight: 500;
+}
+.detail__extra{
+    font-style: italic;
+    font-size: 12px;
+    color: #007264;
+}
+.detail__info{
+
+}
+.detail__item{
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    margin-bottom: 6px;
+    margin-left: 20px;
+    gap: 10px;
+}
+.detail__label{
+    font-size: 14px;
+}
+.detail__text {
+}
+/*================ Катрочка элемента end =========  */
 .sidebar{
     padding-left: 20px;
     padding-right: 10px;

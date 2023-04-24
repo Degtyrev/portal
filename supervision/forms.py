@@ -7,7 +7,9 @@ from .models import *
 
 class ExtensionBusinessTripForm(forms.Form):
 
-    extension_date = forms.DateField(help_text="введите новую дату командировки", label="Дата продления")
+    extension_date = forms.DateField(help_text="введите новую дату командировки",
+                                    widget=forms.TextInput(attrs={'class': 'form_input input_date'}),
+                                    label="Продлить до:")
 
     def clean_extension_date(self):
         data = self.cleaned_data['extension_date']
@@ -53,6 +55,27 @@ class CreateMismatchForm(forms.Form):
     quantity = forms.IntegerField(label='количество', widget=forms.NumberInput(attrs={'class': 'form_input'}))
     file = forms.FileField(label='файлы', widget=forms.FileInput(attrs={'class': 'form_input'}), required=False)
     image = forms.ImageField(label='фото', widget=forms.FileInput(attrs={'class': 'form_input'}), required=False)
+
+
+
+class CreatePlaceForm(forms.ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['status'].empty_lable = 'Категория не выбрана'
+    class Meta:
+        model = Place
+        fields = ['name', 'equipment', 'equipment_type', 'contract', 'project_manager',
+                  'chief_engineer', 'order', 'status']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form_input'}),
+            'equipment': forms.TextInput(attrs={'class': 'form_input'}),
+            'equipment_type': forms.TextInput(attrs={'class': 'form_input'}),
+            'contract': forms.TextInput(attrs={'class': 'form_input'}),
+            'project_manager': forms.TextInput(attrs={'class': 'form_input'}),
+            'chief_engineer': forms.TextInput(attrs={'class': 'form_input'}),
+            'order': forms.NumberInput(attrs={'class': 'form_input'}),
+            'status': forms.Select(attrs={'class': 'form_input', 'autocomplete': 'on'}),
+        }
 
 
 

@@ -8,8 +8,7 @@
     {% block sidebar %}
         <div class="sidebar">
             <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'unit_create' %}">создать Узел</a></li>
-
+                <li class="sidebar__item"><a href="{% url 'group_create' place_pk %} ">создать Группу</a></li>
             </ul>
         </div>
     {% endblock %}
@@ -19,20 +18,19 @@
             <div class="content_title">
                  <h1 class="title">{{ title }}</h1>
                 <div class="new_btn">
-                    <a href="{% url 'unit_create' %}" class="new_link">+ Добавить</a>
+                    <a href="{% url 'group_create' place_pk %}" class="new_link">+ Добавить</a>
                 </div>
             </div>
             <hr>
             <div class="unit_list">
-            {% if unit_list %}
-                {% for unit in unit_list %}
+            {% if group_list %}
+                {% for group in group_list %}
                     <div class="unit__block">
                           <div class="unit__block_parent">
-{#                              <div class="unit__parent">{{ group.parent }}</div>#}
+                              <div class="unit__parent">{{ group.parent }}</div>
                           </div>
-
                             <div class="unit__title" >
-                                <a href="{{unit.get_absolute_url}}">{{ unit.number }} {{ unit.name}}</a>
+                                <a href="{{group.get_absolute_url}}">{{ group.number }} {{ group.name}}</a>
                             </div>
 
                     </div>

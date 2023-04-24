@@ -1,0 +1,135 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+{% block sidebar %}
+      <div class="sidebar">
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="{% url 'place_list' %}">список Объектов </a></li>
+                <li class="sidebar__item"><a href="#"> </a></li>
+            </ul>
+            <hr>
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="#">Планируемые </a></li>
+                <li class="sidebar__item"><a href="#">Завершенные </a></li>
+            </ul>
+
+
+        </div>
+{% endblock %}
+
+{% block content %}
+{#    <div class="content_title">#}
+{#        <h1>Несоответствие</h1>#}
+{#    </div>#}
+{#    <hr>#}
+
+    <form action="{% url 'place_create' %}" method="post" class="form_wrap">
+    {% csrf_token %}
+
+    <div class="form_title">
+        <h2>Объект</h2>
+    </div>
+    <div class="form_error">
+        {{ form.non_field_errors }}
+    </div>
+
+    <div class="form_section">
+        <div class="form_section_name">
+            <h2>данные объекта</h2>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                {{ form.name }}
+            </div>
+            <div class="form_error">{{ form.name.errors }}</div>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.equipment.id_for_label }}">{{ form.equipment.label }}</label>
+                {{ form.equipment }}
+            </div>
+            <div class="form_error">{{ form.equipment.errors }}</div>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.equipment_type.id_for_label }}">{{ form.equipment_type.label }}</label>
+                {{ form.equipment_type }}
+            </div>
+            <div class="form_error">{{ form.equipment_type.errors }}</div>
+        </div>
+    </div>
+
+    <div class="form_section">
+        <div class="form_section_name">
+            <h2>Договор</h2>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.contract.id_for_label }}">{{ form.contract.label }}</label>
+                {{ form.contract }}
+            </div>
+            <div class="form_error">{{ form.contract.errors }}</div>
+        </div>
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.order.id_for_label }}">{{ form.order.label }}</label>
+                {{ form.order }}
+            </div>
+            <div class="form_error">{{ form.order.errors }}</div>
+        </div>
+
+     </div>
+
+        <div class="form_section">
+            <div class="form_section_name">
+                <h2>сопровождение</h2>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.project_manager.id_for_label }}">{{ form.project_manager.label }}</label>
+                    {{ form.project_manager }}
+                </div>
+                <div class="form_error">{{ form.project_manager.errors }}</div>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.chief_engineer.id_for_label }}">{{ form.chief_engineer.label }}</label>
+                    {{ form.chief_engineer }}
+                </div>
+                <div class="form_error">{{ form.chief_engineer.errors }}</div>
+            </div>
+         </div>
+
+        <div class="form_section">
+            <div class="form_section_name">
+                <h2>статус</h2>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+                    {{ form.status }}
+                </div>
+                <div class="form_error">{{ form.status.errors }}</div>
+            </div>
+         </div>
+
+
+    <biv class="form_btn">
+      <input type="submit" value="Сохранить" id="create_place" class="btn ">
+    </biv>
+
+    </form>
+{% endblock %}

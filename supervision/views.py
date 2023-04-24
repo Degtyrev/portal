@@ -155,11 +155,8 @@ class BusinessTripDelete(DeleteView):
 #     fields = '__all__'
 
 def mismatch_create(request):
-
-    form = CreateMismatchForm()
-
     if request.method == 'POST':
-        form = CreateMismatchForm(request.POST)
+        form = CreateMismatchForm(request.POST, request.FILES)
 
         if form.is_valid():
             # print(form.cleaned_data)
@@ -188,7 +185,7 @@ class MismatchDelete(DeleteView):
 
 
 def place_list(request):
-    place_list = Place.objects.all()
+    place_list = Place.objects.filter(status__exact='Действующий')
 
     return render(
         request,
@@ -211,13 +208,29 @@ def place_detail(request, pk):
 
 # --------- Редактирование, обновление, удаление  формы Объекта
 
-class PlaceCreate(CreateView):
-    model = Place
-    fields = '__all__'
+# class PlaceCreate(CreateView):
+#     model = Place
+#     fields = '__all__'
+
+def place_create(request):
+    if request.method == 'POST':
+        form = CreatePlaceForm(request.POST)
+
+        if form.is_valid():
+            # print(form.cleaned_data)
+            form.save()
+            return redirect('place_list')
+        # return HttpResponseRedirect(reverse('mismatch'))
+    else:
+        form = CreatePlaceForm()
+    return render(request, 'supervision/place/place_create.html',
+                      {'form': form, 'title': 'Несоответстиве'})
+
 
 class PlaceUpdate(UpdateView):
     model = Place
     fields = '__all__'
+    template_name = 'supervision/place/place_create.html'
 
 class PlaceDelete(DeleteView):
     model = Place
@@ -225,15 +238,15 @@ class PlaceDelete(DeleteView):
 
 
 
-#--------------- Узлы----------------
-def group_list(request):
-    group_list = Group.objects.all()
-
+#--------------- Группы  ----------------
+def group_list(request, pk):
+    group_list = Group.objects.filter(place_id__exact=pk)
+    place_pk = pk
     return render(
         request,
         'supervision/group/group_list.html',
         context={
-            'title': 'Список Узлов', 'group_list': group_list
+            'title': 'Список Групп', 'group_list': group_list, "place_pk": place_pk
         },
     )
 
@@ -244,11 +257,12 @@ def group_detail(request, pk):
         request,
         'supervision/group/group_detail.html',
         context={
-            'title': 'Узел', 'group_detail': group_detail
+            'title': 'Группа', 'group_detail': group_detail
         },
     )
 
 # --------- Редактирование, обновление, удаление  формы Узла
+
 class GroupCreate(CreateView):
     model = Group
     fields = '__all__'

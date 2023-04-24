@@ -8,15 +8,13 @@
     {% block sidebar %}
         <div class="sidebar">
             <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'place_list' %}">Все объекты </a></li>
-                <li class="sidebar__item"><a href="#">Создать </a></li>
-                <li class="sidebar__item"><a href="#">ХХХ</a></li>
+                <li class="sidebar__item"><a href="{% url 'place_list' %}">Список Объектов </a></li>
+                <li class="sidebar__item"><a href="{% url 'place_create' %}">Создать объект</a></li>
             </ul>
             <hr>
             <ul class="sidebar__list">
-
-                <li class="sidebar__item"><a href="#">Планируемые </a></li>
-                <li class="sidebar__item"><a href="#">Завершенные </a></li>
+                <li class="sidebar__item"><a href="{% url 'group_list' place_detail.pk %}">Посмотреть группы </a></li>
+                <li class="sidebar__item"><a href="{% url 'group_create' place_detail.pk %}">Добавить группу </a></li>
             </ul>
 
 
@@ -27,45 +25,44 @@
     {% block content %}
         <section class="place_detail">
             <div class="content_title">
-                 <h1 class="title">{{ title }} <span class="title_number"> {{ place.name }}</span></h1>
+                 <h1 class="title">{{ place_detail.name }}</h1>
+                <div class="new_btn">
+                    <a href="{% url 'place_update' place_detail.pk %}" class="new_link">Радактировать</a>
+                </div>
             </div>
         <hr>
 
-            <div class="place_detail__block">
+            <div class="detail__block">
                 {% if place_detail %}
-                    <div class="place_detail__item">
-                        <div class="place_detail__ladel">объект</div>
-                        <div class="place_detail__plaсe">{{ place_detail.name }}</div>
+
+                    <div class="detail__item">
+                        <div class="detail__label">статус</div>
+                        <div class="detail__text">{{ place_detail.get_status_display }}</div>
                     </div>
 
-                    <div class="place_detail__item">
-                        <div class="place_detail__ladel">статус</div>
-                        <div class="place_detail__status">{{ place_detail.get_status_display }}</div>
+                    <div class="detail__item">
+                        <div class="detail__label">Модель оборудовани</div>
+                        <div class="detail__text">{{ place_detail.equipment}}</div>
                     </div>
 
-                    <div class="place_detail__item">
-                        <div class="place_detail__ladel">Модель оборудовани</div>
-                        <div class="place_detail__equipment">{{ place_detail.equipment}}</div>
+                    <div class="detail__item">
+                        <div class="detail__label">Тип оборудования</div>
+                        <div class="detail__text">{{ place_detail.equipment_type}}</div>
                     </div>
 
-                    <div class="place_detail__item">
-                        <div class="place_detail__ladel">Тип оборудования</div>
-                        <div class="place_detail__equipment_type">{{ place_detail.equipment_type}}</div>
+                    <div class="detail__item">
+                        <div class="detail__label">Договор №</div>
+                        <div class="detail__text">{{ place_detail.contract}} </div>
                     </div>
 
-                    <div class="place_detail__item">
-                        <div class="place_detail__ladel">Договор №</div>
-                        <div class="place_detail__contract">{{ place_detail.contract}} </div>
+                    <div class="detail__item">
+                        <div class="detail__label">Руководитель проекта</div>
+                        <div class="detail__text">{{ place_detail.project_manager}}</div>
                     </div>
 
-                    <div class="place_detail__item">
-                        <div class="place_detail__ladel">Руководитель проекта</div>
-                        <div class="place_detail__project_manager">{{ place_detail.project_manager}}</div>
-                    </div>
-
-                    <div class="place_detail__item">
-                        <div class="place_detail__ladel">Главны инженер проекта</div>
-                        <div class="place_detail__chief_engineer">{{ place_detail.chief_engineer}} </div>
+                    <div class="detail__item">
+                        <div class="detail__label">Главны инженер проекта</div>
+                        <div class="detail__text">{{ place_detail.chief_engineer}} </div>
                     </div>
 
 

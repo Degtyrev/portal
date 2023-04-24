@@ -28,7 +28,7 @@
 {#    </div>#}
 {#    <hr>#}
 
-    <form action="{% url 'mismatch_create' %}" method="post" class="form_wrap">
+    <form action="{% url 'mismatch_create' %}" method="post" enctype="multipart/form-data" class="form_wrap">
     {% csrf_token %}
 
     <div class="form_title">

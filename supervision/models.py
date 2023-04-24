@@ -12,7 +12,7 @@ class Profile(models.Model):
     surname = models.CharField(max_length=50, help_text="Отчество", null=True, blank=True)
     birth_date = models.DateField(verbose_name='Дата рождения', null=True, blank=True)
     death_date = models.DateField(verbose_name='Дата смерти', null=True, blank=True)
-    position = models.ForeignKey('Career', on_delete=models.SET_NULL, null=True, blank=True)
+    position = models.ManyToManyField('Position', through='Career')
 
     # @receiver(post_save, sender=User)
     # def create_user_profile(sender, instance, created, **kwargs):
@@ -32,37 +32,42 @@ class Profile(models.Model):
 # Дата рождения: {{ user.profile.birth_date }}
 
 class Career(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    POSITION = (
-        ('3', 'Шеф-инженер 3-й категории'),
-        ('2', 'Шеф-инженер 2-й категории'),
-        ('1', 'Шеф-инженер 1-й категории'),
-        ('ld', 'Ведущий шеф-инженер'),
-    )
-    position = models.CharField(max_length=5, choices=POSITION, default='ld')
+    user = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    position = models.ForeignKey('Position', on_delete=models.SET_NULL, null=True,)
     start_date = models.DateField(help_text="Дата приёма")
     end_date = models.DateField(help_text="Дата увольнения", null=True, blank=True)
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name} {self.position}'
+        return f'{self.user.user.first_name} {self.user.user.last_name} {self.position}'
+    class Meta:
+        unique_together = ('user', 'position')
+
+
+class Position(models.Model):
+    name = models.CharField(max_length=250, verbose_name='Должность')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('position_detail', args=[str(self.id)])
 
 
 class Place(models.Model):
-    name = models.CharField(max_length=250, help_text="Название объекта", verbose_name='Модель оборудования (котла)')
+    name = models.CharField(max_length=250, help_text="Название объекта", verbose_name='Название объекта')
     equipment = models.CharField(max_length=250, help_text="Модель оборудования (котла)", null=True, blank=True, verbose_name='Модель оборудования (котла)')
     equipment_type = models.CharField(max_length=250, help_text="Тип оборудования (котла)", null=True, blank=True, verbose_name='Тип оборудования (котла)')
     contract = models.CharField(max_length=250, help_text="номер договора", null=True, blank=True, verbose_name='номер договора')
     project_manager = models.CharField(max_length=100, help_text='руководитель проекта', null=True, blank=True, verbose_name='руководитель проекта')
     chief_engineer = models.CharField(max_length=100, help_text='главный инженер проекта', null=True, blank=True, verbose_name='главный инженер проекта')
-    order = models.IntegerField(help_text='Номер Заказа', null=True, blank=True)
+    order = models.IntegerField(help_text='Номер Заказа', null=True, blank=True, verbose_name='Номер Заказа')
     STATUS_OBJ = (
-        ('prs', 'Перспективный'),
-        ('act', 'Действующий'),
-        ('cnc', 'Завершенный'),
-        ('dlt', 'Отмененный'),
+        ('Перспективный', 'Перспективный'),
+        ('Действующий', 'Действующий'),
+        ('Завершенный', 'Завершенный'),
+        ('Отмененный', 'Отмененный'),
     )
-    status = models.CharField(max_length=3, choices=STATUS_OBJ, default='prs', verbose_name='Статус')
+    status = models.CharField(max_length=20, choices=STATUS_OBJ, default='Перспективный', verbose_name='Статус')
 
     def __str__(self):
         return self.name
