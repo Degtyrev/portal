@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from supervision.views import pageNotFound
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
@@ -36,10 +38,16 @@ urlpatterns += [
     path('home/', include('supervision.urls')),
 
 ]
+# обработка несуществующей страницы и ошибок 404, 301, 302, 500
+
+handler404 = pageNotFound
 
 
 from django.conf.urls.static import static
 from django.conf import settings
-urlpatterns += static(settings.STATIC_URL,
-                      document_root=settings.STATIC_ROOT)
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

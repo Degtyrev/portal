@@ -5,18 +5,45 @@ import datetime
 
 from django.urls import include
 
+def pageNotFound(request, exception):
+    return render(request, 'supervision/page404.html', context={'title': 'Страницы не существует'})
+    # return redirect ('home', permanent=True) перенаправление на главную страницу , постоянный редирект,
+    # если на выполняется условие или ошибка на станице
+
+
+
+menu = (
+    {'title': 'Главная', 'url_menu': 'index', 'image': 'supervision/image/home.png'},
+    {'title': 'Командировки', 'url_menu': 'busines_trip', 'image': 'supervision/image/trippng'},
+    {'title': 'Несоответствия', 'url_menu': 'mismatch_list', 'image': 'supervision/image/miath.png'},
+    {'title': 'Сотрудники', 'url_menu': 'employee_list', 'image': 'supervision/image/employee.png'},
+    {'title': 'Объекты', 'url_menu': 'place_detail', 'image': 'supervision/image/place.png'},
+
+)
+
 #----------- Главная Main -----------
 def index(request):
-    # num_instances_available = BookInstance.objects.filter(status__exact='a').count()
-    # num_authors = Author.objects.count()  # Метод 'all()' применён по умолчанию.
+    num_employeer = User.objects.filter(is_active=1).count()
+    num_place = Place.objects.filter(status='Действующий').count()  # Метод 'all()' применён по умолчанию.
 
     # Отрисовка HTML-шаблона index.html с данными внутри
     # переменной контекста context
 
+    # request.GET - список параметров передаваемых GET запросом /?name=gggg&age=233
+    # request.POST - список параметров передаваемых POST запросом
+
+    context = {
+        'title': "Портал",
+        'num_employeer': num_employeer,
+        'num_place': num_place,
+        'menu': menu
+    }
+
+
     return render(
         request,
         'index.html',
-        context={'title': "Портал"},
+        context=context,
     )
 #----------- Командировки  -----------
 
@@ -370,20 +397,43 @@ def employee_list(request):
 def employee_detail(request, pk):
     employee_detail = Profile.objects.get(user_id=pk)
     career_list = Career.objects.filter(user_id=pk)
-
+    current_position = Career.objects.filter(user_id=pk, end_date__exact=None)
+    context = {
+        'title': 'Сотрудник', 'employee_detail': employee_detail,
+        'career_list': career_list, 'current_position': current_position[0].position
+    }
     return render(
         request,
         'supervision/employee/employee_detail.html',
-        context={
-            'title': 'Сотрудник', 'employee_detail': employee_detail,
-            'career_list': career_list
-        },
+        context=context,
     )
 
 # --------- Редактирование, обновление, удаление  формы сотрудники
 class EmployeeCreate(CreateView):
+    form_class = AddEmployeeForm # форма создания
+    template_name = 'supervision/employee/employee_create.html' # адрес шаблона
+    success_url = reverse_lazy('employee_list') # переадресация на страницу при успешном добавлении записи
+
     model = Profile
+
     fields = '__all__'
+    # template_name =
+    # выборка данных из модели в коллекции  -> object_list, для задания своей переменной использовать
+    # context_object_name = 'имя переменной'
+    # extra_context = {'title': 'Главная страница'}- для передачи статических доп. данных
+
+    # def get_context_data(self, *, object_list=None, **kwargs):- для передачи динамических доп. данных
+    #     context = super().get_context_data(**kwargs)
+    #     context['menu'] = menu
+    #     context = {'title': 'Главная страница'}
+    #     return context
+
+    # для получения конкртеных данных из модели
+    # def get_queryset(self):
+    #     return Profile.objects.filter(параметы выборки)
+
+
+
 
 class EmployeeUpdate(UpdateView):
     model = Profile

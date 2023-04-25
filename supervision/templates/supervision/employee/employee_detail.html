@@ -9,7 +9,7 @@
         <div class="sidebar">
             <ul class="sidebar__list">
                 <li class="sidebar__item"><a href="{% url 'employee_list' %}">Список сотрудников</a></li>
-                <li class="sidebar__item"><a href="#">Добавить сотрудника</a></li>
+                <li class="sidebar__item"><a href="{% url 'employee_create' %}">Добавить сотрудника</a></li>
 
             </ul>
         </div>
@@ -21,63 +21,64 @@
                  <h1 class="title">{{ title }} {{ employee_detail.user.last_name }}
                               {{ employee_detail.user.first_name}} {{ employee_detail.surname}}</h1>
                 <div class="new_btn">
-                    <a href="#" class="new_link">+ Добавить</a>
+                    <a href="{% url 'employee_update' employee_detail.user.id %}" class="new_link">Редактировать</a>
                 </div>
             </div>
             <hr>
-            <div class="employee_list">
+
+            <div class="detail__block">
             {% if employee_detail %}
 
-                    <div class="employee__block">
+                <div class="detail__item">
+                    <div class="detail__label">Фамилия</div>
+                    <div class="detail__text">{{ employee_detail.user.last_name }}</div>
+                </div>
+                <div class="detail__item">
+                    <div class="detail__label">Имя</div>
+                    <div class="detail__text">{{ employee_detail.user.first_name }}</div>
+                </div>
+                <div class="detail__item">
+                    <div class="detail__label">Отчество</div>
+                    <div class="detail__text">{{ employee_detail.user.profile.surname }}</div>
+                </div>
+                <div class="detail__item">
+                    <div class="detail__label">Дата рождения</div>
+                    <div class="detail__text">{{ employee_detail.user.profile.birth_date }}</div>
+                </div>
 
-                        <div class="employee_detail__item">
-                            <div class="employee_detail__ladel">Фамилия</div>
-                            <div class="employee_detail__last_name">{{ employee_detail.user.last_name }}</div>
-                        </div>
-                        <div class="employee_detail__item">
-                            <div class="employee_detail__ladel">Имя</div>
-                            <div class="employee_detail__first_name">{{ employee_detail.user.first_name }}</div>
-                        </div>
+                {% if death_date %}
+                <div class="detail__item">
+                    <div class="detail__label">Дата смерти</div>
+                    <div class="detail__text">{{ employee_detail.user.profile.death_date }}</div>
+                </div>
+                {% endif %}
 
-                        <div class="employee_detail__item">
-                            <div class="employee_detail__ladel">Отчество</div>
-                            <div class="employee_detail__surname">{{ employee_detail.surname }}</div>
-                        </div>
-
-                        <div class="employee_detail__item">
-                            <div class="employee_detail__ladel">Дата рождения</div>
-                            <div class="employee_detail__birth_date">{{ employee_detail.birth_date }}</div>
-                        </div>
-                        {% if death_date %}
-                        <div class="employee_detail__item">
-                            <div class="employee_detail__ladel">Дата смерти</div>
-                            <div class="employee_detail__death_date">{{ employee_detail.death_date }}</div>
-                        </div>
-                        {% endif %}
-
-                        <div class="employee_detail__item">
-                            <div class="employee_detail__ladel">Должность</div>
-                            <div class="employee_detail__position">{{ employee_detail.position.get_position_display }}</div>
-                        </div>
+                <div class="detail__item">
+                    <div class="detail__label">Должность</div>
+                    <div class="detail__text">{{ current_position }}</div>
+                </div>
+             </div>
 
                     {% if career_list %}
-                      Карьера:
-                        {% for career in career_list %}
-                        <div class="career__block">
-                            <div class="career__item">
-                                <div class="career__position">{{ career.get_position_display }}</div>
-                                <div class="career__start_date">с {{ career.start_date }}</div>
-                                {% if career.end_date %}
-                                <div class="career__end_date">по{{ career.end_date }}</div>
-                                    {% else %}
-                                    <div class="career__end_date">по настоящее время</div>
-                                {% endif %}
-                            </div>
+                        <div class="detail__block">
+                            Карьера:
+                            {% for career in career_list %}
+
+                                <div class="detail__item">
+                                    <div class="detail__label">{{ career.position.name }}</div>
+                                    <div class="detail__text">с {{ career.start_date }}
+                                        {% if career.end_date %}
+                                            по{{ career.end_date }}
+                                        {% else %}
+                                            по настоящее время
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            {% endfor %}
                         </div>
-                        {% endfor %}
                     {% endif %}
 
-                    </div>
 
                 {% else %}
                 <p>Нет сотрудников</p>

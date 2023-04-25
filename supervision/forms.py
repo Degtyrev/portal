@@ -78,4 +78,5 @@ class CreatePlaceForm(forms.ModelForm):
         }
 
 
-
+class AddEmployeeForm(forms.Form):
+    pass

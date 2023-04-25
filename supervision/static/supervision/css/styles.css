@@ -20,6 +20,8 @@ h1{
 .btn:hover{
     background-color: rgb(246, 100, 52);
 }
+
+/*================== Базовый шаблон ======================*/
 .wrapper{
     display: grid;
     grid-auto-columns: 1fr;
@@ -75,6 +77,10 @@ h1{
 .new_btn:hover{
     background-color: rgb(246, 100, 52);
 }
+
+/*================== Базовый шаблон  end  ======================*/
+
+
 /*================== FORMS ======================*/
 .form_wrap{
     padding-left: 20px;
