@@ -1,6 +1,10 @@
+*{
+    box-sizing: border-box;
+}
+
 body{
     font-family: "wf_segoe-ui_semilight", "Segoe UI Semilight", "Segoe WP Semilight", "Segoe UI", "Segoe WP", Tahoma, Arial, sans-serif;
-    box-sizing: border-box;
+
 }
 h1{
     font-size: 18px;
@@ -27,41 +31,92 @@ h1{
     position: relative;
 }
 .nav{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 200px;
-    display: flex;
+    width: 100px;
     background-color: #007264;
     color: #fff;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
     align-items: center;
+    height: 100%;
 }
-.nav__logo{
-    width: 100px;
+.auth_user{
+    font-size: 12px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #028770;
+    text-align: center;
+}
+.auth_user__name{
+    margin-bottom: 10px;
+}
+.auth_user__info{
+    margin-bottom: 5px;
+}
+.auth_user__photo{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 40px;
+    margin-bottom: 10px;
 }
 .nav__menu{
-    width: 100%;
+
 }
 .nav__menu_list{
-    display: flex;
-    justify-content: space-around;
-}
 
-.content{
-    margin-left: 200px;
+}
+.nav__menu_link{
+    z-index: 5;
+}
+.nav__menu_item{
+    text-align: center;
+    margin: 20px 0;
+}
+.nav__menu_img{
+    width: 60px;
+    height: 60px;
+    /*object-fit: cover;*/
+}
+.nav__menu_img:hover{
+ background-color: #eeeeee;
+
+}
+.exit__link{
+    display: inline-block;
+    margin-bottom: 10px;
+    border: 1px solid coral;
+    padding: 1px 0 5px 0;
+    border-radius: 10px;
+    background-color: coral;
+    color: white;
     width: 100%;
-    color: #333;
-
+}
+.exit__link:hover{
+    background-color: rgb(246, 100, 52);
 }
 
+.main{
+    padding-top: 20px;
+    width: 70%;
+    margin: 0 auto;
+
+}
+.content{
+    margin-left: 100px;
+    color: #333;
+}
 .content_title{
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 20px;
 }
+
+
+
 .title_number{
     font-weight: bolder;
 }
@@ -79,7 +134,42 @@ h1{
 .new_btn:hover{
     background-color: rgb(246, 100, 52);
 }
+.sidebar{
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-top: 20px;
+    background-color: #f3f3f3;
+    height: 100vh;
+}
+.sidebar__list{
 
+}
+.sidebar__item{
+    margin-bottom: 10px;
+}
+.sidebar__filter{
+    font-size: 14px;
+}
+.sidebar__filter_title{
+    font-size: 16px;
+    text-align: center;
+}
+
+.bread_crumbs{
+    margin-bottom: 40px;
+}
+.bread_crumbs__list{
+    display: flex;
+}
+.bread_crumbs_item{
+
+}
+.bread_crumbs_item>a{
+    border-bottom: 1px solid #006266;
+}
+.bread_crumbs_item>a:hover{
+    border-bottom: 1px solid coral;
+}
 /*================== Базовый шаблон  end  ======================*/
 
 
@@ -291,7 +381,7 @@ tr:hover td {
 }
 .detail__item{
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: min(150px) 1fr;
     margin-bottom: 6px;
     margin-left: 20px;
     gap: 10px;
@@ -302,40 +392,7 @@ tr:hover td {
 .detail__text {
 }
 /*================ Катрочка элемента end =========  */
-.sidebar{
-    padding-left: 20px;
-    padding-right: 10px;
-    padding-top: 20px;
-    background-color: #f3f3f3;
-    height: 100vh;
-}
-.sidebar__list{
 
-}
-.sidebar__item{
-    margin-bottom: 10px;
-}
-.sidebar__filter{
-    font-size: 14px;
-}
-.sidebar__filter_title{
-    font-size: 16px;
-    text-align: center;
-}
-
-.main{
-    padding-right: 20px;
-}
-.auth_user{
-    font-size: 12px;
-    width: 200px;
-}
-.auth_user__name{
-    margin-bottom: 5px;
-}
-.exit__link{
-
-}
 .footer{
     padding-left: 20px;
     padding-right: 20px;
@@ -497,3 +554,75 @@ font-size: 14px;
     padding: 20px;
     align-items: center;
 }
+
+
+/*---------------- Профиль -----------*/
+.profile_user{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, auto);
+    gap: 16px;
+}
+.person_info{
+    grid-row-start: 1;
+    grid-row-end: 4;
+    padding: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 15px;
+}
+.person_attestation{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    padding: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 15px;
+}
+.person_trips{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    padding: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 15px;
+}
+.person_career{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    padding: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 15px;
+}
+
+.person__block{
+    margin-top: 0;
+}
+.detail__block_title{
+    margin-bottom: 15px;
+
+}
+.profile__photo{
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+.user__photo{
+    width: 100%;
+    object-fit: cover;
+}
+.person__table{
+    width: 100%;
+}
+.person__table_head{
+    padding: 10px 0;
+    background-color: #eeeeee;
+}
+.person__table_data{
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.person__table tr:first-child{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/*---------------- Профиль end -----------*/
+

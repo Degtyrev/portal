@@ -5,49 +5,47 @@
     {% endblock %}
 
 
-    {% block sidebar %}
-        <div class="sidebar">
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'mismatch_list' %}">Несоответствия</a></li>
-                <li class="sidebar__item"><a href="{% url 'mismatch_create' %}">создать Несоответствие</a></li>
-            </ul>
-            <hr>
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'place_list' %}">Объекты</a></li>
-                <li class="sidebar__item"><a href="{% url 'place_create' %}">создать Объект</a></li>
-            </ul>
-            <hr>
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'business_trip' %}">Командировки</a></li>
-                <li class="sidebar__item"><a href="{% url 'business_trip_create' %}">создать Командировку</a></li>
-            </ul>
-            <hr>
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'employee_list' %}">Сотрудники</a></li>
-                <li class="sidebar__item"><a href="#">изменить Должность</a></li>
-                <li class="sidebar__item"><a href="#">добавить Сотрудника</a></li>
-            </ul>
-            <hr>
-            <ul class="sidebar__list">
-{#                <li class="sidebar__item"><a href="{% url 'group_create' %}">создать Узел</a></li>#}
-            </ul>
-            <hr>
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'drawing_list' %}">Чертежи</a></li>
-                <li class="sidebar__item"><a href="{% url 'drawing_create' %}">создать Чертёж</a></li>
-            </ul>
-        </div>
 
-    {% endblock %}
+{#    {% block sidebar %}#}
+{#        <div class="sidebar">#}
+{#            <ul class="sidebar__list">#}
+{#                <li class="sidebar__item"><a href="{% url 'mismatch_list' %}">Несоответствия</a></li>#}
+{#                <li class="sidebar__item"><a href="{% url 'mismatch_create' %}">создать Несоответствие</a></li>#}
+{#            </ul>#}
+{#            <hr>#}
+{#            <ul class="sidebar__list">#}
+{#                <li class="sidebar__item"><a href="{% url 'place_list' %}">Объекты</a></li>#}
+{#                <li class="sidebar__item"><a href="{% url 'place_create' %}">создать Объект</a></li>#}
+{#            </ul>#}
+{#            <hr>#}
+{#            <ul class="sidebar__list">#}
+{#                <li class="sidebar__item"><a href="{% url 'business_trip' %}">Командировки</a></li>#}
+{#                <li class="sidebar__item"><a href="{% url 'business_trip_create' %}">создать Командировку</a></li>#}
+{#            </ul>#}
+{#            <hr>#}
+{#            <ul class="sidebar__list">#}
+{#                <li class="sidebar__item"><a href="{% url 'employee_list' %}">Сотрудники</a></li>#}
+{#                <li class="sidebar__item"><a href="#">изменить Должность</a></li>#}
+{#                <li class="sidebar__item"><a href="#">добавить Сотрудника</a></li>#}
+{#            </ul>#}
+{#            <hr>#}
+{#            <ul class="sidebar__list">#}
+{#                <li class="sidebar__item"><a href="{% url 'group_create' %}">создать Узел</a></li>#}
+{#            </ul>#}
+{#            <hr>#}
+{#            <ul class="sidebar__list">#}
+{#                <li class="sidebar__item"><a href="{% url 'drawing_list' %}">Чертежи</a></li>#}
+{#                <li class="sidebar__item"><a href="{% url 'drawing_create' %}">создать Чертёж</a></li>#}
+{#            </ul>#}
+{#        </div>#}
+{##}
+{#    {% endblock %}#}
 
     {% block content %}
-        <div class="main__issues">
+        <div class="">
 
-                <p>В отделе {{ num_employeer }} сотрудников</p>
-                <p>Действующих объектов - {{ num_place }}</p>
-
-
-
+            <p>В отделе {{ num_employeer }} сотрудников</p>
+            <p>Действующих объектов - {{ num_place }}</p>
 
         </div>
     {% endblock %}

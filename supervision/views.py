@@ -1,3 +1,5 @@
+import os.path
+
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from .models import *
@@ -12,14 +14,14 @@ def pageNotFound(request, exception):
 
 
 
-menu = (
-    {'title': 'Главная', 'url_menu': 'index', 'image': 'supervision/image/home.png'},
-    {'title': 'Командировки', 'url_menu': 'busines_trip', 'image': 'supervision/image/trippng'},
-    {'title': 'Несоответствия', 'url_menu': 'mismatch_list', 'image': 'supervision/image/miath.png'},
-    {'title': 'Сотрудники', 'url_menu': 'employee_list', 'image': 'supervision/image/employee.png'},
-    {'title': 'Объекты', 'url_menu': 'place_detail', 'image': 'supervision/image/place.png'},
+menu = [
+    {'title_menu': 'Главная', 'url_menu': 'index', 'image': 'supervision/image/home.png'},
+    {'title_menu': 'Командировки', 'url_menu': 'business_trip', 'image': 'supervision/image/trip.png'},
+    {'title_menu': 'Несоответствия', 'url_menu': 'mismatch', 'image': 'supervision/image/mismatch.png'},
+    {'title_menu': 'Сотрудники', 'url_menu': 'employee', 'image': 'supervision/image/employee.png'},
+    {'title_menu': 'Объекты', 'url_menu': 'place', 'image': 'supervision/image/place.png'},
 
-)
+]
 
 #----------- Главная Main -----------
 def index(request):
@@ -39,7 +41,6 @@ def index(request):
         'menu': menu
     }
 
-
     return render(
         request,
         'index.html',
@@ -55,16 +56,18 @@ def business_trip(request):
     trips_current = BusinessTrip.objects.filter(activ__exact=True)
     trips_completed = BusinessTrip.objects.filter(activ__exact=False)
 
+    context = {
+                  'title': 'Командировки', 'trips_current': trips_current,
+                  'trips_completed': trips_completed,
+                  'trips_current_user': trips_current_user,
+                  'trips_completed_user': trips_completed_user,
+                  'menu': menu
+              }
 
     return render(
         request,
         'supervision/business_trip/business_trip.html',
-        context={
-            'title': 'Командировки', 'trips_current': trips_current,
-            'trips_completed': trips_completed,
-            'trips_current_user': trips_current_user,
-            'trips_completed_user': trips_completed_user
-        },
+        context=context,
     )
 
 
@@ -74,13 +77,17 @@ def trip(request, pk):
     date_today = datetime.date.today()
     trip = BusinessTrip.objects.get(pk=pk)
 
+    context = {
+                'title': 'Командировка',
+                'trip': trip,
+                'date_today': date_today,
+                'menu': menu
+              }
 
     return render(
         request,
         'supervision/business_trip/businesstrip_detail.html',
-        context={
-            'title': 'Командировка', 'trip': trip, 'date_today': date_today
-        },
+        context=context,
     )
 
 
@@ -94,7 +101,10 @@ def mismatch_list(request):
         request,
         'supervision/mismatch/mismatch.html',
         context={
-            'title': 'Список несоответствий', 'mismatches': mismatches, 'place': place
+            'title': 'Список несоответствий',
+            'mismatches': mismatches,
+            'place': place,
+            'menu': menu
         },
     )
 
@@ -109,7 +119,10 @@ def mismatch_detail(request, pk):
             request,
         'supervision/mismatch/mismatch_detail.html',
             context={
-                'title': 'Карточка Неоответствия', 'mismatch': mismatch, 'status': status
+                'title': 'Карточка Неоответствия',
+                'mismatch': mismatch,
+                'status': status,
+                'menu': menu
             },
         )
 
@@ -218,7 +231,9 @@ def place_list(request):
         request,
         'supervision/place/place_list.html',
         context={
-            'title': 'Список Объектов', 'place_list': place_list
+            'title': 'Список Объектов',
+            'place_list': place_list,
+            'menu': menu
         },
     )
 
@@ -229,7 +244,9 @@ def place_detail(request, pk):
         request,
         'supervision/place/place_detail.html',
         context={
-            'title': 'Объект', 'place_detail': place_detail
+            'title': 'Объект',
+            'place_detail': place_detail,
+            'menu': menu
         },
     )
 
@@ -273,7 +290,10 @@ def group_list(request, pk):
         request,
         'supervision/group/group_list.html',
         context={
-            'title': 'Список Групп', 'group_list': group_list, "place_pk": place_pk
+            'title': 'Список Групп',
+            'group_list': group_list,
+            "place_pk": place_pk,
+            'menu': menu
         },
     )
 
@@ -284,7 +304,9 @@ def group_detail(request, pk):
         request,
         'supervision/group/group_detail.html',
         context={
-            'title': 'Группа', 'group_detail': group_detail
+            'title': 'Группа',
+            'group_detail': group_detail,
+            'menu': menu
         },
     )
 
@@ -313,7 +335,9 @@ def drawing_list(request):
         request,
         'supervision/drawing/drawing_list.html',
         context={
-            'title': 'Список Чертежей', 'drawing_list': drawing_list
+            'title': 'Список Чертежей',
+            'drawing_list': drawing_list,
+            'menu': menu
         },
     )
 
@@ -324,7 +348,9 @@ def drawing_detail(request, pk):
         request,
         'supervision/drawing/drawing_detail.html',
         context={
-            'title': 'Чертёж', 'drawing_detail': drawing_detail
+            'title': 'Чертёж',
+            'drawing_detail': drawing_detail,
+            'menu': menu
         },
     )
 
@@ -352,7 +378,9 @@ def detail_list(request):
         request,
         'supervision/detail/detail_list.html',
         context={
-            'title': 'Список Деталей', 'detail_list': detail_list
+            'title': 'Список Деталей',
+            'detail_list': detail_list,
+            'menu': menu
         },
     )
 
@@ -363,7 +391,9 @@ def detail_detail(request, pk):
         request,
         'supervision/detail/detail_detail.html',
         context={
-            'title': 'Деталь', 'detail_detail': detail_detail
+            'title': 'Деталь',
+            'detail_detail': detail_detail,
+            'menu': menu
         },
     )
 
@@ -390,17 +420,20 @@ def employee_list(request):
         request,
         'supervision/employee/employee_list.html',
         context={
-            'title': 'Список Сотрудников', 'employee_list': employee_list
+            'title': 'Список Сотрудников',
+            'employee_list': employee_list,
+            'menu': menu
         },
     )
 
 def employee_detail(request, pk):
-    employee_detail = Profile.objects.get(user_id=pk)
+    employee_detail = User.objects.get(id=pk)
+    # profile_detail = Profile.objects.get(id=pk)
     career_list = Career.objects.filter(user_id=pk)
     current_position = Career.objects.filter(user_id=pk, end_date__exact=None)
     context = {
         'title': 'Сотрудник', 'employee_detail': employee_detail,
-        'career_list': career_list, 'current_position': current_position[0].position
+        'career_list': career_list, 'current_position': current_position
     }
     return render(
         request,
@@ -453,7 +486,9 @@ def letter_list(request):
         request,
         'supervision/letter/letter_list.html',
         context={
-            'title': 'Список Служебных писем', 'letter_list': letter_list
+            'title': 'Список Служебных писем',
+            'letter_list': letter_list,
+            'menu': menu
         },
     )
 
@@ -464,7 +499,9 @@ def letter_detail(request, pk):
         request,
         'supervision/letter/letter_detail.html',
         context={
-            'title': 'Служебное письмо', 'letter_detail': letter_detail
+            'title': 'Служебное письмо',
+            'letter_detail': letter_detail,
+            'menu': menu
         },
     )
 
@@ -492,7 +529,9 @@ def solution_list(request):
         request,
         'supervision/solution/solution_list.html',
         context={
-            'title': 'Список Технических решений', 'solution_list': solution_list
+            'title': 'Список Технических решений',
+            'solution_list': solution_list,
+            'menu': menu
         },
     )
 
@@ -503,7 +542,9 @@ def solution_detail(request, pk):
         request,
         'supervision/solution/solution_detail.html',
         context={
-            'title': 'Техническое решение', 'solution_detail': solution_detail
+            'title': 'Техническое решение',
+            'solution_detail': solution_detail,
+            'menu': menu
         },
     )
 

@@ -1,83 +1,229 @@
 {% extends "base_generic.html" %}
-
+{% load static %}
     {% block title %}
         <title>{{ title }}</title>
     {% endblock %}
 
 
-    {% block sidebar %}
-        <div class="sidebar">
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'employee_list' %}">Список сотрудников</a></li>
-                <li class="sidebar__item"><a href="{% url 'employee_create' %}">Добавить сотрудника</a></li>
-
-            </ul>
-        </div>
-    {% endblock %}
+{#    {% block sidebar %}#}
+{#        <div class="sidebar">#}
+{#            <ul class="sidebar__list">#}
+{#                <li class="sidebar__item"><a href="{% url 'employee_list' %}">Список сотрудников</a></li>#}
+{#                <li class="sidebar__item"><a href="{% url 'employee_create' %}">Добавить сотрудника</a></li>#}
+{##}
+{#            </ul>#}
+{#        </div>#}
+{#    {% endblock %}#}
 
     {% block content %}
         <section class="employee">
-            <div class="content_title">
-                 <h1 class="title">{{ title }} {{ employee_detail.user.last_name }}
-                              {{ employee_detail.user.first_name}} {{ employee_detail.surname}}</h1>
-                <div class="new_btn">
-                    <a href="{% url 'employee_update' employee_detail.user.id %}" class="new_link">Редактировать</a>
-                </div>
+            <div class="bread_crumbs">
+                <ul class="bread_crumbs__list">
+                    <li class="bread_crumbs_item"><a href="{% url 'employee_list' %}">Сотрудники </a></li>
+                    <li class="bread_crumbs_item">  ->{{ employee_detail.last_name }}
+                                  {{ employee_detail.first_name}} {{ employee_detail.profile.surname}}
+                    </li>
+                </ul>
             </div>
-            <hr>
 
-            <div class="detail__block">
+
+{#            <div class="content_title">#}
+{#                 <h1 class="title">{{ title }} </h1>#}
+{#                <div class="new_btn">#}
+{#                    <a href="{% url 'employee_update' employee_detail.id %}" class="new_link">Редактировать</a>#}
+{#                </div>#}
+{#            </div>#}
+{#            <hr>#}
+            <div class="profile_user">
+                <div class="person_info">
+                    <div class="profile__photo">
+                        <img class="user__photo" src="{% static 'supervision/image/user.png' %}" alt="">
+                    </div>
+
+                    <div class="detail__block">
             {% if employee_detail %}
 
-                <div class="detail__item">
-                    <div class="detail__label">Фамилия</div>
-                    <div class="detail__text">{{ employee_detail.user.last_name }}</div>
-                </div>
-                <div class="detail__item">
-                    <div class="detail__label">Имя</div>
-                    <div class="detail__text">{{ employee_detail.user.first_name }}</div>
-                </div>
-                <div class="detail__item">
-                    <div class="detail__label">Отчество</div>
-                    <div class="detail__text">{{ employee_detail.user.profile.surname }}</div>
-                </div>
-                <div class="detail__item">
-                    <div class="detail__label">Дата рождения</div>
-                    <div class="detail__text">{{ employee_detail.user.profile.birth_date }}</div>
+                        <div class="detail__item">
+                            <div class="detail__label">Фамилия</div>
+                            <div class="detail__text">{{ employee_detail.last_name }}</div>
+                        </div>
+                        <div class="detail__item">
+                            <div class="detail__label">Имя</div>
+                            <div class="detail__text">{{ employee_detail.first_name }}</div>
+                        </div>
+                        <div class="detail__item">
+                            <div class="detail__label">Отчество</div>
+                            <div class="detail__text">{{ employee_detail.profile.surname }}</div>
+                        </div>
+                        <div class="detail__item">
+                            <div class="detail__label">Дата рождения</div>
+                            <div class="detail__text">{{ employee_detail.profile.birth_date }}</div>
+                        </div>
+
+                        {% if death_date %}
+                        <div class="detail__item">
+                            <div class="detail__label">Дата смерти</div>
+                            <div class="detail__text">{{ employee_detail.profile.death_date }}</div>
+                        </div>
+                        {% endif %}
+
+                        <div class="detail__item">
+                            <div class="detail__label">Должность</div>
+                            <div class="detail__text">{{ current_position }}</div>
+                        </div>
+                     </div>
+
                 </div>
 
-                {% if death_date %}
-                <div class="detail__item">
-                    <div class="detail__label">Дата смерти</div>
-                    <div class="detail__text">{{ employee_detail.user.profile.death_date }}</div>
+
+                <div class="person_attestation">
+{#                {% if career_list %}#}
+                        <div class="person__block">
+
+                            <table class="person__table">
+                                <tr>
+                                    <th class="person__table_head">Аттестация</th>
+                                    <th class="person__table_head">сдана</th>
+                                    <th class="person__table_head">годна до</th>
+                                    <th class="person__table_head">осталось</th>
+                                </tr>
+{#                              {% for career in career_list %}#}
+                                 <tr>
+                                    <td class="person__table_data">АЭС</td>
+                                    <td class="person__table_data">26.07.2005</td>
+                                    <td class="person__table_data">14.02.2008</td>
+                                    <td class="person__table_data">45 мес</td>
+                                </tr>
+{#                              {% endfor %}#}
+                                <tr>
+                                    <td class="person__table_data">БП</td>
+                                    <td class="person__table_data">26.07.2005</td>
+                                    <td class="person__table_data">14.02.2008</td>
+                                    <td class="person__table_data">156 дней</td>
+                                </tr>
+                                <tr>
+                                    <td class="person__table_data">АТРМОАЛ</td>
+                                    <td class="person__table_data">26.07.2005</td>
+                                    <td class="person__table_data">14.02.2008</td>
+                                    <td class="person__table_data">5 мес 156 дней</td>
+                                </tr>
+                                <tr>
+                                    <td class="person__table_data">ТЬЛАП</td>
+                                    <td class="person__table_data">26.07.2005</td>
+                                    <td class="person__table_data">14.02.2008</td>
+                                    <td class="person__table_data">5 мес 156 дней</td>
+                                </tr>
+                                <tr>
+                                    <td class="person__table_data">Электробезопасность</td>
+                                    <td class="person__table_data">26.07.2005</td>
+                                    <td class="person__table_data">14.02.2008</td>
+                                    <td class="person__table_data">5 мес 156 дней</td>
+                                </tr>
+
+                            </table>
+
+                        </div>
+{#                    {% endif %}#}
                 </div>
-                {% endif %}
 
-                <div class="detail__item">
-                    <div class="detail__label">Должность</div>
-                    <div class="detail__text">{{ current_position }}</div>
-                </div>
-             </div>
 
-                    {% if career_list %}
-                        <div class="detail__block">
-                            Карьера:
-                            {% for career in career_list %}
+                <div class="person_trips">
+{#                    {% if career_list %}#}
+                        <div class="person__block">
 
-                                <div class="detail__item">
-                                    <div class="detail__label">{{ career.position.name }}</div>
-                                    <div class="detail__text">с {{ career.start_date }}
-                                        {% if career.end_date %}
-                                            по{{ career.end_date }}
+                            <table class="person__table">
+                                <tr class="person__table_row">
+                                    <th class="person__table_head">Командировки</th>
+                                    <th class="person__table_head">с</th>
+                                    <th class="person__table_head">по</th>
+                                    <th class="person__table_head">продолжительность</th>
+                                </tr>
+{#                              {% for career in career_list %}#}
+                                 <tr class="person__table_row">
+                                    <td class="person__table_data">Гусиноозерская ТЭЦ</td>
+                                    <td class="person__table_data">26.07.2005</td>
+                                    <td class="person__table_data">
+                                         {% if career.end_date %}
+                                            {{ career.end_date }}
                                         {% else %}
                                             по настоящее время
                                         {% endif %}
-                                    </div>
-                                </div>
+                                    </td>
+                                    <td class="person__table_data">20лет 5 мес</td>
+                                </tr>
+{#                              {% endfor %}#}
+                                <tr class="person__table_row">
+                                    <td class="person__table_data">Гусиноозерская ТЭЦ</td>
+                                    <td class="person__table_data">26.07.2005</td>
+                                    <td class="person__table_data">14.02.2008</td>
+                                    <td class="person__table_data">5 мес 156 дней</td>
+                                </tr>
+                                <tr class="person__table_row">
+                                    <td class="person__table_data">Гусиноозерская ТЭЦ</td>
+                                    <td class="person__table_data">26.07.2005</td>
+                                    <td class="person__table_data">14.02.2008</td>
+                                    <td class="person__table_data">5 мес 156 дней</td>
+                                </tr>
+                                <tr class="person__table_row">
+                                    <td class="person__table_data">Гусиноозерская ТЭЦ</td>
+                                    <td class="person__table_data">26.07.2005</td>
+                                    <td class="person__table_data">14.02.2008</td>
+                                    <td class="person__table_data">5 мес 156 дней</td>
+                                </tr>
+                                <tr class="person__table_row">
+                                    <td class="person__table_data">Гусиноозерская ТЭЦ</td>
+                                    <td class="person__table_data">26.07.2005</td>
+                                    <td class="person__table_data">14.02.2008</td>
+                                    <td class="person__table_data">5 мес 156 дней</td>
+                                </tr>
+                                <tr class="person__table_row">
+                                    <td class="person__table_data">Гусиноозерская ТЭЦ</td>
+                                    <td class="person__table_data">26.07.2005</td>
+                                    <td class="person__table_data">14.02.2008</td>
+                                    <td class="person__table_data">5 мес 156 дней</td>
+                                </tr>
+                            </table>
 
-                            {% endfor %}
                         </div>
-                    {% endif %}
+{#                    {% endif %}#}
+                </div>
+                {% if career_list %}
+                <div class="person_career">
+
+                        <div class="person__block">
+{#                            <div class="detail__block_title">#}
+{#                                Карьера:#}
+{#                            </div>#}
+                            <table class="person__table">
+                                <tr class="person__table_row">
+                                    <th class="person__table_head">Карьера:</th>
+                                    <th class="person__table_head">с</th>
+                                    <th class="person__table_head">по</th>
+                                    <th class="person__table_head">стаж</th>
+                                </tr>
+                              {% for career in career_list %}
+                                 <tr class="person__table_row">
+                                    <td class="person__table_data">{{ career.user.position.name }}</td>
+                                    <td class="person__table_data">{{ career.start_date|date:"d.m.Y" }}</td>
+                                    <td class="person__table_data">
+                                         {% if career.end_date %}
+                                            {{ career.end_date|date:"d.m.Y" }}
+                                        {% else %}
+                                            по настоящее время
+                                        {% endif %}
+                                    </td>
+                                    <td class="person__table_data">20лет 5 мес</td>
+                                </tr>
+
+                              {% endfor %}
+                            </table>
+
+                        </div>
+
+                </div>
+                {% endif %}
+            </div>
+
 
 
                 {% else %}

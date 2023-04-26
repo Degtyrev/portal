@@ -1,0 +1,26 @@
+{% load static %}
+
+    <div class="auth_user">
+        <a href="{% url 'employee_detail' user.pk %}">
+            <img class="auth_user__photo" src="{% static 'supervision/image/user.png'%}" alt="">
+        </a>
+        <div class="auth_user__name">
+            <p class="auth_user__info">{{ user.first_name }}</p>
+            <p class="auth_user__info">{{ user.last_name }}</p>
+        </div>
+        <a class="exit__link" href="{% url 'logout'%}">выйти</a>
+    </div>
+
+    <div class="nav__menu">
+        <ul class="nav__menu_list">
+            {% for m in menu %}
+                {{m.url_menu}}
+            <li class="nav__menu_item">
+                <a class="nav__menu_link" href="{{ m.url_menu}}" title="{{ m.title_menu }}">
+                    <img class="nav__menu_img" src="{% static  m.image %}" alt="" >
+                </a>
+            </li>
+            <hr>
+            {% endfor %}
+        </ul>
+    </div>

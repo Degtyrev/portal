@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {% load static %}
+{#    {% load supervision_tags %}#}
+
     <link rel="stylesheet" href="{% static 'supervision/css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'supervision/css/styles.css' %}">
     <script src="{% static 'supervision/js/main.js' %}"></script>
@@ -22,34 +24,58 @@
     <section class="nav">
         <!-- Блок панели навигации-->
         {% block navigation %}
-            <div class="nav__logo">
-                <p class="logo__text"><a href="{% url 'index' %}">ОШМ</a></p>
-            </div>
-
-            <div class="nav__menu">
-                <ul class="nav__menu_list">
-                    <li class="nav__menu_item"><a class="nav__menu_link" href="{% url 'business_trip' %}">Командировка</a></li>
-                    <li class="nav__menu_item"><a class="nav__menu_link" href="{% url 'mismatch_list' %}">Несоответствия</a></li>
-                    <li class="nav__menu_item"><a class="nav__menu_link" href="#">Нерешенные вопросы</a></li>
-                </ul>
-            </div>
-
             <div class="auth_user">
-                <div class="auth_user__name">
-                    <p>Вы вошли как: <span>{{ user.first_name }} {{ user.last_name }}</span></p>
+                    <a href="{% url 'employee_detail' user.pk %}">
+                        <img class="auth_user__photo" src="{% static 'supervision/image/user.png'%}" alt="">
+                    </a>
+                    <div class="auth_user__name">
+                        <p class="auth_user__info">{{ user.first_name }}</p>
+                        <p class="auth_user__info">{{ user.last_name }}</p>
+                    </div>
+                    <a class="exit__link" href="{% url 'logout'%}">выйти</a>
                 </div>
-                <a class="exit__link" href="{% url 'logout'%}">Выйти</a>
-            </div>
 
+                <div class="nav__menu">
+                    <ul class="nav__menu_list">
+{#                        {% for m in menu %}#}
+{#                            {{m.url_menu}}#}
+                        <li class="nav__menu_item">
+                            <a class="nav__menu_link" href="{% url 'index' %}" title="Главная">
+                                <img class="nav__menu_img" src="{% static  'supervision/image/home.png' %}" alt="" >
+                            </a>
+                        </li>
+                        <hr>
+                        <li class="nav__menu_item">
+                            <a class="nav__menu_link" href="{% url 'business_trip' %}" title="Командировки">
+                                <img class="nav__menu_img" src="{% static  'supervision/image/trip.png' %}" alt="" >
+                            </a>
+                        </li>
+                        <hr>
+                        <li class="nav__menu_item">
+                            <a class="nav__menu_link" href="{% url 'mismatch_list' %}" title="Несоответствия">
+                                <img class="nav__menu_img" src="{% static  'supervision/image/mismatch.png' %}" alt="" >
+                            </a>
+                        </li>
+                        <hr>
+                        <li class="nav__menu_item">
+                            <a class="nav__menu_link" href="{% url 'employee_list' %}" title="Сотрудники">
+                                <img class="nav__menu_img" src="{% static  'supervision/image/employee.png' %}" alt="" >
+                            </a>
+                        </li>
+                        <hr>
+                        <li class="nav__menu_item">
+                            <a class="nav__menu_link" href="{% url 'place_list' %}" title="Объекты">
+                                <img class="nav__menu_img" src="{% static  'supervision/image/place.png' %}" alt="" >
+                            </a>
+                        </li>
+                        <hr>
+{#                        {% endfor %}#}
+                    </ul>
+                </div>
         {% endblock %}
     </section>
 
     <section class="content">
-        <!-- Блок левого меню -->
-        {% block sidebar %}
-
-        {% endblock %}
-
         <!-- Блок контента -->
         <div class="main">
             {% block content %}
