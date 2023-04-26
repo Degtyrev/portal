@@ -40,7 +40,7 @@ class CreateBusinessTripModelForm(forms.ModelForm):
 
 
 class CreateMismatchForm(forms.Form):
-    place = forms.ModelChoiceField(queryset=Place.objects.filter(status__exact='act'),
+    place = forms.ModelChoiceField(queryset=Place.objects.all(),
                                    label='объект', empty_label='выберите объект',
                                    widget=forms.Select(attrs={'class': 'form_input', 'autocomplete': 'on'}))
     type = forms.ChoiceField(label='тип несоответстия', widget=forms.RadioSelect(attrs={'class': 'form_input'}))

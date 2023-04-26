@@ -82,3 +82,12 @@ urlpatterns += [
     path('solution/<int:pk>/update/', views.SolutionUpdate.as_view(), name='solution_update'),
     path('solution/<int:pk>/delete/', views.SolutionDelete.as_view(), name='solution_delete'),
 ]
+
+urlpatterns += [
+    path('place_status/', views.place_status_list, name='place_status_list'),
+    path('status_place/<int:status_id>/', views.place_status_show, name='status_place'),
+    path('place_status/<int:pk>/', views.place_status_detail, name='place_status_detail'),
+    path('place_status/create/', views.PlaceStatusCreate.as_view(), name='place_status_create'),
+    path('place_status/<int:pk>/update/', views.PlaceStatusUpdate.as_view(), name='place_status_update'),
+    path('place_status/<int:pk>/delete/', views.PlaceStatusDelete.as_view(), name='place_status_delete'),
+]

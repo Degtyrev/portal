@@ -26,7 +26,7 @@ menu = [
 #----------- Главная Main -----------
 def index(request):
     num_employeer = User.objects.filter(is_active=1).count()
-    num_place = Place.objects.filter(status='Действующий').count()  # Метод 'all()' применён по умолчанию.
+    num_place = Place.objects.filter(status=2).count()  # Метод 'all()' применён по умолчанию.
 
     # Отрисовка HTML-шаблона index.html с данными внутри
     # переменной контекста context
@@ -225,15 +225,16 @@ class MismatchDelete(DeleteView):
 
 
 def place_list(request):
-    place_list = Place.objects.filter(status__exact='Действующий')
-
+    place_list = Place.objects.filter(status__exact=2)
+    place_status = PlaceStatus.objects.all()
     return render(
         request,
         'supervision/place/place_list.html',
         context={
             'title': 'Список Объектов',
             'place_list': place_list,
-            'menu': menu
+            'place_status': place_status,
+            'place_selected': 2,
         },
     )
 
@@ -561,3 +562,62 @@ class SolutionUpdate(UpdateView):
 class SolutionDelete(DeleteView):
     model = Solution
     success_url = reverse_lazy('solution_list')
+
+#--------------- Статус объекта ----------------
+
+def place_status_list(request):
+    place_status_list = PlaceStatus.objects.all()
+
+    return render(
+        request,
+        'supervision/place/place_status_list.html',
+        context={
+            'title': 'Список статусов Объектов',
+            'place_status_list': place_status_list,
+
+        },
+    )
+
+def place_status_detail(request, pk):
+    place_status_detail = PlaceStatus.objects.get(pk=pk)
+
+    return render(
+        request,
+        'supervision/place/place_status_detail.html',
+        context={
+            'title': 'Статус объекта',
+            'place_status_detail': place_status_detail,
+
+        },
+    )
+
+def place_status_show(request, status_id):
+    place_list = Place.objects.filter(status__exact=status_id)
+    place_status = PlaceStatus.objects.all()
+
+    return render(
+        request,
+        'supervision/place/place_list.html',
+        context={
+            'title': 'Список Объектов',
+            'place_list': place_list,
+            'place_status': place_status,
+            'place_selected': status_id,
+        },
+    )
+
+
+
+# --------- Редактирование, обновление, удаление  формы чертеж
+
+class PlaceStatusCreate(CreateView):
+    model = Solution
+    fields = '__all__'
+
+class PlaceStatusUpdate(UpdateView):
+    model = Solution
+    fields = '__all__'
+
+class PlaceStatusDelete(DeleteView):
+    model = Solution
+    success_url = reverse_lazy('place_status_list')

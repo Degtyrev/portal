@@ -61,20 +61,28 @@ class Place(models.Model):
     project_manager = models.CharField(max_length=100, help_text='руководитель проекта', null=True, blank=True, verbose_name='руководитель проекта')
     chief_engineer = models.CharField(max_length=100, help_text='главный инженер проекта', null=True, blank=True, verbose_name='главный инженер проекта')
     order = models.IntegerField(help_text='Номер Заказа', null=True, blank=True, verbose_name='Номер Заказа')
-    STATUS_OBJ = (
-        ('Перспективный', 'Перспективный'),
-        ('Действующий', 'Действующий'),
-        ('Завершенный', 'Завершенный'),
-        ('Отмененный', 'Отмененный'),
-    )
-    status = models.CharField(max_length=20, choices=STATUS_OBJ, default='Перспективный', verbose_name='Статус')
+    # STATUS_OBJ = (
+    #     ('Перспективный', 'Перспективный'),
+    #     ('Действующий', 'Действующий'),
+    #     ('Завершенный', 'Завершенный'),
+    #     ('Отмененный', 'Отмененный'),
+    # )
+    status = models.ForeignKey('PlaceStatus', on_delete=models.SET_NULL,  null=True, blank=True, verbose_name='Статус')
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('place_detail', args=[str(self.id)])
+        return reverse('place_detail', args=[int(self.id)])
 
+class PlaceStatus(models.Model):
+    name = models.CharField(max_length=250, verbose_name='статус объекта')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('status_place', kwargs={'status_id': self.id})
 
 
 class BusinessTrip(models.Model):
@@ -89,7 +97,7 @@ class BusinessTrip(models.Model):
         return f'{self.place} {self.purpose}'
 
     def get_absolute_url(self):
-        return reverse('business_trip_detail', args=[str(self.id)])
+        return reverse('business_trip_detail', args=[int(self.id)])
 
     class Meta:
         permissions =(('can_extension', 'Может продливать командировку'),)

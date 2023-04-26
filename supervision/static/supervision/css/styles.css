@@ -300,7 +300,7 @@ tr:hover td {
 .list__filter_link{
 
 }
-.activ_item{
+.selected_item{
     color: coral;
     border-color: coral;
 

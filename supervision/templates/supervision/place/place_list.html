@@ -5,16 +5,7 @@
     {% endblock %}
 
 
-    {% block sidebar %}
-        <div class="sidebar">
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'place_create' %}">создать Объект</a></li>
-
-            </ul>
-        </div>
-    {% endblock %}
-
-    {% block content %}
+{% block content %}
         {% if user.is_staff %}
 
         <section class="section">
@@ -26,10 +17,13 @@
             </div>
            <div class="list__filter">
                <ul class="list__filter_list">
-                   <li class="list__filter_item"><a class="list__filter_link" href="#">Перспективный</a></li>
-                   <li class="list__filter_item activ_item"><a class="list__filter_link " href="#">Действующий</a></li>
-                   <li class="list__filter_item"><a class="list__filter_link" href="#">Завершенный</a></li>
-                   <li class="list__filter_item"><a class="list__filter_link" href="#">Отмененный</a></li>
+                   {% for status in place_status %}
+                       {% if status.pk == place_selected %}
+                   <li class="list__filter_item selected_item">{{ status.name}}</li>
+                       {% else %}
+                   <li class="list__filter_item"><a class="list__filter_link" href="{{ status.get_absolute_url }}">{{ status.name}}</a></li>
+                       {% endif %}
+               {% endfor %}
                </ul>
            </div>
 
