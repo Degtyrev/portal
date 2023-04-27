@@ -91,3 +91,12 @@ urlpatterns += [
     path('place_status/<int:pk>/update/', views.PlaceStatusUpdate.as_view(), name='place_status_update'),
     path('place_status/<int:pk>/delete/', views.PlaceStatusDelete.as_view(), name='place_status_delete'),
 ]
+
+urlpatterns += [
+    path('type_mismatch/', views.type_mismatch_list, name='type_mismatch_list'),
+    # path('status_place/<int:status_id>/', views.type_mismatch_show, name='status_place'),
+    path('type_mismatch/<int:pk>/', views.type_mismatch_detail, name='type_mismatch_detail'),
+    path('type_mismatch/create/', views.TypeMismatchCreate.as_view(), name='type_mismatch_create'),
+    path('type_mismatch/<int:pk>/update/', views.TypeMismatchUpdate.as_view(), name='type_mismatch_update'),
+    path('type_mismatch/<int:pk>/delete/', views.TypeMismatchDelete.as_view(), name='type_mismatch_delete'),
+]

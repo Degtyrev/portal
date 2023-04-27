@@ -95,7 +95,7 @@ def trip(request, pk):
 
 def mismatch_list(request):
     mismatches = Mismatch.objects.all()
-    place = Place.objects.filter(status__exact='prs')
+    place = Place.objects.filter(status__exact=2)
 
     return render(
         request,
@@ -621,3 +621,64 @@ class PlaceStatusUpdate(UpdateView):
 class PlaceStatusDelete(DeleteView):
     model = Solution
     success_url = reverse_lazy('place_status_list')
+
+
+#--------------- Типы несоответствий ----------------
+
+def type_mismatch_list(request):
+    type_mismatch_list = TypeMismatch.objects.all()
+
+    return render(
+        request,
+        'supervision/mismatch/type_mismatch_list.html',
+        context={
+            'title': 'Список Типов носооветствий',
+            'type_mismatch_list': type_mismatch_list,
+
+        },
+    )
+
+def type_mismatch_detail(request, pk):
+    type_mismatch_detail = PlaceStatus.objects.get(pk=pk)
+
+    return render(
+        request,
+        'supervision/mismatch/type_mismatch_detail.html',
+        context={
+            'title': 'Тип несоответствия',
+            'type_mismatch_detail': type_mismatch_detail,
+
+        },
+    )
+
+def type_mismatch_show(request, status_id):
+    # type_mismatch_list = Place.objects.filter(status__exact=status_id)
+    # place_status = PlaceStatus.objects.all()
+    #
+    # return render(
+    #     request,
+    #     'supervision/place/place_list.html',
+    #     context={
+    #         'title': 'Список Объектов',
+    #         'place_list': place_list,
+    #         'place_status': place_status,
+    #         'place_selected': status_id,
+    #     },
+    # )
+    pass
+
+
+
+# --------- Редактирование, обновление, удаление  формы чертеж
+
+class TypeMismatchCreate(CreateView):
+    model = Solution
+    fields = '__all__'
+
+class TypeMismatchUpdate(UpdateView):
+    model = Solution
+    fields = '__all__'
+
+class TypeMismatchDelete(DeleteView):
+    model = Solution
+    success_url = reverse_lazy('type_mismatch_list')

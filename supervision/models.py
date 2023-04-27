@@ -61,13 +61,7 @@ class Place(models.Model):
     project_manager = models.CharField(max_length=100, help_text='руководитель проекта', null=True, blank=True, verbose_name='руководитель проекта')
     chief_engineer = models.CharField(max_length=100, help_text='главный инженер проекта', null=True, blank=True, verbose_name='главный инженер проекта')
     order = models.IntegerField(help_text='Номер Заказа', null=True, blank=True, verbose_name='Номер Заказа')
-    # STATUS_OBJ = (
-    #     ('Перспективный', 'Перспективный'),
-    #     ('Действующий', 'Действующий'),
-    #     ('Завершенный', 'Завершенный'),
-    #     ('Отмененный', 'Отмененный'),
-    # )
-    status = models.ForeignKey('PlaceStatus', on_delete=models.SET_NULL,  null=True, blank=True, verbose_name='Статус')
+    status = models.ForeignKey('PlaceStatus', on_delete=models.SET_NULL,  null=True, blank=True, verbose_name='Статус объекта')
 
     def __str__(self):
         return self.name
@@ -76,7 +70,7 @@ class Place(models.Model):
         return reverse('place_detail', args=[int(self.id)])
 
 class PlaceStatus(models.Model):
-    name = models.CharField(max_length=250, verbose_name='статус объекта')
+    name = models.CharField(max_length=250, verbose_name='статус объекта', null=True, blank=True,)
 
     def __str__(self):
         return self.name
@@ -109,11 +103,6 @@ class Group(models.Model):
     number = models.PositiveIntegerField(help_text='номер узла без родителя')
     suffix = models.CharField(max_length=10, help_text='суфикс номера', null=True, blank=True)
     name = models.CharField(max_length=200, help_text='наименование узла/подузла')
-
-
-    def check_parent(self):
-        if not self.parent:
-            return ""
 
 
     def __str__(self):
@@ -158,11 +147,7 @@ class Mismatch(models.Model):
     place = models.ForeignKey('Place', on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=400, help_text=' Краткое описание')
     text = models.TextField(help_text=' Полное описание')
-    TYPE = [
-        ('p', 'Конструкторское'),
-        ('m', 'Производстенное'),
-    ]
-    type = models.CharField(max_length=2, choices=TYPE, help_text='Тип несоответствия')
+    type = models.ForeignKey('TypeMismatch', on_delete=models.SET_NULL, null=True, blank=True)
     file = models.FileField(upload_to='media/mismatch/', null=True, blank=True)
     image = models.ImageField(upload_to='media/mismatch/images/', null=True, blank=True)
     details = models.ManyToManyField('Detail', through='Irrelevant')
@@ -171,8 +156,17 @@ class Mismatch(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('mismatch_detail', args=[str(self.id)])
+        return reverse('mismatch_detail', args=[int(self.pk)])
 
+
+class TypeMismatch(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Тип несоответствия', null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return receiver('type_mismatch', args=[int(self.pk)])
 
 class Irrelevant(models.Model):
     mismatch = models.ForeignKey('Mismatch', on_delete=models.CASCADE)
