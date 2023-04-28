@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+    {% block content %}
+        <div class="sidebar">
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="{% url 'place_status_list' %}">Статусы объекта</a></li>
+            </ul>
+            <hr>
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="{% url 'type_mismatch_list' %}">Типы несоответствий</a></li>
+            </ul>
+            <hr>
+            <ul class="sidebar__list">
+                <li class="sidebar__item"><a href="{% url 'position_list' %}">Список Должностей</a></li>
+            </ul>
+
+        </div>
+
+    {% endblock %}

@@ -46,6 +46,25 @@ def index(request):
         'index.html',
         context=context,
     )
+
+#----------- Страница добавления админка -----------
+def admin_page(request):
+
+    context = {
+        'title': "Административная страница",
+    }
+
+    return render(
+        request,
+        'supervision/settings/admin_page.html',
+        context=context,
+    )
+
+
+
+
+
+
 #----------- Командировки  -----------
 
 def business_trip(request):
@@ -166,6 +185,7 @@ def extension_business_trip(request, pk):
 # ----------------Редактирование, обновление, удаление формы  командировки
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
 from django.urls import reverse_lazy
 
 
@@ -443,14 +463,18 @@ def employee_detail(request, pk):
     )
 
 # --------- Редактирование, обновление, удаление  формы сотрудники
-class EmployeeCreate(CreateView):
-    form_class = AddEmployeeForm # форма создания
-    template_name = 'supervision/employee/employee_create.html' # адрес шаблона
-    success_url = reverse_lazy('employee_list') # переадресация на страницу при успешном добавлении записи
 
-    model = Profile
+# -----   СОТРУДНИКА ДОБАВЛЯЕТ АДМИН!!!!
+#  ----   СОТРУДНИКА НЕЛЬЗЯ УДАЛИТЬ!!!
 
-    fields = '__all__'
+# class EmployeeCreate(CreateView):
+#     form_class = AddEmployeeForm # форма создания
+#     template_name = 'supervision/employee/employee_create.html' # адрес шаблона
+#     success_url = reverse_lazy('employee_list') # переадресация на страницу при успешном добавлении записи
+#
+#     model = Profile
+#
+#     fields = '__all__'
     # template_name =
     # выборка данных из модели в коллекции  -> object_list, для задания своей переменной использовать
     # context_object_name = 'имя переменной'
@@ -466,16 +490,9 @@ class EmployeeCreate(CreateView):
     # def get_queryset(self):
     #     return Profile.objects.filter(параметы выборки)
 
-
-
-
 class EmployeeUpdate(UpdateView):
     model = Profile
     fields = '__all__'
-
-class EmployeeDelete(DeleteView):
-    model = Profile
-    success_url = reverse_lazy('employee_list')
 
 
 #--------------- Служебные письма----------------
@@ -563,6 +580,8 @@ class SolutionDelete(DeleteView):
     model = Solution
     success_url = reverse_lazy('solution_list')
 
+
+
 #--------------- Статус объекта ----------------
 
 def place_status_list(request):
@@ -578,48 +597,54 @@ def place_status_list(request):
         },
     )
 
-def place_status_detail(request, pk):
-    place_status_detail = PlaceStatus.objects.get(pk=pk)
+# def place_status_detail(request, pk):
+#     place_status_detail = PlaceStatus.objects.get(pk=pk)
+#
+#     return render(
+#         request,
+#         'supervision/place/place_status_detail.html',
+#         context={
+#             'title': 'Статус объекта',
+#             'place_status_detail': place_status_detail,
+#
+#         },
+#     )
 
-    return render(
-        request,
-        'supervision/place/place_status_detail.html',
-        context={
-            'title': 'Статус объекта',
-            'place_status_detail': place_status_detail,
-
-        },
-    )
-
-def place_status_show(request, status_id):
-    place_list = Place.objects.filter(status__exact=status_id)
-    place_status = PlaceStatus.objects.all()
-
-    return render(
-        request,
-        'supervision/place/place_list.html',
-        context={
-            'title': 'Список Объектов',
-            'place_list': place_list,
-            'place_status': place_status,
-            'place_selected': status_id,
-        },
-    )
-
-
+# def place_status_show(request, status_id):
+#     place_list = Place.objects.filter(status__exact=status_id)
+#     place_status = PlaceStatus.objects.all()
+#
+#     return render(
+#         request,
+#         'supervision/place/place_list.html',
+#         context={
+#             'title': 'Список Объектов',
+#             'place_list': place_list,
+#             'place_status': place_status,
+#             'place_selected': status_id,
+#         },
+#     )
 
 # --------- Редактирование, обновление, удаление  формы чертеж
 
 class PlaceStatusCreate(CreateView):
-    model = Solution
-    fields = '__all__'
+    model = PlaceStatus
+    template_name = 'supervision/place/placestatus_form.html'
+    fields = ['name']
+    success_url = reverse_lazy('place_status_list')
+
+
+
 
 class PlaceStatusUpdate(UpdateView):
-    model = Solution
-    fields = '__all__'
+    model = PlaceStatus
+    template_name = 'supervision/place/placestatus_form.html'
+    fields = ['name']
+    success_url = reverse_lazy('place_status_list')
 
 class PlaceStatusDelete(DeleteView):
-    model = Solution
+    model = PlaceStatus
+    template_name = 'supervision/place/placestatus_confirm_delete.html'
     success_url = reverse_lazy('place_status_list')
 
 
@@ -638,18 +663,18 @@ def type_mismatch_list(request):
         },
     )
 
-def type_mismatch_detail(request, pk):
-    type_mismatch_detail = PlaceStatus.objects.get(pk=pk)
-
-    return render(
-        request,
-        'supervision/mismatch/type_mismatch_detail.html',
-        context={
-            'title': 'Тип несоответствия',
-            'type_mismatch_detail': type_mismatch_detail,
-
-        },
-    )
+# def type_mismatch_detail(request, pk):
+#     type_mismatch_detail = PlaceStatus.objects.get(pk=pk)
+#
+#     return render(
+#         request,
+#         'supervision/mismatch/type_mismatch_detail.html',
+#         context={
+#             'title': 'Тип несоответствия',
+#             'type_mismatch_detail': type_mismatch_detail,
+#
+#         },
+#     )
 
 def type_mismatch_show(request, status_id):
     # type_mismatch_list = Place.objects.filter(status__exact=status_id)
@@ -667,18 +692,58 @@ def type_mismatch_show(request, status_id):
     # )
     pass
 
-
-
 # --------- Редактирование, обновление, удаление  формы чертеж
 
 class TypeMismatchCreate(CreateView):
-    model = Solution
-    fields = '__all__'
+    model = TypeMismatch
+    template_name = 'supervision/mismatch/typemismatch_form.html'
+    fields = ['name']
+    success_url = reverse_lazy('type_mismatch_list')
 
 class TypeMismatchUpdate(UpdateView):
-    model = Solution
-    fields = '__all__'
+    model = TypeMismatch
+    template_name = 'supervision/mismatch/typemismatch_form.html'
+    fields = ['name']
+    success_url = reverse_lazy('type_mismatch_list')
 
 class TypeMismatchDelete(DeleteView):
-    model = Solution
+    model = TypeMismatch
+    template_name = 'supervision/mismatch/typemismatch_confirm_delete.html'
+    fields = ['name']
     success_url = reverse_lazy('type_mismatch_list')
+
+
+#--------------- Должности ----------------
+
+def position_list(request):
+    position_list = Position.objects.all()
+
+    return render(
+        request,
+        'supervision/position/position_list.html',
+        context={
+            'title': 'Список Должностей',
+            'position_list': position_list,
+        },
+    )
+
+
+# --------- Редактирование, обновление, удаление  формы чертеж
+class PositionCreate(CreateView):
+    model = Position
+    template_name = 'supervision/position/positino_form.html'
+    fields = ['name']
+    success_url = reverse_lazy('position_list')
+
+class PositionUpdate(UpdateView):
+    model = Position
+    template_name = 'supervision/position/positino_form.html'
+    fields = ['name']
+    success_url = reverse_lazy('position_list')
+
+class PositionDelete(DeleteView):
+    model = Position
+    template_name = 'supervision/position/position_confirm_delete.html'
+    fields = ['name']
+    success_url = reverse_lazy('position_list')
+

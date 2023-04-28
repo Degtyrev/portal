@@ -44,7 +44,7 @@ class Career(models.Model):
 
 
 class Position(models.Model):
-    name = models.CharField(max_length=250, verbose_name='Должность')
+    name = models.CharField(max_length=250, verbose_name='Должность', unique=True)
 
     def __str__(self):
         return self.name
@@ -76,7 +76,7 @@ class PlaceStatus(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('status_place', kwargs={'status_id': self.id})
+        return reverse('place_status_detail', args=[int(self.pk)])
 
 
 class BusinessTrip(models.Model):
@@ -160,7 +160,7 @@ class Mismatch(models.Model):
 
 
 class TypeMismatch(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Тип несоответствия', null=True, blank=True)
+    name = models.CharField(max_length=50, verbose_name='Тип несоответствия', null=True, blank=True, unique=True)
 
     def __str__(self):
         return self.name
@@ -212,7 +212,7 @@ class Solution(models.Model):
 
 
 class Status(models.Model):
-    name = models.CharField(max_length=200, help_text='Статус')
+    name = models.CharField(max_length=200, help_text='Статус', unique=True)
 
     def __str__(self):
         return self.name

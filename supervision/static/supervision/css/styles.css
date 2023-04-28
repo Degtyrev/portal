@@ -223,7 +223,40 @@ text-align: right;
 .form_btn{
     margin-left: 195px;
 }
+
+.errorlist{
+    color: red;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    border: 2px solid coral;
+    padding: 20px;
+    border-radius: 20px;
+}
 /*================== FORMS end ======================*/
+
+
+
+/*================ Страница подтверждения удаления  =========  */
+.confirm_delete__title{
+    margin-top: 20px;
+}
+.confirm_delete__text{
+    margin-top: 20px;
+}
+
+.confirm_delete__form{
+    margin-top: 50px;
+}
+.confirm_delete__btn{
+    margin-right: 50px;
+}
+.confirm_delete__cancel{
+
+}
+/*================ Страница подтверждения удаления  =========  */
+
+
 
 /*================ Стили списков таблицы  =========  */
 .list__section{
@@ -275,6 +308,7 @@ tr:hover td {
 .list__link{
     display: inline-block;
     line-height: 0;
+    margin-right: 20px;
 }
 .list__icon{
     width: 20px;
@@ -352,7 +386,7 @@ tr:hover td {
 .card__text{
 
 }
-/*================ Списоки элементовend ========= */
+/*================ Списоки элементов end ========= */
 
 
 /*================ Катрочка элемента =========  */

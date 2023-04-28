@@ -1,0 +1,43 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+{% block content %}
+
+    <form action="" method="post" class="form_wrap">
+    {% csrf_token %}
+
+        <div class="form_title">
+            <h2>Должность</h2>
+        </div>
+        <div class="form_error">
+            {{ form.non_field_errors }}
+        </div>
+
+        <div class="form_section">
+            <div class="form_section_name">
+                <h2>данные должности</h2>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                    {{ form.name }}
+                </div>
+                <div class="form_error">{{ form.name.errors }}</div>
+            </div>
+        </div>
+
+        <biv class="form_btn">
+          <input type="submit" value="Сохранить" id="create_type_mismatch" class="btn ">
+        </biv>
+        <biv class="form_btn">
+            <a href="{% url 'position_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
+        </biv>
+    </form>
+{% endblock %}

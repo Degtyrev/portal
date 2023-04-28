@@ -7,6 +7,7 @@ from django.urls import include
 urlpatterns = [
     path('', views.index, name='index'),
     path('main/', views.index, name='index'),
+    path('admin_page/', views.admin_page, name='admin_page')
 ]
 
 urlpatterns += [
@@ -62,9 +63,8 @@ urlpatterns += [
 urlpatterns += [
     path('employee/', views.employee_list, name='employee_list'),
     path('employee/<int:pk>/', views.employee_detail, name='employee_detail'),
-    path('employee/create/', views.EmployeeCreate.as_view(), name='employee_create'),
     path('employee/<int:pk>/update/', views.EmployeeUpdate.as_view(), name='employee_update'),
-    path('employee/<int:pk>/delete/', views.EmployeeDelete.as_view(), name='employee_delete'),
+
 ]
 
 urlpatterns += [
@@ -85,8 +85,8 @@ urlpatterns += [
 
 urlpatterns += [
     path('place_status/', views.place_status_list, name='place_status_list'),
-    path('status_place/<int:status_id>/', views.place_status_show, name='status_place'),
-    path('place_status/<int:pk>/', views.place_status_detail, name='place_status_detail'),
+    # path('status_place/<int:status_id>/', views.place_status_show, name='status_place'),
+    # path('place_status/<int:pk>/', views.place_status_detail, name='place_status_detail'),
     path('place_status/create/', views.PlaceStatusCreate.as_view(), name='place_status_create'),
     path('place_status/<int:pk>/update/', views.PlaceStatusUpdate.as_view(), name='place_status_update'),
     path('place_status/<int:pk>/delete/', views.PlaceStatusDelete.as_view(), name='place_status_delete'),
@@ -95,8 +95,16 @@ urlpatterns += [
 urlpatterns += [
     path('type_mismatch/', views.type_mismatch_list, name='type_mismatch_list'),
     # path('status_place/<int:status_id>/', views.type_mismatch_show, name='status_place'),
-    path('type_mismatch/<int:pk>/', views.type_mismatch_detail, name='type_mismatch_detail'),
+    # path('type_mismatch/<int:pk>/', views.type_mismatch_detail, name='type_mismatch_detail'),
     path('type_mismatch/create/', views.TypeMismatchCreate.as_view(), name='type_mismatch_create'),
     path('type_mismatch/<int:pk>/update/', views.TypeMismatchUpdate.as_view(), name='type_mismatch_update'),
     path('type_mismatch/<int:pk>/delete/', views.TypeMismatchDelete.as_view(), name='type_mismatch_delete'),
+]
+
+urlpatterns += [
+    path('position/', views.position_list, name='position_list'),
+    # path('position/<int:pk>/', views.position_detail, name='position_detail'),
+    path('position/create/', views.PositionCreate.as_view(), name='position_create'),
+    path('position/<int:pk>/update/', views.PositionUpdate.as_view(), name='position_update'),
+    path('position/<int:pk>/delete/', views.PositionDelete.as_view(), name='position_delete'),
 ]

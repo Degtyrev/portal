@@ -77,6 +77,10 @@ class CreatePlaceForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form_input', 'autocomplete': 'on'}),
         }
 
-
-class AddEmployeeForm(forms.Form):
-    pass
+# class CreatePlaceStatusForm(forms.ModelForm):
+#     class Meta:
+#         model = PlaceStatus
+#         fields = ['name']
+#         widgets = {
+#             'name': forms.TextInput(attrs={'class': 'form_input'})
+#         }

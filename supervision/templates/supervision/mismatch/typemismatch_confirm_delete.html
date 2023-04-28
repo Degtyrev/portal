@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1 class="confirm_delete__title">Удаление Типа Несоответствия</h1>
+
+<p class="confirm_delete__text">Вы уверенычто хотите удалить Тип: {{ typemismatch }}?</p>
+
+<form action="" method="POST" class="confirm_delete__form">
+  {% csrf_token %}
+  <input type="submit" action="" value="Да, удалить" class="confirm_delete__btn">
+ <a href="{% url 'place_status_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
+</form>
+
+{% endblock %}
