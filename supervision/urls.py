@@ -23,9 +23,12 @@ urlpatterns += [
     path('business_trip/', views.business_trip, name='business_trip'),
     path('business_trip/<int:pk>/', views.trip, name='business_trip_detail'),
     path('business_trip/<int:pk>/extension/', views.extension_business_trip, name='extension_business_trip'),
-    path('business_trip/create/', views.BusinessTripCreate.as_view(), name='business_trip_create'),
+    path('business_trip/create/', views.business_trip_create, name='business_trip_create'),
+    # path('business_trip/create/', views.BusinessTripCreate.as_view(), name='business_trip_create'),
     path('business_trip/<int:pk>/update/', views.BusinessTripUpdate.as_view(), name='business_trip_update'),
     path('business_trip/<int:pk>/delete/', views.BusinessTripDelete.as_view(), name='business_trip_delete'),
+
+    path('condition/<int:pk>/', views.condition_show, name='condition'),
 ]
 
 urlpatterns += [
@@ -85,7 +88,7 @@ urlpatterns += [
 
 urlpatterns += [
     path('place_status/', views.place_status_list, name='place_status_list'),
-    # path('status_place/<int:status_id>/', views.place_status_show, name='status_place'),
+    path('status_place/<int:pk>/', views.place_status_show, name='status_place'),
     # path('place_status/<int:pk>/', views.place_status_detail, name='place_status_detail'),
     path('place_status/create/', views.PlaceStatusCreate.as_view(), name='place_status_create'),
     path('place_status/<int:pk>/update/', views.PlaceStatusUpdate.as_view(), name='place_status_update'),
@@ -107,4 +110,12 @@ urlpatterns += [
     path('position/create/', views.PositionCreate.as_view(), name='position_create'),
     path('position/<int:pk>/update/', views.PositionUpdate.as_view(), name='position_update'),
     path('position/<int:pk>/delete/', views.PositionDelete.as_view(), name='position_delete'),
+]
+
+urlpatterns += [
+    path('condition_trip/', views.condition_trip_list, name='condition_trip_list'),
+    # path('condition_trip/<int:pk>/', views.condition_trip_detail, name='condition_trip_detail'),
+    path('condition_trip/create/', views.ConditionTripCreate.as_view(), name='condition_trip_create'),
+    path('condition_trip/<int:pk>/update/', views.ConditionTripUpdate.as_view(), name='condition_trip_update'),
+    path('condition_trip/<int:pk>/delete/', views.ConditionTripDelete.as_view(), name='condition_trip_delete'),
 ]

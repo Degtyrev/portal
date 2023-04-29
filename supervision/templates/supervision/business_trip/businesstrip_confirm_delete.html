@@ -1,21 +1,15 @@
- {% block title %}
-     <title>{{ title }}</title>
-{% endblock %}
-
-
-{% block sidebar %}
-    1
-{% endblock %}
+{% extends "base_generic.html" %}
 
 {% block content %}
 
-<h1>Удаление командиовки</h1>
+<h1 class="confirm_delete__title">Удаление командировки</h1>
 
-<p>Подтвердите удаление командировки {{ business_trip }}?</p>
+<p class="confirm_delete__text">Вы уверены что хотите удалить Командировку: {{ businesstrip }}?</p>
 
-<form action="" method="POST">
+<form action="" method="POST" class="confirm_delete__form">
   {% csrf_token %}
-  <input type="submit" value="Удалить" />
+  <input type="submit" action="" value="Да, удалить" class="confirm_delete__btn">
+ <a href="{% url 'business_trip' %}" class="confirm_delete__cancel btn" >Отменить</a>
 </form>
 
 {% endblock %}

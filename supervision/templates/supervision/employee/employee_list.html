@@ -19,9 +19,9 @@
         <section class="employee">
             <div class="content_title">
                  <h1 class="title">{{ title }}</h1>
-                <div class="new_btn">
-                    <a href="{% url 'employee_create' %}" class="new_link">+ Добавить</a>
-                </div>
+{#                <div class="new_btn">#}
+{#                    <a href="{% url 'employee_create' %}" class="new_link">+ Добавить</a>#}
+{#                </div>#}
             </div>
             <hr>
 
@@ -39,7 +39,7 @@
                         <div class="card__info">
                             <div class="card__item">
                                 <p class="card__label">Должность</p>
-                                <p class="card__text">{{employee.position}}</p>
+                                <p class="card__text">{{employee.position.name}}</p>
                             </div>
                         </div>
                     </div>

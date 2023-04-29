@@ -7,6 +7,20 @@ import datetime
 
 from django.urls import include
 
+
+# ___ for forms
+from .forms import *
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import permission_required
+
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+import datetime
+
+
+
 def pageNotFound(request, exception):
     return render(request, 'supervision/page404.html', context={'title': 'Страницы не существует'})
     # return redirect ('home', permanent=True) перенаправление на главную страницу , постоянный редирект,
@@ -62,31 +76,43 @@ def admin_page(request):
 
 
 
-
-
-
 #----------- Командировки  -----------
 
 def business_trip(request):
     date_today = datetime.date.today()
-    trips_current_user = BusinessTrip.objects.filter(activ__exact=True).filter(user_id__exact=request.user.pk)
-    trips_completed_user = BusinessTrip.objects.filter(activ__exact=False).filter(user_id__exact=request.user.pk)
-
-    trips_current = BusinessTrip.objects.filter(activ__exact=True)
-    trips_completed = BusinessTrip.objects.filter(activ__exact=False)
-
-    context = {
-                  'title': 'Командировки', 'trips_current': trips_current,
-                  'trips_completed': trips_completed,
-                  'trips_current_user': trips_current_user,
-                  'trips_completed_user': trips_completed_user,
-                  'menu': menu
-              }
+    trips_user = BusinessTrip.objects.filter(status__exact=2).filter(user_id__exact=request.user.pk)
+    trips = BusinessTrip.objects.filter(status__exact=2)
+    conditions = ConditionTrip.objects.all()
 
     return render(
         request,
         'supervision/business_trip/business_trip.html',
-        context=context,
+        context={
+            'title': 'Список Командировок',
+            'trips_user': trips_user,
+            'trips': trips,
+
+            'conditions': conditions,
+            'condition_selected': 2,
+        },
+    )
+
+
+def condition_show(request, pk):
+    trips_user = BusinessTrip.objects.filter(status__exact=pk).filter(user_id__exact=request.user.pk)
+    trips = BusinessTrip.objects.filter(status__exact=pk)
+    conditions = ConditionTrip.objects.all()
+
+    return render(
+        request,
+        'supervision/business_trip/business_trip.html',
+        context={
+            'title': 'Список Командировок',
+            'trips_user': trips_user,
+            'trips': trips,
+            'conditions': conditions,
+            'condition_selected': pk,
+        },
     )
 
 
@@ -100,7 +126,6 @@ def trip(request, pk):
                 'title': 'Командировка',
                 'trip': trip,
                 'date_today': date_today,
-                'menu': menu
               }
 
     return render(
@@ -108,6 +133,60 @@ def trip(request, pk):
         'supervision/business_trip/businesstrip_detail.html',
         context=context,
     )
+# @permission_required('catalog.can_mark_returned')
+
+# Обработка формы продления командировки
+
+def extension_business_trip(request, pk):
+    trip_extens = get_object_or_404(BusinessTrip, pk=pk)
+
+# If this is a POST request then process the Form data
+    if request.method == 'POST':
+        form = ExtensionBusinessTripForm(request.POST)
+        if form.is_valid():
+            # присваиваем значение их формы полю "end"
+            trip_extens.end = form.cleaned_data['extension_date']
+            trip_extens.save()
+            # redirect to a new URL:
+            return HttpResponseRedirect(reverse('business_trip'))
+    else:
+
+        form = ExtensionBusinessTripForm(initial={'extension_date': datetime.date.today()})
+
+    return render(request, 'supervision/business_trip/business_trip_extension.html',
+                  {'form': form, 'tripextens': trip_extens, 'title':'Продление командировки'})
+
+
+
+# ----------------Редактирование, обновление, удаление формы  командировки
+def business_trip_create(request):
+
+    return render(request, 'supervision/business_trip/business_trip_extension.html',
+                  {'form': form, 'tripextens': trip_extens, 'title': 'Продление командировки'})
+
+
+class BusinessTripCreate(CreateView):
+    model = BusinessTrip
+    template_name = 'supervision/business_trip/businesstrip_form.html'
+    # fields = ['name', 'equipment', 'equipment_type', 'contract',
+    #           'project_manager', 'chief_engineer', 'order', 'status']
+    # success_url = reverse_lazy('business_trip_detail')
+    fields = "__all__"
+
+
+class BusinessTripUpdate(UpdateView):
+    model = BusinessTrip
+    template_name = 'supervision/business_trip/businesstrip_form.html'
+    # fields = ['name', 'equipment', 'equipment_type', 'contract',
+    #           'project_manager', 'chief_engineer', 'order', 'status']
+    fields = "__all__"
+    # success_url = reverse_lazy('business_trip_detail')
+
+
+class BusinessTripDelete(DeleteView):
+    model = BusinessTrip
+    template_name = 'supervision/business_trip/businesstrip_confirm_delete.html'
+    success_url = reverse_lazy('business_trip')
 
 
 #----------- Список Наосоответствий  -----------
@@ -123,7 +202,6 @@ def mismatch_list(request):
             'title': 'Список несоответствий',
             'mismatches': mismatches,
             'place': place,
-            'menu': menu
         },
     )
 
@@ -145,70 +223,7 @@ def mismatch_detail(request, pk):
             },
         )
 
-
-
-#--- ФОРМЫ------
-from .forms import *
-
-from django.contrib.auth.decorators import permission_required
-
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-import datetime
-
-
-# @permission_required('catalog.can_mark_returned')
-
-# Обработка формы продления командировки
-
-
-def extension_business_trip(request, pk):
-    trip_extens = get_object_or_404(BusinessTrip, pk=pk)
-
-# If this is a POST request then process the Form data
-    if request.method == 'POST':
-        form = ExtensionBusinessTripForm(request.POST)
-        if form.is_valid():
-            # присваиваем значение их формы полю "end"
-            trip_extens.end = form.cleaned_data['extension_date']
-            trip_extens.save()
-            # redirect to a new URL:
-            return HttpResponseRedirect(reverse('business_trip'))
-    else:
-
-        form = ExtensionBusinessTripForm(initial={'extension_date': datetime.date.today()})
-
-    return render(request, 'supervision/business_trip/business_trip_extension.html',
-                  {'form': form, 'tripextens': trip_extens, 'title':'Продление командировки'})
-
-# ----------------Редактирование, обновление, удаление формы  командировки
-
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
-from django.urls import reverse_lazy
-
-
-class BusinessTripCreate(CreateView):
-    model = BusinessTrip
-    fields = '__all__'
-
-    class Meta:
-        labels = {'plaсe': 'Объект', 'user': 'сотрудник',
-                  'start': 'С', 'end': 'По', 'purpose': 'Цель',
-                  'activ': 'дайствующая', }
-
-class BusinessTripUpdate(UpdateView):
-    model = BusinessTrip
-    fields = '__all__'
-
-class BusinessTripDelete(DeleteView):
-    model = BusinessTrip
-    success_url = reverse_lazy('business_trip')
-
-
 # --------- Редактирование, обновление, удаление  формы  несоответствия
-
 
 # class MismatchCreate(CreateView):
 #     model = Mismatch
@@ -241,8 +256,8 @@ class MismatchDelete(DeleteView):
     success_url = reverse_lazy('mismatch')
 
 
-#--------------- Объекты----------------
 
+#--------------- Объекты----------------
 
 def place_list(request):
     place_list = Place.objects.filter(status__exact=2)
@@ -267,7 +282,6 @@ def place_detail(request, pk):
         context={
             'title': 'Объект',
             'place_detail': place_detail,
-            'menu': menu
         },
     )
 
@@ -287,7 +301,7 @@ def place_create(request):
             return redirect('place_list')
         # return HttpResponseRedirect(reverse('mismatch'))
     else:
-        form = CreatePlaceForm()
+        form = CreatePlaceForm(initial={'status': 1})
     return render(request, 'supervision/place/place_create.html',
                       {'form': form, 'title': 'Несоответстиве'})
 
@@ -610,20 +624,20 @@ def place_status_list(request):
 #         },
 #     )
 
-# def place_status_show(request, status_id):
-#     place_list = Place.objects.filter(status__exact=status_id)
-#     place_status = PlaceStatus.objects.all()
-#
-#     return render(
-#         request,
-#         'supervision/place/place_list.html',
-#         context={
-#             'title': 'Список Объектов',
-#             'place_list': place_list,
-#             'place_status': place_status,
-#             'place_selected': status_id,
-#         },
-#     )
+def place_status_show(request, pk):
+    place_list = Place.objects.filter(status__exact=pk)
+    place_status = PlaceStatus.objects.all()
+
+    return render(
+        request,
+        'supervision/place/place_list.html',
+        context={
+            'title': 'Список Объектов',
+            'place_list': place_list,
+            'place_status': place_status,
+            'place_selected': pk,
+        },
+    )
 
 # --------- Редактирование, обновление, удаление  формы чертеж
 
@@ -747,3 +761,39 @@ class PositionDelete(DeleteView):
     fields = ['name']
     success_url = reverse_lazy('position_list')
 
+
+
+
+#--------------- Состояние командировки ----------------
+
+def condition_trip_list(request):
+    condition_trip_list = ConditionTrip.objects.all()
+
+    return render(
+        request,
+        'supervision/business_trip/condition_trip_list.html',
+        context={
+            'title': 'Список Состояний Командировки',
+            'condition_trip_list': condition_trip_list,
+        },
+    )
+
+
+# --------- Редактирование, обновление, удаление  формы чертеж
+class ConditionTripCreate(CreateView):
+    model = ConditionTrip
+    template_name = 'supervision/business_trip/conditiontrip_form.html'
+    fields = ['name']
+    success_url = reverse_lazy('condition_trip_list')
+
+class ConditionTripUpdate(UpdateView):
+    model = ConditionTrip
+    template_name = 'supervision/business_trip/conditiontrip_form.html'
+    fields = ['name']
+    success_url = reverse_lazy('condition_trip_list')
+
+class ConditionTripDelete(DeleteView):
+    model = ConditionTrip
+    template_name = 'supervision/business_trip/conditiontrip_confirm_delete.html'
+    fields = ['name']
+    success_url = reverse_lazy('condition_trip_list')

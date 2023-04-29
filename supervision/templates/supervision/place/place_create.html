@@ -28,7 +28,16 @@
 {#    </div>#}
 {#    <hr>#}
 
-    <form action="{% url 'place_create' %}" method="post" class="form_wrap">
+    <div class="bread_crumbs">
+        <ul class="bread_crumbs__list">
+            <li class="bread_crumbs_item"><a href="{% url 'business_trip' %}">Список Объектов </a></li>
+            <li class="bread_crumbs_item">  -> Объект
+            </li>
+        </ul>
+    </div>
+
+
+    <form action="" method="post" class="form_wrap">
     {% csrf_token %}
 
     <div class="form_title">

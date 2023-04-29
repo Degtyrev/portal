@@ -15,13 +15,14 @@
                     <a href="{% url 'place_create' %}" class="new_link">+ Добавить</a>
                 </div>
             </div>
+
            <div class="list__filter">
                <ul class="list__filter_list">
                    {% for status in place_status %}
                        {% if status.pk == place_selected %}
                    <li class="list__filter_item selected_item">{{ status.name}}</li>
                        {% else %}
-                   <li class="list__filter_item"><a class="list__filter_link" href="{{ status.get_absolute_url }}">{{ status.name}}</a></li>
+                   <li class="list__filter_item"><a class="list__filter_link" href="{% url 'status_place' status.id %}">{{ status.name}}</a></li>
                        {% endif %}
                {% endfor %}
                </ul>

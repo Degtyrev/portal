@@ -1,0 +1,57 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+{% block content %}
+        {% if user.is_staff %}
+
+        <section class="section">
+            <div class="content_title">
+                 <h1 class="title">{{ title }}</h1>
+                <div class="new_btn">
+                    <a href="{% url 'condition_trip_create' %}" class="new_link">+ Добавить</a>
+                </div>
+            </div>
+
+            <div class="list__card">
+            {% if condition_trip_list %}
+
+                     <div class="person__block">
+                            <table class="person__table">
+                                <tr>
+                                    <th class="person__table_head"></th>
+                                    <th class="person__table_head">{{ title }}</th>
+                                    <th class="person__table_head"></th>
+                                </tr>
+                     {% for condition in condition_trip_list %}
+                                <tr>
+                                    <td class="person__table_data">{{ forloop.counter }}</td>
+                                    <td class="person__table_data">{{ condition.name}}</td>
+                                    <td class="person__table_data">
+                                        <div class="list__action_icon">
+                                            <a class="list__link" href="{% url 'condition_trip_update' condition.id %}">
+                                                <img class="list__icon" src="{% static 'supervision/icon/edit_icon1.png' %}" alt="редактировать" title="редактировать">
+                                            </a>
+                                            <a class="list__link" href="{% url 'condition_trip_delete' condition.id %}">
+                                                <img class="list__icon" src="{% static 'supervision/icon/delete_icon.png' %}" alt="уладить" title="удалить">
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                     {% endfor %}
+                            </table>
+                     </div>
+
+            {% else %}
+                <p>Нет типов несоотвествий</p>
+            {% endif %}
+            </div>
+        </section>
+
+
+        {% endif %}
+    {% endblock %}

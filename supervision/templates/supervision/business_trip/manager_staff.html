@@ -7,11 +7,25 @@
                  </div>
              </div>
 
-                {% if trips_current %}
+
+            <div class="list__filter">
+               <ul class="list__filter_list">
+                   {% for condition in conditions %}
+                       {% if condition.pk == condition_selected %}
+                   <li class="list__filter_item selected_item">{{ condition.name}}</li>
+                       {% else %}
+                   <li class="list__filter_item"><a class="list__filter_link" href="{% url 'condition' condition.pk %}">{{ condition.name}}</a></li>
+                       {% endif %}
+               {% endfor %}
+               </ul>
+            </div>
+
+
+                {% if trips %}
 
                     <div class="list__section">
                         <div class="list_section_name">
-                            <h2>Текущие командировки</h2>
+                            <h2>командировки</h2>
                         </div>
 
                         <table class="list__block">
@@ -24,7 +38,7 @@
                                 <th class="list__head"></th>
                             </tr>
 
-                            {% for trip in trips_current %}
+                            {% for trip in trips %}
                             <tr class="list__row">
                                 <td class="list__data">{{ forloop.counter }}</td>
                                 <td class="list__data"><a href="{{ trip.get_absolute_url  }}">{{ trip.place.name }}</a></td>
@@ -46,35 +60,9 @@
                         </table>
 
                     </div>
+
+                {% else %}
+                <p> Здесь пока нет командировок</p>
                 {% endif %}
 
-            {% if trips_completed %}
-                <div class="list__section">
-                    <div class="list_section_name">
-                        <h2>Завершенные командировки</h2>
-                    </div>
-
-                    <table class="list__block">
-                        <tr class="list__row">
-                            <th class="list__head">№</th>
-                            <th class="list__head">Объект</th>
-                            <th class="list__head">Сотрудник</th>
-                            <th class="list__head">Начало</th>
-                            <th class="list__head">Завершена</th>
-                        </tr>
-
-                        {% for trip_c in trips_completed %}
-                        <tr class="list__row">
-                            <td class="list__data">{{ forloop.counter }}</td>
-                            <td class="list__data"><a href="{{ trip_c.get_absolute_url  }}">{{ trip_c.plaсe.name }}</a></td>
-                            <td class="list__data">{{ trip_c.user.last_name }}</td>
-                            <td class="list__data">{{ trip_c.start|date:"d.m.Y"}}</td>
-                            <td class="list__data">{{ trip_c.end|date:"d.m.Y" }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-
-                    </div>
-
-            {% endif %}
         </section>

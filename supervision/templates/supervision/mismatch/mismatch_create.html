@@ -28,6 +28,15 @@
 {#    </div>#}
 {#    <hr>#}
 
+    <div class="bread_crumbs">
+        <ul class="bread_crumbs__list">
+            <li class="bread_crumbs_item"><a href="{% url 'employee_list' %}">Сотрудники </a></li>
+            <li class="bread_crumbs_item">  ->{{ employee_detail.last_name }}
+                          {{ employee_detail.first_name}} {{ employee_detail.profile.surname}}
+            </li>
+        </ul>
+    </div>
+
     <form action="{% url 'mismatch_create' %}" method="post" enctype="multipart/form-data" class="form_wrap">
     {% csrf_token %}
 

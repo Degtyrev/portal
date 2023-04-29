@@ -1,7 +1,6 @@
 from django import forms
 
 from django.core.exceptions import ValidationError
-# from django.utils.translation import ugettext_lazy as _
 import datetime
 from .models import *
 
@@ -24,10 +23,10 @@ from django.forms import ModelForm, Textarea, DateField, Select,CheckboxSelectMu
     CheckboxInput
 
 
-class CreateBusinessTripModelForm(forms.ModelForm):
+class CreateBusinessTripForm(forms.ModelForm):
     class Meta:
         model = BusinessTrip
-        fields = ('place', 'user', 'start', 'end', 'purpose', 'activ')
+        fields = ['place', 'user', 'start', 'end', 'purpose']
         labels = {'place': 'Объект', 'user': 'сотрудник',
                   'start': 'С', 'end': 'По', 'purpose': 'Цель',
                   'activ': 'дайствующая'}
@@ -74,13 +73,6 @@ class CreatePlaceForm(forms.ModelForm):
             'project_manager': forms.TextInput(attrs={'class': 'form_input'}),
             'chief_engineer': forms.TextInput(attrs={'class': 'form_input'}),
             'order': forms.NumberInput(attrs={'class': 'form_input'}),
-            'status': forms.Select(attrs={'class': 'form_input', 'autocomplete': 'on'}),
+            'status': forms.Select(attrs={'class': 'form_input'}),
         }
 
-# class CreatePlaceStatusForm(forms.ModelForm):
-#     class Meta:
-#         model = PlaceStatus
-#         fields = ['name']
-#         widgets = {
-#             'name': forms.TextInput(attrs={'class': 'form_input'})
-#         }

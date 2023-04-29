@@ -5,55 +5,47 @@
     {% endblock %}
 
 
-    {% block sidebar %}
-        <div class="sidebar">
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="#">Создать командировку</a></li>
-                <li class="sidebar__item"><a href="#">Продлить командировку</a></li>
+    {% block content %}
+        <div class="bread_crumbs">
+            <ul class="bread_crumbs__list">
+                <li class="bread_crumbs_item"><a href="{% url 'business_trip' %}">Список командировок </a></li>
+                <li class="bread_crumbs_item">  ->{{ trip.place.name }}
+
+                </li>
             </ul>
-            <hr>
-            <ul class="sidebar__list">
-
-                <li class="sidebar__item"><a href="#">Планируемые командировки</a></li>
-                <li class="sidebar__item"><a href="#">Завершенные командировки</a></li>
-            </ul>
-
-
         </div>
 
-    {% endblock %}
 
-    {% block content %}
-        <section class="business-trip">
+        <section class="business_trip">
              <div class="content_title">
                 <h1 class="title">{{ title }}</h1>
              {% if trip.end > date_today %}
                  {% if trip %}
                  <div class="new_btn">
-                    <a href="extension_business_trip" class="new_link">Продлить</a>
+                    <a href="{% url 'extension_business_trip' trip.pk %}" class="new_link">Продлить</a>
                 </div>
                  {% else %}
                      <div class="new_btn">
-                        <a href="business_trip_create" class="new_link">+ Добавить</a>
+                        <a href="{% url 'business_trip_create' %}" class="new_link">+ Добавить</a>
                      </div>
                  {% endif %}
              {% endif %}
         </div>
 
         {% if trip %}
-            <div class="business-trip__current">
+            <div class="business_trip__current">
                 {% if trip.end > date_today %}
                 <h2 class="bt__title">Текущая командировка</h2>
                 {% else %}
                 <h2 class="bt__title">Завершенная командировка</h2>
                 {% endif %}
 
-                <div class="business-trip__block">
+                <div class="business_trip__block">
                     <div class="btc__item">
-                        <p class="bt__object">{{ trip.plaсe.name}}</p>
+                        <p class="bt__object">{{ trip.place.name }}</p>
                         <div class="bt__date">
-                            <p class="bt__date_start"> с {{ trip.start }}г</p>
-                            <p class="bt__date_end">по {{ trip.end }}г</p>
+                            <p class="bt__date_start"> с {{ trip.start|date:"d.m.Y" }}</p>
+                            <p class="bt__date_end">по {{ trip.end|date:"d.m.Y" }}</p>
                         </div>
 
                     </div>
