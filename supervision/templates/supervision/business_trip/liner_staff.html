@@ -41,12 +41,13 @@
                         </tr>
 
                             {% for trip in trips_user %}
+
                             <tr class="list__row">
                                 <td class="list__data"><a href="{{ trip.get_absolute_url  }}">{{ trip.place.name }}</a></td>
                                 <td class="list__data">{{ trip.start|date:"d.m.Y"}}</td>
                                 <td class="list__data">{{ trip.end|date:"d.m.Y" }}</td>
                                 <td class="list__data">{{ trip.purpose }}</td>
-                                <td class="list__data">{{ trip.end|add:trip.start  }}</td>
+                                <td class="list__data">{{ trip.balans|date:"d.m.Y"  }}</td>
                             </tr>
                             {% endfor %}
                     </table>

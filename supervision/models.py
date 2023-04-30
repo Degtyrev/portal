@@ -13,6 +13,7 @@ class Profile(models.Model):
     birth_date = models.DateField(verbose_name='Дата рождения', null=True, blank=True)
     death_date = models.DateField(verbose_name='Дата смерти', null=True, blank=True)
     position = models.ManyToManyField('Position', through='Career')
+    is_liner = models.BooleanField(default=True)
 
     # @receiver(post_save, sender=User)
     # def create_user_profile(sender, instance, created, **kwargs):
@@ -81,7 +82,7 @@ class PlaceStatus(models.Model):
 
 class BusinessTrip(models.Model):
     place = models.ForeignKey('Place', on_delete=models.SET_NULL, null=True, verbose_name='Оъект')
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='сотрудник')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='Cотрудник')
     start = models.DateField(null=True, blank=True, verbose_name='дата начала')
     end = models.DateField(null=True, blank=True, verbose_name='дата окончания')
     purpose = models.CharField(max_length=250, verbose_name='Цель командировки')

@@ -119,3 +119,11 @@ urlpatterns += [
     path('condition_trip/<int:pk>/update/', views.ConditionTripUpdate.as_view(), name='condition_trip_update'),
     path('condition_trip/<int:pk>/delete/', views.ConditionTripDelete.as_view(), name='condition_trip_delete'),
 ]
+
+urlpatterns += [
+    path('status_mismatch/', views.status_mismatch_list, name='status_mismatch_list'),
+    # path('status_mismatch/<int:pk>/', views.status_mismatch_detail, name='status_mismatch_detail'),
+    path('status_mismatch/create/', views.StatusMismatchCreate.as_view(), name='status_mismatch_create'),
+    path('status_mismatch/<int:pk>/update/', views.StatusMismatchUpdate.as_view(), name='status_mismatch_update'),
+    path('status_mismatch/<int:pk>/delete/', views.StatusMismatchDelete.as_view(), name='status_mismatch_delete'),
+]

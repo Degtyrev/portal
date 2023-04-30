@@ -57,6 +57,7 @@
                             </a>
                         </li>
                         <hr>
+                        {% if user.profile.is_liner == 0 %}
                         <li class="nav__menu_item">
                             <a class="nav__menu_link" href="{% url 'employee_list' %}" title="Сотрудники">
                                 <img class="nav__menu_img" src="{% static  'supervision/image/employee.png' %}" alt="" >
@@ -74,6 +75,7 @@
                                 <img class="nav__menu_img" src="{% static  'supervision/image/settings.png' %}" alt="" >
                             </a>
                         </li>
+                        {% endif %}
 {#                        {% endfor %}#}
                     </ul>
                 </div>

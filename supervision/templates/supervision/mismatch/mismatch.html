@@ -4,133 +4,18 @@
         <title>{{ title }}</title>
     {% endblock %}
 
-
-    {% block sidebar %}
-        <div class="sidebar">
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="#">создать Узел</a></li>
-                <li class="sidebar__item"><a href="#">создать Чертёж</a></li>
-            </ul>
-
-            <hr>
-            <div class="sidebar__filter">
-                <h2 class="sidebar__filter_title">Фильтр</h2>
-
-                <form action="" method="get" class="sidebar__list sidebar__filter" >
-                    <div class="mismatch_filter__block">
-                        <div class="form_mismatch__search">
-                            <label class="mismatch_filter__label">Найти:</label>
-                            <input type="text">
-                        </div>
-                    </div>
-
-                    <div class="mismatch_filter__block">
-                        <div class="form_mismatch__send">
-                            <label class="mismatch_filter__label">Тип несоответствия:</label>
-                            <p><input type="radio" name="type" value="all" checked>Все</p>
-                            <p><input type="radio" name="type" value="p">Конструкторское</p>
-                            <p><input type="radio" name="type" value="m">Производственное</p>
-                         </div>
-                    </div>
-
-                    <div class="mismatch_filter__block">
-                        <div class="form_mismatch__object">
-                        <ladel class="mismatch_filter__label">Объект:</ladel>
-                            <select id="object">
-                                {% if palce %}
-                                    {% for i in palce %}
-                                        <option>{{ i.name }}</option>
-                                    {% endfor %}
-                                {% endif %}
-                             </select>
-                        </div>
-                    </div>
-
-                    <div class="mismatch_filter__block">
-                        <div class="form_mismatch__date">
-                            <p class="mismatch_filter__label">Дата:</p>
-                            <div class="form_mismatch__date">
-                                 <div class="form_mismatch__date_item">
-                                    <input type="radio" name="filfer_date">все:
-                                </div>
-
-                                 <div class="form_mismatch__date_item">
-                                    <input type="radio" name="filfer_date" value="">за месяц:
-                                </div>
-
-                                 <div class="form_mismatch__date_item">
-                                    <input type="radio" name="filfer_date" value="">за год:
-                                </div>
-
-                                 <div class="form_mismatch__date_item">
-                                    <input type="radio" name="filfer_date" value="">за период:
-
-                                     <div class="form_mismatch__period">
-                                          <div class="form_mismatch__period_item">
-                                            <label class="mismatch_filter__label_date">с:</label>
-                                            <input type="date">
-                                          </div>
-
-                                         <div class="form_mismatch__period_item">
-                                            <label class="mismatch_filter__label_date">по:</label>
-                                            <input type="date">
-                                         </div>
-                                     </div>
-
-                                </div>
-
-
-
-                            </div>
-
-                        </div>
-                    </div>
-
-
-
-                    <div class="form_mismatch__send">
-                        <input type="submit" value="Применить фильтр ">
-                    </div>
-                </form>
-
-            </div>
-
-        </div>
-    {% endblock %}
-
     {% block content %}
-        <section class="mismatch">
-            <div class="content_title">
-                 <h1 class="title">{{ title }}</h1>
-                <div class="new_btn">
-                    <a href="{% url 'mismatch_create' %}" class="new_link">+ Добавить</a>
-                </div>
-            </div>
-            <hr>
-            <div class="mismatches">
-            {% if mismatches %}
-                {% for mismatch in mismatches %}
-                    <div class="mismatch__block">
-                        <div class="mismatch__block_title">
-                            <div class="mismatch__id">{{ mismatch.pk}}</div>
-                            <div class="mismatch__title">
-                                <a href="{% url 'mismatch_detail' mismatch.pk %}">{{ mismatch.title}}</a>
-                            </div>
-                        </div>
-                        <div class="mismatch__block_status">
-                          <div class="mismatch__type">{{ mismatch.get_type_display }}</div>
-                            <div class="mismatch__place">{{ mismatch.plaсe.name}}</div>
-                            <div class="mismatch__status">{{ mismatch.tracking_set}}</div>
-                            <div class="mismatch__date">дата: {{ mismatch.date_finding|date:"d.m.Y"}}</div>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>Несоответствий не выявленно</p>
-            {% endif %}
-            </div>
-        </section>
 
+             {# страница Линейного пользователя#}
+        {% if user.profile.is_liner == 1 %}
+           {% include 'supervision/mismatch/liner_staff_mis.html' %}
+        {% endif %}
+
+
+        {# страница Менеджера пользователя#}
+        {% if user.profile.is_liner == 0 %}
+            {% include 'supervision/mismatch/manager_staff_mis.html' %}
+        {% endif %}
 
 
     {% endblock %}

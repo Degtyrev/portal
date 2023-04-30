@@ -1,0 +1,15 @@
+{% load static %}
+<section class="mismatch">
+{#    <div class="content_title">#}
+{#         <h1 class="title">{{ title }}</h1>#}
+{#    </div>#}
+{#    <hr>#}
+    <div class="mismatches">
+    {% if activ_trip %}
+        <div>Текущая командировка</div>
+        {{ activ_trip.place}} {{ activ_trip.purpose}} с: {{ activ_trip.start|date:"d.m.Y"}} по: {{ activ_trip.end|date:'d.m.Y'}}
+    {% else %}
+        <p>У вас сейчас нет Действующей командировки</p>
+    {% endif %}
+    </div>
+</section>

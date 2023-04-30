@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1 class="confirm_delete__title">Удаление Статуса Несоответствия</h1>
+
+<p class="confirm_delete__text">Вы уверены что хотите удалить Статус: {{ status }}?</p>
+
+<form action="" method="POST" class="confirm_delete__form">
+  {% csrf_token %}
+  <input type="submit" action="" value="Да, удалить" class="confirm_delete__btn">
+ <a href="{% url 'status_mismatch_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
+</form>
+
+{% endblock %}

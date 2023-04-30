@@ -5,14 +5,7 @@
     {% endblock %}
 
 
-    {% block sidebar %}
-        <div class="sidebar">
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'employee_create' %}">Добавить сотрудника</a></li>
 
-            </ul>
-        </div>
-    {% endblock %}
 
     {% block content %}
 
@@ -23,7 +16,13 @@
 {#                    <a href="{% url 'employee_create' %}" class="new_link">+ Добавить</a>#}
 {#                </div>#}
             </div>
-            <hr>
+
+          <div class="list__filter">
+       <ul class="list__filter_list">
+           <li class="list__filter_item selected_item">Действующий</li>
+           <li class="list__filter_item"><a class="list__filter_link" href="">Уволеные</a></li>
+        </ul>
+   </div>
 
             <div class="list__card">
             {% if employee_list %}
@@ -31,15 +30,15 @@
                     <div class="card__block">
                         <div class="card__head">
                             <div class="card__title">
-                                <a href="{{employee.get_absolute_url}}"> {{ forloop.counter }}  {{ employee.user.first_name }}
-                                  {{ employee.user.last_name}} {{ employee.surname}}</a>
+                                <a href="{{employee.profile.get_absolute_url}}"> {{ forloop.counter }}  {{ employee.first_name }}
+                                  {{ employee.last_name}} {{ employee.profile.surname}}</a>
                             </div>
                         </div>
 
                         <div class="card__info">
                             <div class="card__item">
                                 <p class="card__label">Должность</p>
-                                <p class="card__text">{{employee.position.name}}</p>
+                                <p class="card__text">{{employee.profile.position.name}}</p>
                             </div>
                         </div>
                     </div>

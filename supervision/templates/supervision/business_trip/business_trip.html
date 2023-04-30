@@ -4,39 +4,17 @@
         <title>{{ title }}</title>
     {% endblock %}
 
-{#{% block navigation %}#}
-{#    {% include 'nav_menu.html' %}#}
-{#{% endblock %}#}
-
-{#    {% block sidebar %}#}
-{#        <div class="sidebar">#}
-{#            <ul class="sidebar__list">#}
-{#                <li class="sidebar__item"><a href="#">Создать командировку</a></li>#}
-{#                <li class="sidebar__item"><a href="#">Продлить командировку</a></li>#}
-{#            </ul>#}
-{#            <hr>#}
-{#            <ul class="sidebar__list">#}
-{##}
-{#                <li class="sidebar__item"><a href="#">Планируемые командировки</a></li>#}
-{#                <li class="sidebar__item"><a href="#">Завершенные командировки</a></li>#}
-{#            </ul>#}
-{##}
-{##}
-{#        </div>#}
-{##}
-{#    {% endblock %}#}
-
 {% block content %}
 
     {# страница Линейного пользователя#}
 
-    {% if user.is_staff != 1 %}
+    {% if user.profile.is_liner == 1 %}
        {% include 'supervision/business_trip/liner_staff.html' %}
     {% endif %}
 
 
     {# страница Менеджера пользователя#}
-    {% if user.is_staff %}
+    {% if user.profile.is_liner == 0 %}
         {% include 'supervision/business_trip/manager_staff.html' %}
     {% endif %}
 {% endblock %}

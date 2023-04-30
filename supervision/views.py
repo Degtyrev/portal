@@ -10,6 +10,7 @@ from django.urls import include
 
 # ___ for forms
 from .forms import *
+
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import permission_required
@@ -42,6 +43,7 @@ def index(request):
     num_employeer = User.objects.filter(is_active=1).count()
     num_place = Place.objects.filter(status=2).count()  # Метод 'all()' применён по умолчанию.
 
+    activ_trip = BusinessTrip.objects.filter(user_id__exact=request.user.pk, status_id__exact=2)
     # Отрисовка HTML-шаблона index.html с данными внутри
     # переменной контекста context
 
@@ -52,7 +54,7 @@ def index(request):
         'title': "Портал",
         'num_employeer': num_employeer,
         'num_place': num_place,
-        'menu': menu
+        'activ_trip': activ_trip[0]
     }
 
     return render(
@@ -103,6 +105,14 @@ def condition_show(request, pk):
     trips = BusinessTrip.objects.filter(status__exact=pk)
     conditions = ConditionTrip.objects.all()
 
+    # day_now = date.today()
+    # new={}
+    # for tu in trips_user:
+    #     new[tu.pk]=tu
+    #     new[tu.pk].balans = tu.end - day_now
+
+
+
     return render(
         request,
         'supervision/business_trip/business_trip.html',
@@ -112,6 +122,7 @@ def condition_show(request, pk):
             'trips': trips,
             'conditions': conditions,
             'condition_selected': pk,
+
         },
     )
 
@@ -161,17 +172,46 @@ def extension_business_trip(request, pk):
 # ----------------Редактирование, обновление, удаление формы  командировки
 def business_trip_create(request):
 
-    return render(request, 'supervision/business_trip/business_trip_extension.html',
-                  {'form': form, 'tripextens': trip_extens, 'title': 'Продление командировки'})
+    if request.method == 'POST':
+        form = CreateBusinessTripForm(request.POST)
+
+        # print(form.cleaned_data['end'])
+        if form.is_valid():
+            start = datetime.datetime.strptime(request.POST['start'], '%d.%m.%Y').date()
+            end = datetime.datetime.strptime(request.POST['end'], '%d.%m.%Y').date()
+            user = request.POST['user']
+            # print(start)
+            # print(end)
+            # print(user)
+            carent_trip = BusinessTrip.objects.filter(user__exact=user).filter(status__exact=2)
+
+            date_end_carent_trip = carent_trip[0].end
+            try:
+                if start < date_end_carent_trip: # если дата следующей командировки раньще конца текущей
+                    raise Exception(form.add_error(None, f'Сотрудник находится в командировке до {date_end_carent_trip}'))
+
+                if start > end :# если дата начала позже даты завершения
+                    raise Exception(form.add_error(None, 'Дата начала командировки позже даты завершения'))
+
+                form.save()
+                return redirect('business_trip')
+                    # BusinessTrip.objects.create(**form.cleaned_data)
+
+            except Exception:
+                 form.add_error(None, error='')
+    else:
+        form = CreateBusinessTripForm()
+    return render(request, 'supervision/business_trip/businesstrip_form.html',
+                  {'title': 'Добавление командировки', 'form': form})
 
 
-class BusinessTripCreate(CreateView):
-    model = BusinessTrip
-    template_name = 'supervision/business_trip/businesstrip_form.html'
-    # fields = ['name', 'equipment', 'equipment_type', 'contract',
-    #           'project_manager', 'chief_engineer', 'order', 'status']
-    # success_url = reverse_lazy('business_trip_detail')
-    fields = "__all__"
+# class BusinessTripCreate(CreateView):
+#     model = BusinessTrip
+#     template_name = 'supervision/business_trip/businesstrip_form.html'
+#     # fields = ['name', 'equipment', 'equipment_type', 'contract',
+#     #           'project_manager', 'chief_engineer', 'order', 'status']
+#     # success_url = reverse_lazy('business_trip_detail')
+#     fields = "__all__"
 
 
 class BusinessTripUpdate(UpdateView):
@@ -219,7 +259,6 @@ def mismatch_detail(request, pk):
                 'title': 'Карточка Неоответствия',
                 'mismatch': mismatch,
                 'status': status,
-                'menu': menu
             },
         )
 
@@ -449,7 +488,7 @@ class DetailDelete(DeleteView):
 
 #--------------- Сотрудники----------------
 def employee_list(request):
-    employee_list = Profile.objects.all()
+    employee_list = User.objects.all()
 
     return render(
         request,
@@ -457,7 +496,7 @@ def employee_list(request):
         context={
             'title': 'Список Сотрудников',
             'employee_list': employee_list,
-            'menu': menu
+
         },
     )
 
@@ -797,3 +836,38 @@ class ConditionTripDelete(DeleteView):
     template_name = 'supervision/business_trip/conditiontrip_confirm_delete.html'
     fields = ['name']
     success_url = reverse_lazy('condition_trip_list')
+
+
+#--------------- Статусы носоответствия ----------------
+
+def status_mismatch_list(request):
+    status_mismatch_list = Status.objects.all()
+
+    return render(
+        request,
+        'supervision/mismatch/status_mismatch_list.html',
+        context={
+            'title': 'Статусы несоответствий',
+            'status_mismatch_list': status_mismatch_list,
+        },
+    )
+
+
+# --------- Редактирование, обновление, удаление  формы чертеж
+class StatusMismatchCreate(CreateView):
+    model = Status
+    template_name = 'supervision/mismatch/statusmismatch_form.html'
+    fields = ['name']
+    success_url = reverse_lazy('status_mismatch_list')
+
+class StatusMismatchUpdate(UpdateView):
+    model = Status
+    template_name = 'supervision/mismatch/statusmismatch_form.html'
+    fields = ['name']
+    success_url = reverse_lazy('status_mismatch_list')
+
+class StatusMismatchDelete(DeleteView):
+    model = Status
+    template_name = 'supervision/mismatch/statusmismatch_confirm_delete.html'
+    fields = ['name']
+    success_url = reverse_lazy('status_mismatch_list')
