@@ -1,5 +1,5 @@
 
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 from django.urls import include
 
@@ -73,17 +73,17 @@ urlpatterns += [
 urlpatterns += [
     path('letter/', views.letter_list, name='letter_list'),
     path('letter/<int:pk>/', views.letter_detail, name='letter_detail'),
-    path('letter/create/', views.LetterCreate.as_view(), name='letter_create'),
+    re_path(r'^letter/create/$', views.letter_create, name='letter_create'),
     path('letter/<int:pk>/update/', views.LetterUpdate.as_view(), name='letter_update'),
-    path('letter/<int:pk>/delete/', views.LetterDelete.as_view(), name='letter_delete'),
+    # path('letter/<int:pk>/delete/', views.LetterDelete.as_view(), name='letter_delete'),
 ]
 
 urlpatterns += [
     path('solution/', views.solution_list, name='solution_list'),
     path('solution/<int:pk>/', views.solution_detail, name='solution_detail'),
-    path('solution/create/', views.SolutionCreate.as_view(), name='solution_create'),
+    path('solution/create/', views.solution_create, name='solution_create'),
     path('solution/<int:pk>/update/', views.SolutionUpdate.as_view(), name='solution_update'),
-    path('solution/<int:pk>/delete/', views.SolutionDelete.as_view(), name='solution_delete'),
+    # path('solution/<int:pk>/delete/', views.SolutionDelete.as_view(), name='solution_delete'),
 ]
 
 urlpatterns += [

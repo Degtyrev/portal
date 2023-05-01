@@ -34,7 +34,7 @@ h1{
     position: fixed;
     top: 0;
     left: 0;
-    width: 100px;
+    width: 130px;
     background-color: #007264;
     color: #fff;
     padding-left: 10px;
@@ -42,6 +42,7 @@ h1{
     padding-top: 10px;
     align-items: center;
     height: 100%;
+    overflow: scroll;
 }
 .auth_user{
     font-size: 12px;
@@ -568,7 +569,7 @@ td>input{
 
 
 .mismatch_detail__block{
-font-size: 14px;
+/*font-size: 14px;*/
 }
 .mismatch_detail__item{
     display: grid;
@@ -578,9 +579,25 @@ font-size: 14px;
 .mismatch_detail__ladel{
     flex-basis: 200px;
     margin-right: 10px;
-    font-size: 12px;
+    /*font-size: 12px;*/
  }
+.non_flex{
+    display: block;
+}
+.marg_bot{
+    margin-bottom: 10px;
+}
 
+.block__add{
+
+}
+.block__add__title{
+    display: flex;
+    justify-content: space-between;
+}
+.block__add__content{
+
+}
 /*----------------Узлы-----------*/
 .unit__block{
     margin-bottom: 7px;
@@ -668,3 +685,20 @@ font-size: 14px;
 
 /*---------------- Профиль end -----------*/
 
+.status_track{
+    display: flex;
+    margin-bottom: 20px;
+    padding: 7px 5px  7px 20px;
+    background-color: #ddd;
+    border-radius: 10px;
+    border-bottom: 2px solid #c0c0c0;
+    border-right: 2px solid #c0c0c0;
+}
+.status__done{
+    color: #fd490f;
+    font-weight: bolder;
+}
+.status__progress{
+    color: #c0c0c0;
+    color: #fff;
+}

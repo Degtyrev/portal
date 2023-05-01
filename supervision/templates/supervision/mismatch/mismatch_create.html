@@ -6,21 +6,7 @@
         <title>{{ title }}</title>
     {% endblock %}
 
-{% block sidebar %}
-      <div class="sidebar">
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'mismatch_list' %}">список несоответствий </a></li>
-                <li class="sidebar__item"><a href="#">Продлить </a></li>
-            </ul>
-            <hr>
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="#">Планируемые </a></li>
-                <li class="sidebar__item"><a href="#">Завершенные </a></li>
-            </ul>
 
-
-        </div>
-{% endblock %}
 
 {% block content %}
 {#    <div class="content_title">#}
@@ -143,6 +129,9 @@
 
     <biv class="form_btn">
       <input type="submit" value="Сохранить" id="create_mismatch" class="btn ">
+    </biv>
+     <biv class="form_btn">
+        <a href="{% url 'mismatch_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
     </biv>
 
     </form>

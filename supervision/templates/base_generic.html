@@ -57,6 +57,18 @@
                             </a>
                         </li>
                         <hr>
+                        <li class="nav__menu_item">
+                            <a class="nav__menu_link" href="{% url 'letter_list' %}" title="Служебные письма">
+                                <img class="nav__menu_img" src="{% static  'supervision/image/letters.png' %}" alt="" >
+                            </a>
+                        </li>
+                        <hr>
+                        <li class="nav__menu_item">
+                            <a class="nav__menu_link" href="{% url 'solution_list' %}" title="Тех.решения">
+                                <img class="nav__menu_img" src="{% static  'supervision/image/solutions.png' %}" alt="" >
+                            </a>
+                        </li>
+                        <hr>
                         {% if user.profile.is_liner == 0 %}
                         <li class="nav__menu_item">
                             <a class="nav__menu_link" href="{% url 'employee_list' %}" title="Сотрудники">

@@ -138,3 +138,35 @@ class CreatePlaceForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form_input'}),
         }
 
+
+
+class CreateLetterForm(forms.ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['place'].empty_label = 'Выберите Объект'
+
+    class Meta:
+        model = Letter
+        fields = ['number', 'date', 'title', 'text', 'user',
+                  'to', 'mismatch', 'file', 'image']
+        labels = {'number': 'Номер письма СП-',
+                  'date': 'Дата',
+                  'title': 'Тема',
+                  'text': 'Текст письма',
+                  'user': 'От кого',
+                  'to': 'Кому',
+                  'mismatch': 'Несоответстивие',
+                  'file': 'Файлы',
+                  'image': 'Фото',
+                  }
+        widgets = {
+            'number': forms.NumberInput(attrs={'class': 'form_input'}),
+            'date': forms.DateInput(attrs={'class': 'form_input'}),
+            'title': forms.TextInput(attrs={'class': 'form_input'}),
+            'text': forms.Textarea(attrs={'class': 'form_input', 'cols': 80, 'rows': 5}),
+            'user': forms.Select(attrs={'class': 'form_input'}),
+            'to': forms.TextInput(attrs={'class': 'form_input'}),
+            'mismatch': forms.Select(attrs={'class': 'form_input'}),
+            'file': forms.FileInput(attrs={'class': 'form_input'}),
+            'image': forms.FileInput(attrs={'class': 'form_input'}),
+        }

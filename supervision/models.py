@@ -158,16 +158,38 @@ class Mismatch(models.Model):
     place = models.ForeignKey('Place', on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=400, verbose_name=' Краткое описание')
     text = models.TextField(verbose_name=' Полное описание')
+    correct = models.TextField(verbose_name='Предложения по устранению', null=True, blank=True)
     type = models.ForeignKey('TypeMismatch', on_delete=models.SET_NULL, null=True, blank=True)
     file = models.FileField(upload_to='media/mismatch/', null=True, blank=True, verbose_name='Файлы')
     image = models.ImageField(upload_to='media/mismatch/images/', null=True, blank=True, verbose_name='Фото')
     details = models.ManyToManyField('Detail', through='Irrelevant')
+    status = models.ManyToManyField('Status', through='Tracking')
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('mismatch_detail', args=[int(self.pk)])
+
+class Status(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Статус', unique=True)
+
+    def __str__(self):
+        return self.name
+
+    # def get_absolute_url(self):
+    #     return reverse('solution_detail', args=[str(self.id)])
+
+class Tracking(models.Model):
+    mismatch = models.ForeignKey('Mismatch', on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.ForeignKey('Status', on_delete=models.SET_NULL, null=True, blank=True)
+    date_status = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.mismatch.title} {self.status.name}'
+
+    # class Meta:
+    #     unique_together = ('mismatch', 'status')
 
 
 class TypeMismatch(models.Model):
@@ -222,22 +244,3 @@ class Solution(models.Model):
         return reverse('solution_detail', args=[str(self.id)])
 
 
-class Status(models.Model):
-    name = models.CharField(max_length=200, verbose_name='Статус', unique=True)
-
-    def __str__(self):
-        return self.name
-
-    # def get_absolute_url(self):
-    #     return reverse('solution_detail', args=[str(self.id)])
-
-class Tracking(models.Model):
-    mismatch = models.ForeignKey('Mismatch', on_delete=models.SET_NULL, null=True, blank=True)
-    status = models.ForeignKey('Status', on_delete=models.SET_NULL, null=True, blank=True)
-    date_status = models.DateField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.mismatch.title} {self.status.name}'
-
-    # class Meta:
-    #     unique_together = ('mismatch', 'status')

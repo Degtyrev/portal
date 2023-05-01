@@ -5,112 +5,195 @@
     {% endblock %}
 
 
-    {% block sidebar %}
-        <div class="sidebar">
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="#">Создать </a></li>
-                <li class="sidebar__item"><a href="#">Продлить </a></li>
+    {% block content %}
+        <div class="bread_crumbs">
+            <ul class="bread_crumbs__list">
+                <li class="bread_crumbs_item"><a href="{% url 'mismatch_list' %}">Список несоответствий </a></li>
+                <li class="bread_crumbs_item">  ->{{ mismatch.title }} </li>
             </ul>
-            <hr>
-            <ul class="sidebar__list">
-
-                <li class="sidebar__item"><a href="#">Планируемые </a></li>
-                <li class="sidebar__item"><a href="#">Завершенные </a></li>
-            </ul>
-
-
         </div>
 
-    {% endblock %}
-
-    {% block content %}
         <section class="mismatch_detail">
-            <div class="content_title">
-                 <h1 class="title">{{ title }} <span class="title_number">№ {{ mismatch.pk }}</span></h1>
+            <div class="content_title non_flex">
+                 <h1 class="title marg_bot">{{ title }}</h1> Кас: {{ mismatch.title }}
             </div>
-        <hr>
 
-            <div class="mismatch_detail__block">
+        <div class="status_track">
+            Статус:
+            <div class="status__done">&nbsp;&nbsp;новое&nbsp;</div>
+            <div class="status__done"> -->&nbsp;не решённое&nbsp;</div>
+            <div class="status__progress"> -->&nbsp;закрыто</div>
+        </div>
+
+            <div class="detail__block">
                 {% if mismatch %}
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">объект</div>
-                        <div class="mismatch_detail__plaсe">{{ mismatch.place.name }}</div>
+
+                    <div class="detail__item">
+                        <div class="detail__ladel">объект</div>
+                        <div class="detail__text">{{ mismatch.place.name }}</div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">статус</div>
-                        <div class="mismatch_detail__status">gggggg</div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">статус</div>
+                        <div class="detail__text">gggggg</div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">тип</div>
-                        <div class="mismatch_detail__type">{{ mismatch.get_type_display }}</div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">тип</div>
+                        <div class="detail__text">{{ mismatch.type }}</div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">описание</div>
-                        <div class="mismatch_detail__title">{{ mismatch.title}}</div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">описание</div>
+                        <div class="detail__text">{{ mismatch.title}}</div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">подробное описание</div>
-                        <div class="mismatch_detail__text">{{ mismatch.text}}</div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">подробное описание</div>
+                        <div class="detail__text">{{ mismatch.text}}</div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">дата</div>
-                        <div class="mismatch_detail__date">{{ mismatch.date_finding}}</div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">Предложение по устранению</div>
+                        <div class="detail__text">{{ mismatch.correct}}</div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">производитель</div>
-                        <div class="mismatch_detail__factory">{{ mismatch.factory}} </div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">производитель</div>
+                        <div class="detail__text">{{ mismatch.factory}} </div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">узел</div>
-                        <div class="mismatch_detail__unit">{{ mismatch.unit}}</div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">узел</div>
+                        <div class="detail__text">{{ mismatch.unit}}</div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">чертеж</div>
-                        <div class="mismatch_detail__drawing">{{ mismatch.element}} </div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">чертеж</div>
+                        <div class="detail__text">{{ mismatch.element}} </div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">количество</div>
-                        <div class="mismatch_detail__amount">{{ mismatch.amount}}</div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">количество</div>
+                        <div class="detail__text">{{ mismatch.amount}}</div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">зав.номер</div>
-                        <div class="mismatch_detail__fac_number"> </div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">зав.номер</div>
+                        <div class="detail__text"> </div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">заказ</div>
-                        <div class="mismatch_detail__order"></div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">заказ</div>
+                        <div class="detail__text"></div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">грузовое место</div>
-                        <div class="mismatch_detail__pack">{{ mismatch.pack}}</div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">грузовое место</div>
+                        <div class="detail__text">{{ mismatch.pack}}</div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">принятое решение</div>
-                        <div class="mismatch_detail__correction">{{ mismatch.solution}}</div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">принятое решение</div>
+                        <div class="detail__text">{{ mismatch.solution}}</div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">фото, файлы</div>
-                        <div class="mismatch_detail__image"></div>
+                    <div class="detail__item">
+                        <div class="detail__ladel">фото, файлы</div>
+                        <div class="detail__text"></div>
                     </div>
 
-                    <div class="mismatch_detail__item">
-                        <div class="mismatch_detail__ladel">кем устранено</div>
-                        <div class="mismatch_detail__corrected">{{ mismatch.corrected}}</div>
+                    <hr>
+                    <div class="block__add">
+                        <div class="block__add__title">
+                            <p>Служебные письма</p>
+
+                            {% if user.profile.is_liner == 1 %}
+                                <a href="{% url 'letter_create' %}?mismatch_id={{ mismatch.pk }}&place_id={{ mismatch.place_id }}" class="btn">+ Добавить</a>
+                            {% endif %}
+                        </div>
+                        <div class="block__add__content">
+
+                            {% if letters %}
+                                <div class="detail__block">
+                                {% for letter in letters %}
+
+                                    <div class="detail__item">
+                                        <div class="detail__ladel">Номер письма</div>
+                                        <div class="detail__text">
+                                            <a href="{% url 'letter_detail' letter.pk %}">СП-{{ letter.number }} от {{ letter.date }}</a></div>
+                                    </div>
+                                    <div class="detail__item">
+                                        <div class="detail__ladel">кому</div>
+                                        <div class="detail__text">{{ letter.to }}</div>
+                                    </div>
+                                    <div class="detail__item">
+                                        <div class="detail__ladel">Кас:</div>
+                                        <div class="detail__text">{{ letter.title }}</div>
+                                    </div>
+                                    <div class="detail__item">
+                                        <div class="detail__ladel">Текст</div>
+                                        <div class="detail__text">{{ letter.text}}</div>
+                                    </div>
+
+                                    <div class="detail__item">
+                                        <div class="detail__ladel">Файлы</div>
+                                        <div class="detail__text">{{ letter.file}}</div>
+                                    </div>
+                                    <div class="detail__item">
+                                        <div class="detail__ladel">Фото</div>
+                                        <div class="detail__text">{{ letter.image }}</div>
+                                    </div>
+
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
+
+                    <hr>
+                    <div class="block__add">
+                        <div class="block__add__title">
+                            <p>Технические решения</p>
+                            {% if user.profile.is_liner == 1 %}
+                                <a href="{% url 'solution_create' %}?mismatch_id={{ mismatch.pk }}&place_id={{ mismatch.place_id }}" class="btn">+ Добавить</a>
+                            {% endif %}
+                        </div>
+                        <div class="block__add__content">
+                       {% if solutions %}
+                                <div class="detail__block">
+                                {% for solution in solutions %}
+
+                                    <div class="detail__item">
+                                        <div class="detail__ladel">Номер письма</div>
+                                        <div class="detail__text">
+                                            <a href="{% url 'solution_detail' solution.pk %}">СП-{{ solution.number }} от {{ solution.date }}</a></div>
+                                    </div>
+                                    <div class="detail__item">
+                                        <div class="detail__ladel">от</div>
+                                        <div class="detail__text">{{ solution.from }}</div>
+                                    </div>
+                                    <div class="detail__item">
+                                        <div class="detail__ladel">Кас:</div>
+                                        <div class="detail__text">{{ solution.title }}</div>
+                                    </div>
+                                    <div class="detail__item">
+                                        <div class="detail__ladel">Текст</div>
+                                        <div class="detail__text">{{ solution.text}}</div>
+                                    </div>
+
+                                    <div class="detail__item">
+                                        <div class="detail__ladel">Файлы</div>
+                                        <div class="detail__text">{{ solution.file}}</div>
+                                    </div>
+
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
             {% else %}
                 <p>Несоответствие не составлялось</p>
             {% endif %}

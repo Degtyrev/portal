@@ -1,0 +1,122 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+
+{% block content %}
+
+    <div class="bread_crumbs">
+        <ul class="bread_crumbs__list">
+            <li class="bread_crumbs_item"><a href="{% url 'letter_list' %}">Список писем </a></li>
+        </ul>
+    </div>
+
+    <form action="" method="post" enctype="multipart/form-data" class="form_wrap">
+    {% csrf_token %}
+
+    <div class="form_title">
+        <h2>{{ title }}</h2>
+    </div>
+    <div class="form_error">
+        {{ form.non_field_errors }}
+    </div>
+
+    <div class="form_section">
+        <div class="form_section_name">
+            <h2>общие данные</h2>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.number.id_for_label }}">{{ form.number.label }}</label>
+                {{ form.number }}
+            </div>
+            <div class="form_error">{{ form.number.errors }}</div>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.date.id_for_label }}">{{ form.date.label }}</label>
+                {{ form.date }}
+            </div>
+            <div class="form_error">{{ form.date.errors }}</div>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.to.id_for_label }}">{{ form.to.label }}</label>
+                {{ form.to }}
+            </div>
+            <div class="form_error">{{ form.to.errors }}</div>
+        </div>
+    </div>
+
+    <div class="form_section">
+        <div class="form_section_name">
+{#            <h2>детали</h2>#}
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+                {{ form.title }}
+            </div>
+            <div class="form_error">{{ form.title.errors }}</div>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.text.id_for_label }}">{{ form.text.label }}</label>
+                {{ form.text }}
+            </div>
+            <div class="form_error">{{ form.text.errors }}</div>
+        </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.mismatch.id_for_label }}">{{ form.mismatch.label }}</label>
+                    {{ form.mismatch }}
+                </div>
+                <div class="form_error">{{ form.mismatch.errors }}</div>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.file.id_for_label }}">{{ form.file.label }}</label>
+                    {{ form.file }}
+                </div>
+                <div class="form_error">{{ form.file.errors }}</div>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.image.id_for_label }}">{{ form.image.label }}</label>
+                    {{ form.image }}
+                </div>
+                <div class="form_error">{{ form.image.errors }}</div>
+            </div>
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.user.id_for_label }}">{{ form.user.label }}</label>
+                    {{ form.user }}
+                </div>
+                <div class="form_error">{{ form.user.errors }}</div>
+            </div>
+
+      </div>
+
+
+    <biv class="form_btn">
+      <input type="submit" value="Сохранить" id="create_letter" class="btn ">
+    </biv>
+     <biv class="form_btn">
+        <a href="{% url 'letter_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
+    </biv>
+
+    </form>
+{% endblock %}

@@ -1,6 +1,7 @@
 import os.path
 
 from django.contrib.auth.views import LoginView
+from django.db.models import Max
 from django.shortcuts import render, redirect
 from .models import *
 import datetime
@@ -232,8 +233,15 @@ class BusinessTripDelete(DeleteView):
 #----------- Список Наосоответствий  -----------
 
 def mismatch_list(request):
-    mismatches = Mismatch.objects.all()
+    mismatches = Mismatch.objects.select_related().all()
+    # n = {}
+    # for mismatche in mismatches:
+    #     track = Tracking.objects.filter(mismatch_id__exact=mismatche.id)
+    #     n['track'] = track
+    #     n = mismatche
+    print(mismatches)
     place = Place.objects.filter(status__exact=2)
+
 
     return render(
         request,
@@ -242,6 +250,7 @@ def mismatch_list(request):
             'title': 'Список несоответствий',
             'mismatches': mismatches,
             'place': place,
+
         },
     )
 
@@ -251,6 +260,8 @@ def mismatch_list(request):
 def mismatch_detail(request, pk):
     mismatch = Mismatch.objects.get(pk=pk)
     status = Tracking.objects.filter(mismatch=mismatch.pk)
+    letters = Letter.objects.filter(mismatch=mismatch.pk)
+    solutions = Solution.objects.filter(mismatch=mismatch.pk)
 
     return render(
             request,
@@ -259,6 +270,8 @@ def mismatch_detail(request, pk):
                 'title': 'Карточка Неоответствия',
                 'mismatch': mismatch,
                 'status': status,
+                'letters': letters,
+                'solutions': solutions,
             },
         )
 
@@ -559,36 +572,56 @@ def letter_list(request):
         context={
             'title': 'Список Служебных писем',
             'letter_list': letter_list,
-            'menu': menu
+
         },
     )
 
 def letter_detail(request, pk):
-    letter_detail = Letter.objects.get(pk=pk)
+    letter = Letter.objects.get(pk=pk)
 
     return render(
         request,
         'supervision/letter/letter_detail.html',
         context={
             'title': 'Служебное письмо',
-            'letter_detail': letter_detail,
-            'menu': menu
+            'letter': letter,
         },
     )
 
 # --------- Редактирование, обновление, удаление  формы служебных писем
 
-class LetterCreate(CreateView):
-    model = Letter
-    fields = '__all__'
+# class LetterCreate(CreateView):
+#     model = Letter
+#     fields = '__all__'
+def letter_create(request):
+    if request.method == 'POST':
+        form = CreateLetterForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            # print(form.cleaned_data)
+            try:
+                form.save()
+                return redirect('letter_list')
+            except:
+                form.add_error(None, "Ошибка добавления Служебного письма")
+        # return HttpResponseRedirect(reverse('mismatch'))
+    else:
+        mismatch_id = request.GET['mismatch_id']
+        form = CreateLetterForm(initial={'user': request.user, 'mismatch': mismatch_id})
+
+    return render(request, 'supervision/letter/letter_create.html',
+                      {'form': form, 'title': 'Служебное письмо в ОШМ'})
+
 
 class LetterUpdate(UpdateView):
     model = Letter
     fields = '__all__'
-
-class LetterDelete(DeleteView):
-    model = Letter
+    template_name = 'supervision/letter/letter_create.html'
     success_url = reverse_lazy('letter_list')
+
+# class LetterDelete(DeleteView):
+#     model = Letter
+#     success_url = reverse_lazy('letter_list')
 
 
 #--------------- Технические решения----------------
@@ -602,7 +635,7 @@ def solution_list(request):
         context={
             'title': 'Список Технических решений',
             'solution_list': solution_list,
-            'menu': menu
+
         },
     )
 
@@ -615,23 +648,38 @@ def solution_detail(request, pk):
         context={
             'title': 'Техническое решение',
             'solution_detail': solution_detail,
-            'menu': menu
+
         },
     )
 
 # --------- Редактирование, обновление, удаление  формы чертеж
 
-class SolutionCreate(CreateView):
-    model = Solution
-    fields = '__all__'
+def solution_create(request):
+    if request.method == 'POST':
+        form = CreateLetterForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            # print(form.cleaned_data)
+            try:
+                form.save()
+                return redirect('letter_list')
+            except:
+                form.add_error(None, "Ошибка добавления Служебного письма")
+        # return HttpResponseRedirect(reverse('mismatch'))
+    else:
+        mismatch_id = request.GET['mismatch_id']
+        form = CreateLetterForm(initial={'user': request.user, 'mismatch': mismatch_id})
+
+    return render(request, 'supervision/letter/letter_create.html',
+                      {'form': form, 'title': 'Служебное письмо в ОШМ'})
 
 class SolutionUpdate(UpdateView):
     model = Solution
     fields = '__all__'
 
-class SolutionDelete(DeleteView):
-    model = Solution
-    success_url = reverse_lazy('solution_list')
+# class SolutionDelete(DeleteView):
+#     model = Solution
+#     success_url = reverse_lazy('solution_list')
 
 
 
