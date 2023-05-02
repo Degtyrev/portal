@@ -115,38 +115,38 @@
                         <div class="block__add__content">
 
                             {% if letters %}
-                                <div class="detail__block">
+
                                 {% for letter in letters %}
+                                    <div class="detail__block">
+                                        <div class="detail__item">
+                                            <div class="detail__ladel">Номер письма</div>
+                                            <div class="detail__text">
+                                                <a href="{% url 'letter_detail' letter.pk %}">СП-{{ letter.number }} от {{ letter.date }}</a></div>
+                                        </div>
+                                        <div class="detail__item">
+                                            <div class="detail__ladel">Кому</div>
+                                            <div class="detail__text">{{ letter.to }}</div>
+                                        </div>
+                                        <div class="detail__item">
+                                            <div class="detail__ladel">Кас:</div>
+                                            <div class="detail__text">{{ letter.title }}</div>
+                                        </div>
+                                        <div class="detail__item">
+                                            <div class="detail__ladel">Текст</div>
+                                            <div class="detail__text">{{ letter.text}}</div>
+                                        </div>
 
-                                    <div class="detail__item">
-                                        <div class="detail__ladel">Номер письма</div>
-                                        <div class="detail__text">
-                                            <a href="{% url 'letter_detail' letter.pk %}">СП-{{ letter.number }} от {{ letter.date }}</a></div>
+                                        <div class="detail__item">
+                                            <div class="detail__ladel">Файлы</div>
+                                            <div class="detail__text">{{ letter.file}}</div>
+                                        </div>
+                                        <div class="detail__item">
+                                            <div class="detail__ladel">Фото</div>
+                                            <div class="detail__text">{{ letter.image }}</div>
+                                        </div>
                                     </div>
-                                    <div class="detail__item">
-                                        <div class="detail__ladel">кому</div>
-                                        <div class="detail__text">{{ letter.to }}</div>
-                                    </div>
-                                    <div class="detail__item">
-                                        <div class="detail__ladel">Кас:</div>
-                                        <div class="detail__text">{{ letter.title }}</div>
-                                    </div>
-                                    <div class="detail__item">
-                                        <div class="detail__ladel">Текст</div>
-                                        <div class="detail__text">{{ letter.text}}</div>
-                                    </div>
-
-                                    <div class="detail__item">
-                                        <div class="detail__ladel">Файлы</div>
-                                        <div class="detail__text">{{ letter.file}}</div>
-                                    </div>
-                                    <div class="detail__item">
-                                        <div class="detail__ladel">Фото</div>
-                                        <div class="detail__text">{{ letter.image }}</div>
-                                    </div>
-
                                 {% endfor %}
-                                </div>
+
                             {% endif %}
                         </div>
                     </div>
@@ -155,9 +155,9 @@
                     <div class="block__add">
                         <div class="block__add__title">
                             <p>Технические решения</p>
-                            {% if user.profile.is_liner == 1 %}
+{#                            {% if user.profile.is_liner == 1 %}#}
                                 <a href="{% url 'solution_create' %}?mismatch_id={{ mismatch.pk }}&place_id={{ mismatch.place_id }}" class="btn">+ Добавить</a>
-                            {% endif %}
+{#                            {% endif %}#}
                         </div>
                         <div class="block__add__content">
                        {% if solutions %}
@@ -170,7 +170,7 @@
                                             <a href="{% url 'solution_detail' solution.pk %}">СП-{{ solution.number }} от {{ solution.date }}</a></div>
                                     </div>
                                     <div class="detail__item">
-                                        <div class="detail__ladel">от</div>
+                                        <div class="detail__ladel">От</div>
                                         <div class="detail__text">{{ solution.from }}</div>
                                     </div>
                                     <div class="detail__item">

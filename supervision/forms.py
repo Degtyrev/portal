@@ -164,9 +164,39 @@ class CreateLetterForm(forms.ModelForm):
             'date': forms.DateInput(attrs={'class': 'form_input'}),
             'title': forms.TextInput(attrs={'class': 'form_input'}),
             'text': forms.Textarea(attrs={'class': 'form_input', 'cols': 80, 'rows': 5}),
-            'user': forms.Select(attrs={'class': 'form_input'}),
+            'user': forms.Select(attrs={'class': 'form_input', 'disabled': True}),
             'to': forms.TextInput(attrs={'class': 'form_input'}),
-            'mismatch': forms.Select(attrs={'class': 'form_input'}),
+            'mismatch': forms.Select(attrs={'class': 'form_input', 'disabled': True}),
             'file': forms.FileInput(attrs={'class': 'form_input'}),
             'image': forms.FileInput(attrs={'class': 'form_input'}),
+        }
+
+
+class CreateSolutionForm(forms.ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['place'].empty_label = 'Выберите Объект'
+
+    class Meta:
+        model = Solution
+        fields = ['number', 'date', 'title', 'text', 'user',
+                  'to', 'mismatch', 'file']
+        labels = {'number': 'Номер письма СП-',
+                  'date': 'Дата',
+                  'title': 'Тема',
+                  'text': 'Текст письма',
+                  'user': 'От кого',
+                  'to': 'Кому',
+                  'mismatch': 'Несоответстивие',
+                  'file': 'Файлы',
+                  }
+        widgets = {
+            'number': forms.NumberInput(attrs={'class': 'form_input'}),
+            'date': forms.DateInput(attrs={'class': 'form_input'}),
+            'title': forms.TextInput(attrs={'class': 'form_input'}),
+            'text': forms.Textarea(attrs={'class': 'form_input', 'cols': 80, 'rows': 5}),
+            'user': forms.Select(attrs={'class': 'form_input', 'disabled': True}),
+            'to': forms.TextInput(attrs={'class': 'form_input'}),
+            'mismatch': forms.Select(attrs={'class': 'form_input', 'disabled': True}),
+            'file': forms.FileInput(attrs={'class': 'form_input'}),
         }

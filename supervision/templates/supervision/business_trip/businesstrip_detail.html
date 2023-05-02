@@ -9,48 +9,42 @@
         <div class="bread_crumbs">
             <ul class="bread_crumbs__list">
                 <li class="bread_crumbs_item"><a href="{% url 'business_trip' %}">Список командировок </a></li>
-                <li class="bread_crumbs_item">  ->{{ trip.place.name }}
-
-                </li>
+                <li class="bread_crumbs_item">  ->{{ trip.place.name }}</li>
             </ul>
         </div>
-
 
         <section class="business_trip">
              <div class="content_title">
                 <h1 class="title">{{ title }}</h1>
-             {% if trip.end > date_today %}
-                 {% if trip %}
-                 <div class="new_btn">
-                    <a href="{% url 'extension_business_trip' trip.pk %}" class="new_link">Продлить</a>
-                </div>
-                 {% else %}
+                 {% if trip.status == 2 %}
                      <div class="new_btn">
-                        <a href="{% url 'business_trip_create' %}" class="new_link">+ Добавить</a>
-                     </div>
-                 {% endif %}
-             {% endif %}
-        </div>
-
-        {% if trip %}
-            <div class="business_trip__current">
-                {% if trip.end > date_today %}
-                <h2 class="bt__title">Текущая командировка</h2>
-                {% else %}
-                <h2 class="bt__title">Завершенная командировка</h2>
-                {% endif %}
-
-                <div class="business_trip__block">
-                    <div class="btc__item">
-                        <p class="bt__object">{{ trip.place.name }}</p>
-                        <div class="bt__date">
-                            <p class="bt__date_start"> с {{ trip.start|date:"d.m.Y" }}</p>
-                            <p class="bt__date_end">по {{ trip.end|date:"d.m.Y" }}</p>
-                        </div>
-
+                        <a href="{% url 'extension_business_trip' trip.pk %}" class="new_link">Продлить</a>
                     </div>
+                 {% endif %}
+            </div>
+            <hr>
+        {% if trip %}
+            <div class="detail__block">
 
-                    <p class="bt__purpose"><span class="small">цель: </span>{{ trip.purpose}}</p>
+                <div class="detail__item">
+                    <div class="detail__label">статус</div>
+                    <div class="detail__text">{{ trip.status }}</div>
+                </div>
+                <div class="detail__item">
+                    <div class="detail__label">Объект</div>
+                    <div class="detail__text">{{ trip.place.name }}</div>
+                </div>
+                <div class="detail__item">
+                    <div class="detail__label">Дата начала</div>
+                    <div class="detail__text">{{ trip.start|date:"d.m.Y" }}</div>
+                </div>
+                <div class="detail__item">
+                    <div class="detail__label">Дата окончания</div>
+                    <div class="detail__text">{{ trip.end|date:"d.m.Y" }}</div>
+                </div>
+                <div class="detail__item">
+                    <div class="detail__label">Цель:</div>
+                    <div class="detail__text">{{ trip.purpose }}</div>
                 </div>
 
             </div>

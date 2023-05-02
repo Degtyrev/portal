@@ -103,7 +103,7 @@ h1{
     padding-top: 20px;
     width: 70%;
     margin: 0 auto;
-
+    padding-bottom: 60px;
 }
 .content{
     margin-left: 100px;
@@ -568,8 +568,8 @@ td>input{
 /*------------------ несоответствия детально------  */
 
 
-.mismatch_detail__block{
-/*font-size: 14px;*/
+.mismatch_detail{
+    /*margin-bottom: 40px;*/
 }
 .mismatch_detail__item{
     display: grid;

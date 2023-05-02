@@ -1,10 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base_generic.html" %}
+{% load static %}
 
-</body>
-</html>
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+{% block content %}
+{#        {% if user.profile.is_liner == 0 %}#}
+
+        <section class="section">
+            <div class="content_title">
+                 <h1 class="title">{{ title }}</h1>
+{#                <div class="new_btn">#}
+{#                    <a href="{% url 'status_mismatch_create' %}" class="new_link">+ Добавить</a>#}
+{#                </div>#}
+            </div>
+
+            <div class="list__card">
+            {% if solution_list %}
+
+                     <div class="person__block">
+                            <table class="person__table">
+                                <tr>
+                                    <th class="person__table_head">№</th>
+                                    <th class="person__table_head">СП-№/дата</th>
+                                    <th class="person__table_head">Тема</th>
+                                    <th class="person__table_head">по Несоответствию</th>
+                                    <th class="person__table_head"></th>
+                                </tr>
+                     {% for solution in solution_list %}
+                                <tr>
+                                    <td class="person__table_data">{{ forloop.counter }}</td>
+                                    <td class="person__table_data">
+                                        <a href="{% url 'solution_detail' solution.pk %}">СП-{{ solution.number}} от: {{ solution.date|date:'d.m.Y' }}</a></td>
+                                    <td class="person__table_data">{{ solution.title}}</td>
+                                    <td class="person__table_data"><a href="{% url 'mismatch_detail' solution.mismatch_id %}">{{ solution.mismatch.title}}</a></td>
+                                    <td class="person__table_data">
+                                        <div class="list__action_icon">
+                                            <a class="list__link" href="{% url 'solution_update' solution.id %}">
+                                                <img class="list__icon" src="{% static 'supervision/icon/edit_icon1.png' %}" alt="редактировать" title="редактировать">
+                                            </a>
+{#                                            <a class="list__link" href="{% url 'letter_delete' letter.id %}">#}
+{#                                                <img class="list__icon" src="{% static 'supervision/icon/delete_icon.png' %}" alt="уладить" title="удалить">#}
+{#                                            </a>#}
+                                        </div>
+                                    </td>
+                                </tr>
+                     {% endfor %}
+                            </table>
+                     </div>
+
+            {% else %}
+                <p>Нет Технических решений</p>
+            {% endif %}
+            </div>
+        </section>
+
+
+{#        {% endif %}#}
+    {% endblock %}

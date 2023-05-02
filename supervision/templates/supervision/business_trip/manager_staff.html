@@ -46,6 +46,7 @@
                                 <td class="list__data">{{ trip.start|date:"d.m.Y"}}</td>
                                 <td class="list__data">{{ trip.end|date:"d.m.Y" }}</td>
                                 <td class="list__data list__action">
+                                    {% if condition_selected != 3 %}
                                     <div class="list__action_icon">
                                         <a class="list__link" href="{% url 'extension_business_trip' trip.id %}">
                                             <img class="list__icon" src="{% static 'supervision/icon/Time_icon.png' %}" alt="продлить" title="продлить">
@@ -54,6 +55,7 @@
                                             <img class="list__icon" src="{% static 'supervision/icon/edit_icon1.png' %}" alt="редактировать" title="редактировать">
                                         </a>
                                     </div>
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% endfor %}

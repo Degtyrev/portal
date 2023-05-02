@@ -16,13 +16,12 @@
 {#                    <a href="{% url 'employee_create' %}" class="new_link">+ Добавить</a>#}
 {#                </div>#}
             </div>
-
-          <div class="list__filter">
-       <ul class="list__filter_list">
-           <li class="list__filter_item selected_item">Действующий</li>
-           <li class="list__filter_item"><a class="list__filter_link" href="">Уволеные</a></li>
-        </ul>
-   </div>
+            <div class="list__filter">
+               <ul class="list__filter_list">
+                   <li class="list__filter_item selected_item">Действующий</li>
+                   <li class="list__filter_item"><a class="list__filter_link" href="">Уволеные</a></li>
+                </ul>
+           </div>
 
             <div class="list__card">
             {% if employee_list %}

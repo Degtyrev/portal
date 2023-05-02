@@ -1,10 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base_generic.html" %}
 
-</body>
-</html>
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+    {% block content %}
+        <div class="bread_crumbs">
+            <ul class="bread_crumbs__list">
+                <li class="bread_crumbs_item"><a href="{% url 'solution_list' %}">Список Технических решений </a></li>
+                <li class="bread_crumbs_item">  -> СП-{{ solution.number }} от {{ solution.date }} </li>
+            </ul>
+        </div>
+
+        <section class="mismatch_detail">
+            <div class="content_title">
+                 <h1 class="title">{{ title }}</h1>
+                <div class="new_btn">
+                    <a href="{% url 'solution_update' solution.pk %}" class="new_link">Радактировать</a>
+                </div>
+            </div>
+            <hr>
+    {% if solution %}
+            <div class="detail__block">
+
+                <div class="detail__item">
+                    <div class="detail__ladel">Номер письма</div>
+                    <div class="detail__text">СП-{{ solution.number }} от {{ solution.date }}</div>
+                </div>
+                <div class="detail__item">
+                    <div class="detail__ladel">От</div>
+                    <div class="detail__text">{{ solution.user }}</div>
+                </div>
+                <div class="detail__item">
+                    <div class="detail__ladel">Кас:</div>
+                    <div class="detail__text">{{ solution.title }}</div>
+                </div>
+                <div class="detail__item">
+                    <div class="detail__ladel">Текст</div>
+                    <div class="detail__text">{{ solution.text}}</div>
+                </div>
+
+                <div class="detail__item">
+                    <div class="detail__ladel">Файлы</div>
+                    <div class="detail__text">{{ solution.file}}</div>
+                </div>
+
+            </div>
+
+            {% else %}
+                <p>Нет такого Технического решения </p>
+            {% endif %}
+
+        </section>
+
+
+    {% endblock %}

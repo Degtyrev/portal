@@ -26,13 +26,19 @@
 
                 <div class="detail__item">
                     <div class="detail__ladel">Номер письма</div>
-                    <div class="detail__text">
-                        <a href="{% url 'letter_detail' letter.pk %}">СП-{{ letter.number }} от {{ letter.date }}</a></div>
+                    <div class="detail__text">СП-{{ letter.number }} от {{ letter.date }}</div>
                 </div>
                 <div class="detail__item">
                     <div class="detail__ladel">кому</div>
                     <div class="detail__text">{{ letter.to }}</div>
                 </div>
+
+                <div class="detail__item">
+                    <div class="detail__ladel">По несоответствию</div>
+                    <div class="detail__text">СП-{{ letter.number }} от {{ letter.date }}</div>
+                </div>
+
+
                 <div class="detail__item">
                     <div class="detail__ladel">Кас:</div>
                     <div class="detail__text">{{ letter.title }}</div>
@@ -56,7 +62,7 @@
             {% else %}
                 <p>Нет такого Служебного письма </p>
             {% endif %}
-            </div>
+
         </section>
 
 

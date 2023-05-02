@@ -7,8 +7,6 @@
 
 
 {% block content %}
-        {% if user.profile.is_liner == 0 %}
-
         <section class="section">
             <div class="content_title">
                  <h1 class="title">{{ title }}</h1>
@@ -17,43 +15,92 @@
 {#                </div>#}
             </div>
 
+
+
             <div class="list__card">
+            {% if user.profile.is_liner == 0 %}
             {% if letter_list %}
 
-                     <div class="person__block">
+                <div class="person__block">
+                    <table class="person__table">
+                        <tr>
+                            <th class="person__table_head">№</th>
+                            <th class="person__table_head">СП-№/дата</th>
+                            <th class="person__table_head">Тема</th>
+                            <th class="person__table_head">по Несоответствию</th>
+                        </tr>
+                        {% for letter in letter_list %}
+                        <tr>
+                            <td class="person__table_data">{{ forloop.counter }}</td>
+                            <td class="person__table_data">
+                                <a href="{% url 'letter_detail' letter.pk %}">СП-{{ letter.number}} от: {{ letter.date|date:'d.m.Y' }}</a></td>
+                            <td class="person__table_data">{{ letter.title}}</td>
+                            <td class="person__table_data"><a href="{% url 'mismatch_detail' letter.mismatch_id %}">{{ letter.mismatch.title}}</a></td>
+                            <td class="person__table_data">
+                                <div class="list__action_icon">
+                                    <a class="list__link" href="{% url 'letter_update' letter.id %}">
+                                        <img class="list__icon" src="{% static 'supervision/icon/edit_icon1.png' %}" alt="редактировать" title="редактировать">
+                                    </a>
+{#                                            <a class="list__link" href="{% url 'letter_delete' letter.id %}">#}
+{#                                                <img class="list__icon" src="{% static 'supervision/icon/delete_icon.png' %}" alt="уладить" title="удалить">#}
+{#                                            </a>#}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+            {% else %}
+                <p>Нет Служебных писем</p>
+            {% endif %}
+
+            {% endif %}
+
+                {% if user.profile.is_liner == 1 %}
+                    {% if letter_list %}
+        ЗДЕСЬ БУДУТ ПИСЬМА ДЛЯ ТЕКУЩЕГО ОБЪЕКТА
+
+
+                        <div class="person__block">
                             <table class="person__table">
                                 <tr>
                                     <th class="person__table_head">№</th>
                                     <th class="person__table_head">СП-№/дата</th>
                                     <th class="person__table_head">Тема</th>
-                                    <th class="person__table_head"></th>
+                                    <th class="person__table_head">по Несоответствию</th>
                                 </tr>
-                     {% for letter in letter_list %}
+                                {% for letter in letter_list %}
                                 <tr>
                                     <td class="person__table_data">{{ forloop.counter }}</td>
-                                    <td class="person__table_data">СП-{{ letter.number}} от: {{ letter.date|date:'d.m.Y' }}</td>
+                                    <td class="person__table_data">
+                                        <a href="{% url 'letter_detail' letter.pk %}">СП-{{ letter.number}} от: {{ letter.date|date:'d.m.Y' }}</a></td>
                                     <td class="person__table_data">{{ letter.title}}</td>
+                                    <td class="person__table_data"><a href="{% url 'mismatch_detail' letter.mismatch_id %}">{{ letter.mismatch.title}}</a></td>
                                     <td class="person__table_data">
                                         <div class="list__action_icon">
                                             <a class="list__link" href="{% url 'letter_update' letter.id %}">
                                                 <img class="list__icon" src="{% static 'supervision/icon/edit_icon1.png' %}" alt="редактировать" title="редактировать">
                                             </a>
-{#                                            <a class="list__link" href="{% url 'letter_delete' letter.id %}">#}
-{#                                                <img class="list__icon" src="{% static 'supervision/icon/delete_icon.png' %}" alt="уладить" title="удалить">#}
-{#                                            </a>#}
+        {#                                            <a class="list__link" href="{% url 'letter_delete' letter.id %}">#}
+        {#                                                <img class="list__icon" src="{% static 'supervision/icon/delete_icon.png' %}" alt="уладить" title="удалить">#}
+        {#                                            </a>#}
                                         </div>
                                     </td>
                                 </tr>
-                     {% endfor %}
+                                {% endfor %}
                             </table>
-                     </div>
+                        </div>
 
-            {% else %}
-                <p>Нет Служебных писем</p>
+                    {% else %}
+                        <p>Нет Служебных писем</p>
+                    {% endif %}
+
             {% endif %}
+
             </div>
+
         </section>
 
 
-        {% endif %}
     {% endblock %}

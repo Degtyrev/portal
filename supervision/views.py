@@ -39,12 +39,46 @@ menu = [
 
 ]
 
+
+def change_status_trip(request):
+    business_trip = BusinessTrip.objects.all()
+
+    for trip in business_trip:
+        if trip.end <= datetime.date.today():
+            BusinessTrip.objects.filter(pk=trip.pk).update(status_id=3) #завершена
+
+        if trip.start == datetime.date.today():
+            BusinessTrip.objects.filter(pk=trip.pk).update(status_id=2) #действующая
+
+        if trip.start < datetime.date.today() and trip.end > datetime.date.today():
+            BusinessTrip.objects.filter(pk=trip.pk).update(status_id=2) #действующая
+
+        if trip.start > datetime.date.today():
+            BusinessTrip.objects.filter(pk=trip.pk).update(status_id=1)  # перспективная
+
+    request.session['change_status'] = 1
+
+
 #----------- Главная Main -----------
 def index(request):
+
+# проверка и изменение статуса командировок  если
+    session_heck = request.session.get('change_status', 0)
+    if session_heck == 0:
+        change_status_trip(request)
+
+
     num_employeer = User.objects.filter(is_active=1).count()
     num_place = Place.objects.filter(status=2).count()  # Метод 'all()' применён по умолчанию.
 
     activ_trip = BusinessTrip.objects.filter(user_id__exact=request.user.pk, status_id__exact=2)
+    print(activ_trip)
+
+    if activ_trip:
+        request.session['activ_trip'] = activ_trip[0].pk
+        request.session['activ_place'] = activ_trip[0].place_id
+        activ_trip =activ_trip[0]
+
     # Отрисовка HTML-шаблона index.html с данными внутри
     # переменной контекста context
 
@@ -55,7 +89,7 @@ def index(request):
         'title': "Портал",
         'num_employeer': num_employeer,
         'num_place': num_place,
-        'activ_trip': activ_trip[0]
+        'activ_trip': activ_trip,
     }
 
     return render(
@@ -63,6 +97,9 @@ def index(request):
         'index.html',
         context=context,
     )
+
+
+
 
 #----------- Страница добавления админка -----------
 def admin_page(request):
@@ -82,6 +119,7 @@ def admin_page(request):
 #----------- Командировки  -----------
 
 def business_trip(request):
+    change_status_trip(request)  # обновление статуса командировки
     date_today = datetime.date.today()
     trips_user = BusinessTrip.objects.filter(status__exact=2).filter(user_id__exact=request.user.pk)
     trips = BusinessTrip.objects.filter(status__exact=2)
@@ -106,14 +144,6 @@ def condition_show(request, pk):
     trips = BusinessTrip.objects.filter(status__exact=pk)
     conditions = ConditionTrip.objects.all()
 
-    # day_now = date.today()
-    # new={}
-    # for tu in trips_user:
-    #     new[tu.pk]=tu
-    #     new[tu.pk].balans = tu.end - day_now
-
-
-
     return render(
         request,
         'supervision/business_trip/business_trip.html',
@@ -123,7 +153,6 @@ def condition_show(request, pk):
             'trips': trips,
             'conditions': conditions,
             'condition_selected': pk,
-
         },
     )
 
@@ -131,13 +160,11 @@ def condition_show(request, pk):
 #----------- Карточка Командировки  -----------
 
 def trip(request, pk):
-    date_today = datetime.date.today()
     trip = BusinessTrip.objects.get(pk=pk)
 
     context = {
                 'title': 'Командировка',
                 'trip': trip,
-                'date_today': date_today,
               }
 
     return render(
@@ -230,7 +257,7 @@ class BusinessTripDelete(DeleteView):
     success_url = reverse_lazy('business_trip')
 
 
-#----------- Список Наосоответствий  -----------
+#----------- Список Несоответствий  -----------
 
 def mismatch_list(request):
     mismatches = Mismatch.objects.select_related().all()
@@ -239,9 +266,10 @@ def mismatch_list(request):
     #     track = Tracking.objects.filter(mismatch_id__exact=mismatche.id)
     #     n['track'] = track
     #     n = mismatche
-    print(mismatches)
+
     place = Place.objects.filter(status__exact=2)
 
+    # activ_trip = request.session['activ_trip']
 
     return render(
         request,
@@ -250,7 +278,7 @@ def mismatch_list(request):
             'title': 'Список несоответствий',
             'mismatches': mismatches,
             'place': place,
-
+            # 'activ_trip': activ_trip,
         },
     )
 
@@ -565,6 +593,7 @@ class EmployeeUpdate(UpdateView):
 
 def letter_list(request):
     letter_list = Letter.objects.all()
+    letter_list_plase = Letter.objects.filter()
 
     return render(
         request,
@@ -609,15 +638,18 @@ def letter_create(request):
         mismatch_id = request.GET['mismatch_id']
         form = CreateLetterForm(initial={'user': request.user, 'mismatch': mismatch_id})
 
-    return render(request, 'supervision/letter/letter_create.html',
-                      {'form': form, 'title': 'Служебное письмо в ОШМ'})
+    return render(request, 'supervision/letter/lettercreate_form.html',
+                  {'form': form, 'title': 'Служебное письмо в ОШМ'})
 
 
 class LetterUpdate(UpdateView):
     model = Letter
     fields = '__all__'
-    template_name = 'supervision/letter/letter_create.html'
+    template_name = 'supervision/letter/lettercreate_form.html'
     success_url = reverse_lazy('letter_list')
+    complex = {
+        'title': 'Служебное письмо в ОШМ'
+    }
 
 # class LetterDelete(DeleteView):
 #     model = Letter
@@ -640,15 +672,14 @@ def solution_list(request):
     )
 
 def solution_detail(request, pk):
-    solution_detail = Solution.objects.get(pk=pk)
+    solution = Solution.objects.get(pk=pk)
 
     return render(
         request,
         'supervision/solution/solution_detail.html',
         context={
             'title': 'Техническое решение',
-            'solution_detail': solution_detail,
-
+            'solution': solution,
         },
     )
 
@@ -656,26 +687,31 @@ def solution_detail(request, pk):
 
 def solution_create(request):
     if request.method == 'POST':
-        form = CreateLetterForm(request.POST, request.FILES)
+        form = CreateSolutionForm(request.POST, request.FILES)
 
         if form.is_valid():
             # print(form.cleaned_data)
             try:
                 form.save()
-                return redirect('letter_list')
+                return redirect('solution_list')
             except:
-                form.add_error(None, "Ошибка добавления Служебного письма")
+                form.add_error(None, "Ошибка добавления Технического решения")
         # return HttpResponseRedirect(reverse('mismatch'))
     else:
         mismatch_id = request.GET['mismatch_id']
-        form = CreateLetterForm(initial={'user': request.user, 'mismatch': mismatch_id})
+        form = CreateSolutionForm(initial={'user': request.user, 'mismatch': mismatch_id})
 
-    return render(request, 'supervision/letter/letter_create.html',
-                      {'form': form, 'title': 'Служебное письмо в ОШМ'})
+    return render(request, 'supervision/solution/solutioncreate_form.html',
+                  {'form': form, 'title': 'Техническое решение'})
 
 class SolutionUpdate(UpdateView):
     model = Solution
     fields = '__all__'
+    template_name = 'supervision/solution/solutioncreate_form.html'
+    success_url = reverse_lazy('solution_list')
+    complex = {
+        'title': 'Редактирование технического решения'
+    }
 
 # class SolutionDelete(DeleteView):
 #     model = Solution

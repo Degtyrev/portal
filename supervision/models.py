@@ -213,8 +213,8 @@ class Irrelevant(models.Model):
 class Letter(models.Model):
     number = models.PositiveIntegerField(unique=True, verbose_name='Номер письма')
     date = models.DateField(default=date.today, verbose_name='Дата')
-    title = models.CharField(max_length=250, verbose_name='Тема письма')
-    text = models.TextField(null=True, blank=True, verbose_name='Текст письма')
+    title = models.CharField(max_length=250, verbose_name='Тема')
+    text = models.TextField(null=True, blank=True, verbose_name='Текст')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='От кого')
     to = models.CharField(max_length=350, null=True, blank=True, verbose_name='Кому')
     mismatch = models.ForeignKey('Mismatch', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Несоответствие')

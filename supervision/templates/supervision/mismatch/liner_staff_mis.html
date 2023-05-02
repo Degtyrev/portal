@@ -6,6 +6,12 @@
             <a href="{% url 'mismatch_create' %}" class="new_link">+ Добавить</a>
         </div>
     </div>
+     <div class="list__filter">
+       <ul class="list__filter_list">
+           <li class="list__filter_item selected_item">Нерешенные</li>
+           <li class="list__filter_item"><a class="list__filter_link" href="">Показать все</a></li>
+        </ul>
+    </div>
     <hr>
     <div class="mismatches">
     {% if mismatches %}
@@ -30,3 +36,5 @@
     {% endif %}
     </div>
 </section>
+
+{{ activ_trip }}
