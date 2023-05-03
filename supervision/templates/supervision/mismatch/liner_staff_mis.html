@@ -1,5 +1,6 @@
 {% load static %}
 <section class="mismatch">
+    {% if mismatches_place %}
     <div class="content_title">
          <h1 class="title">{{ title }}</h1>
         <div class="new_btn">
@@ -14,8 +15,8 @@
     </div>
     <hr>
     <div class="mismatches">
-    {% if mismatches %}
-        {% for mismatch in mismatches %}
+
+        {% for mismatch in mismatches_place %}
             <div class="mismatch__block">
                 <div class="mismatch__block_title">
                     <div class="mismatch__id">{{ mismatch.pk}}</div>
@@ -31,10 +32,16 @@
                 </div>
             </div>
         {% endfor %}
+        </div>
+
+    {% elif mismatches %}
+
+        {% include 'supervision/mismatch/manager_staff_mis.html' %}
+
     {% else %}
         <p>Несоответствий не выявленно</p>
     {% endif %}
-    </div>
+
 </section>
 
 {{ activ_trip }}

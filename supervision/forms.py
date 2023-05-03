@@ -92,7 +92,7 @@ class CreateMismatchForm(forms.ModelForm):
                   'image': 'Фото',
                   }
         widgets = {
-            'place': forms.Select(attrs={'class': 'form_input', 'autocomplete': 'on'}),
+            'place': forms.Select(attrs={'class': 'form_input'}),
             'type': forms.RadioSelect(attrs={'class': 'form_input radio_input', 'checked':1}),
             # 'details': forms.Select(attrs={'class': 'form_input', 'required': 'False'}),
             'title': forms.TextInput(attrs={'class': 'form_input'}),

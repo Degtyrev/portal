@@ -208,17 +208,21 @@ def business_trip_create(request):
             start = datetime.datetime.strptime(request.POST['start'], '%d.%m.%Y').date()
             end = datetime.datetime.strptime(request.POST['end'], '%d.%m.%Y').date()
             user = request.POST['user']
+            # print(datetime.date.today())
             # print(start)
             # print(end)
             # print(user)
+
             carent_trip = BusinessTrip.objects.filter(user__exact=user).filter(status__exact=2)
 
-            date_end_carent_trip = carent_trip[0].end
             try:
-                if start < date_end_carent_trip: # если дата следующей командировки раньще конца текущей
-                    raise Exception(form.add_error(None, f'Сотрудник находится в командировке до {date_end_carent_trip}'))
+                if carent_trip:
+                    date_end_carent_trip = carent_trip[0].end
 
-                if start > end :# если дата начала позже даты завершения
+                    if start < date_end_carent_trip: # если дата следующей командировки раньще конца текущей
+                        raise Exception(form.add_error(None, f'Сотрудник находится в командировке до {date_end_carent_trip}'))
+
+                if start > end:# если дата начала позже даты завершения
                     raise Exception(form.add_error(None, 'Дата начала командировки позже даты завершения'))
 
                 form.save()
@@ -248,7 +252,7 @@ class BusinessTripUpdate(UpdateView):
     # fields = ['name', 'equipment', 'equipment_type', 'contract',
     #           'project_manager', 'chief_engineer', 'order', 'status']
     fields = "__all__"
-    # success_url = reverse_lazy('business_trip_detail')
+    success_url = reverse_lazy('business_trip')
 
 
 class BusinessTripDelete(DeleteView):
@@ -260,16 +264,19 @@ class BusinessTripDelete(DeleteView):
 #----------- Список Несоответствий  -----------
 
 def mismatch_list(request):
-    mismatches = Mismatch.objects.select_related().all()
-    # n = {}
-    # for mismatche in mismatches:
-    #     track = Tracking.objects.filter(mismatch_id__exact=mismatche.id)
-    #     n['track'] = track
-    #     n = mismatche
+    global mismatches_place
+    mismatches = Mismatch.objects.all()
 
     place = Place.objects.filter(status__exact=2)
+    user = request.user
 
-    # activ_trip = request.session['activ_trip']
+    carent_trip = BusinessTrip.objects.filter(user__exact=user.pk).filter(status__exact=2)
+
+    if carent_trip: # выбираем несоответствия для даного объекта
+        mismatches_place = Mismatch.objects.filter(place_id__exact=carent_trip[0].place_id)
+    else:
+        mismatches_place = False
+
 
     return render(
         request,
@@ -278,7 +285,7 @@ def mismatch_list(request):
             'title': 'Список несоответствий',
             'mismatches': mismatches,
             'place': place,
-            # 'activ_trip': activ_trip,
+            'mismatches_place': mismatches_place,
         },
     )
 
@@ -322,7 +329,7 @@ def mismatch_create(request):
                 form.add_error(None, "ошибка добавления несоответстия")
         # return HttpResponseRedirect(reverse('mismatch'))
     else:
-        form = CreateMismatchForm()
+        form = CreateMismatchForm(initial={'place': request.session['activ_place']})
 
     return render(request, 'supervision/mismatch/mismatch_create.html',
                       {'form': form, 'title': 'Несоответстиве'})
@@ -593,15 +600,20 @@ class EmployeeUpdate(UpdateView):
 
 def letter_list(request):
     letter_list = Letter.objects.all()
-    letter_list_plase = Letter.objects.filter()
 
+    if request.session['activ_place']:
+        letter_list_place = Letter.objects.filter(mismatch__place_id__exact =request.session['activ_place'])
+    else:
+        letter_list_place = False
+
+    print(letter_list_place)
     return render(
         request,
         'supervision/letter/letter_list.html',
         context={
             'title': 'Список Служебных писем',
             'letter_list': letter_list,
-
+            'letter_list_place': letter_list_place,
         },
     )
 
