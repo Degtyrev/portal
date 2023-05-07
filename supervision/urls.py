@@ -40,9 +40,9 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path('group/plase/<int:pk>/', views.group_list, name='group_list'),
+    path('group/', views.group_list, name='group_list'),
     path('group/<int:pk>/', views.group_detail, name='group_detail'),
-    path('group/create/<int:pk>', views.GroupCreate.as_view(), name='group_create'),
+    path('group/create/', views.group_create, name='group_create'),
     path('group/<int:pk>/update/', views.GroupUpdate.as_view(), name='group_update'),
     path('group/<int:pk>/delete/', views.GroupDelete.as_view(), name='group_delete'),
 ]
@@ -98,7 +98,7 @@ urlpatterns += [
 urlpatterns += [
     path('type_mismatch/', views.type_mismatch_list, name='type_mismatch_list'),
     # path('status_place/<int:status_id>/', views.type_mismatch_show, name='status_place'),
-    # path('type_mismatch/<int:pk>/', views.type_mismatch_detail, name='type_mismatch_detail'),
+    path('type_mismatch/<int:pk>/', views.type_mismatch_detail, name='type_mismatch_detail'),
     path('type_mismatch/create/', views.TypeMismatchCreate.as_view(), name='type_mismatch_create'),
     path('type_mismatch/<int:pk>/update/', views.TypeMismatchUpdate.as_view(), name='type_mismatch_update'),
     path('type_mismatch/<int:pk>/delete/', views.TypeMismatchDelete.as_view(), name='type_mismatch_delete'),

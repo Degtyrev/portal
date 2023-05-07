@@ -117,7 +117,8 @@ class Group(models.Model):
 
 
     def __str__(self):
-        return f'{self.parent} -> {self.number} {self.name}'
+        return  f'{self.number}. {self.name}'
+        # return f'{self.parent} -> {self.number} {self.name}'
 
     def get_absolute_url(self):
         return reverse('group_detail', args=[str(self.id)])

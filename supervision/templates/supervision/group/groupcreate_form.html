@@ -1,0 +1,71 @@
+{% extends "base_generic.html" %}
+
+ {% block title %}
+     <title>{{ title }}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="bread_crumbs">
+        <ul class="bread_crumbs__list">
+            <li class="bread_crumbs_item"><a href="{% url 'group_list' %}">Список групп чертежей </a></li>
+{#            <li class="bread_crumbs_item">  ->{{ employee_detail.last_name }}#}
+{#                          {{ employee_detail.first_name}} {{ employee_detail.profile.surname}}#}
+{#            </li>#}
+        </ul>
+    </div>
+
+
+<form action="" method="post" class="business_trip__form_create">
+    {% csrf_token %}
+       <div class="form_title">
+        <h2>Группа чертежей</h2>
+    </div>
+     <div class="form_error">
+        {{ form.non_field_errors }}
+     </div>
+
+    <div class="form_section">
+        <div class="form_section_name">
+            <h2>сведения о группе</h2>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.place.id_for_label }}">{{ form.place.label }}</label>
+                {{ form.place }}
+            </div>
+            <div class="form_error">{{ form.place.errors }}</div>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.parent.id_for_label }}">{{ form.parent.label }}</label>
+                {{ form.parent }}
+            </div>
+            <div class="form_error">{{ form.parent.errors }}</div>
+        </div>
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.number.id_for_label }}">{{ form.number.label }}</label>
+                {{ form.number }}
+            </div>
+            <div class="form_error">{{ form.number.errors }}</div>
+        </div>
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                {{ form.name }}
+            </div>
+            <div class="form_error">{{ form.name.errors }}</div>
+        </div>
+
+
+        <biv class="form_btn">
+            <input type="submit" value="Сохранить" class="btn create_group"/>
+        </biv>
+        <biv class="form_btn">
+            <a href="{% url 'group_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
+        </biv>
+    </div>
+</form>
+{% endblock %}

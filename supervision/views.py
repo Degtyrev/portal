@@ -39,7 +39,7 @@ menu = [
 
 ]
 
-
+#установка статуса командировки
 def change_status_trip(request):
     business_trip = BusinessTrip.objects.all()
 
@@ -77,7 +77,9 @@ def index(request):
     if activ_trip:
         request.session['activ_trip'] = activ_trip[0].pk
         request.session['activ_place'] = activ_trip[0].place_id
-        activ_trip =activ_trip[0]
+        activ_trip = activ_trip[0]
+    else:
+        activ_trip = False
 
     # Отрисовка HTML-шаблона index.html с данными внутри
     # переменной контекста context
@@ -90,6 +92,7 @@ def index(request):
         'num_employeer': num_employeer,
         'num_place': num_place,
         'activ_trip': activ_trip,
+        'pk': request.session['activ_place']
     }
 
     return render(
@@ -124,7 +127,18 @@ def business_trip(request):
     trips_user = BusinessTrip.objects.filter(status__exact=2).filter(user_id__exact=request.user.pk)
     trips = BusinessTrip.objects.filter(status__exact=2)
     conditions = ConditionTrip.objects.all()
+    # получени остатков командировки
 
+    if trips_user:
+        balanse = trips_user[0].end - date_today
+        balanse = balanse.days
+    else:
+        balanse = False
+
+    print(trips_user[0].end)
+    print(date_today)
+
+    print(balanse)
     return render(
         request,
         'supervision/business_trip/business_trip.html',
@@ -132,7 +146,7 @@ def business_trip(request):
             'title': 'Список Командировок',
             'trips_user': trips_user,
             'trips': trips,
-
+            'balanse': balanse,
             'conditions': conditions,
             'condition_selected': 2,
         },
@@ -405,7 +419,8 @@ class PlaceDelete(DeleteView):
 
 
 #--------------- Группы  ----------------
-def group_list(request, pk):
+def group_list(request):
+    pk = request.session['activ_place']
     group_list = Group.objects.filter(place_id__exact=pk)
     place_pk = pk
     return render(
@@ -415,7 +430,7 @@ def group_list(request, pk):
             'title': 'Список Групп',
             'group_list': group_list,
             "place_pk": place_pk,
-            'menu': menu
+
         },
     )
 
@@ -434,9 +449,26 @@ def group_detail(request, pk):
 
 # --------- Редактирование, обновление, удаление  формы Узла
 
-class GroupCreate(CreateView):
-    model = Group
-    fields = '__all__'
+# class GroupCreate(CreateView):
+#     model = Group
+#     fields = '__all__'
+
+def group_create(request):
+    activ_place_pk = request.session['activ_place']
+
+    if request.method == 'POST':
+        form = CreateGroupForm(request.POST)
+
+        if form.is_valid():
+            # print(form.cleaned_data)
+            form.save()
+            return redirect('group_list')
+        # return HttpResponseRedirect(reverse('mismatch'))
+    else:
+        form = CreateGroupForm(initial={'place': activ_place_pk})
+    return render(request, 'supervision/group/groupcreate_form.html',
+                  {'form': form, 'title': 'Группы чертежей'})
+
 
 class GroupUpdate(UpdateView):
     model = Group
@@ -812,18 +844,18 @@ def type_mismatch_list(request):
         },
     )
 
-# def type_mismatch_detail(request, pk):
-#     type_mismatch_detail = PlaceStatus.objects.get(pk=pk)
-#
-#     return render(
-#         request,
-#         'supervision/mismatch/type_mismatch_detail.html',
-#         context={
-#             'title': 'Тип несоответствия',
-#             'type_mismatch_detail': type_mismatch_detail,
-#
-#         },
-#     )
+def type_mismatch_detail(request, pk):
+    type_mismatch_detail = PlaceStatus.objects.get(pk=pk)
+
+    return render(
+        request,
+        'supervision/mismatch/type_mismatch_detail.html',
+        context={
+            'title': 'Тип несоответствия',
+            'type_mismatch_detail': type_mismatch_detail,
+
+        },
+    )
 
 def type_mismatch_show(request, status_id):
     # type_mismatch_list = Place.objects.filter(status__exact=status_id)

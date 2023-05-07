@@ -5,33 +5,32 @@
     {% endblock %}
 
 
-    {% block sidebar %}
-        <div class="sidebar">
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'group_create' place_pk %} ">создать Группу</a></li>
-            </ul>
-        </div>
-    {% endblock %}
-
     {% block content %}
-        <section class="unit">
+        <section class="section">
             <div class="content_title">
                  <h1 class="title">{{ title }}</h1>
                 <div class="new_btn">
-                    <a href="{% url 'group_create' place_pk %}" class="new_link">+ Добавить</a>
+                    <a href="{% url 'group_create' %}" class="new_link">+ Добавить</a>
                 </div>
             </div>
-            <hr>
-            <div class="unit_list">
+
+            <div class="list__card">
             {% if group_list %}
                 {% for group in group_list %}
-                    <div class="unit__block">
-                          <div class="unit__block_parent">
-                              <div class="unit__parent">{{ group.parent }}</div>
-                          </div>
-                            <div class="unit__title" >
-                                <a href="{{group.get_absolute_url}}">{{ group.number }} {{ group.name}}</a>
-                            </div>
+                    <div class="card__block">
+{#                    {% if group.parent %}#}
+{#                        <div class="card__item">#}
+{#                            <p class="card__label">Номер родительской группы</p>#}
+{#                            <p class="card__text">{{ group.parent }}</p>#}
+{#                        </div>#}
+{#                    {% endif %}#}
+
+                        <div class="card__item">
+                            <p class="card__label">Группа </p>
+                            <a href="{{group.get_absolute_url}}"><p class="card__text">
+                                {% if group.parent %}{{ group.parent.number }}.{% endif %}{{ group.number }}. {{ group.name}}</p></a>
+                        </div>
+
 
                     </div>
                 {% endfor %}

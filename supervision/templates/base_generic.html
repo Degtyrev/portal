@@ -69,6 +69,21 @@
                             </a>
                         </li>
                         <hr>
+                        {% if user.profile.is_liner == 1 %}
+                            <li class="nav__menu_item">
+                            <a class="nav__menu_link" href="{% url 'drawing_list' %}" title="Чертежи">
+                                <img class="nav__menu_img" src="{% static  'supervision/image/drawing.png' %}" alt="" >
+                            </a>
+                        </li>
+                        <hr>
+                        <li class="nav__menu_item">
+                            <a class="nav__menu_link" href="{% url 'group_list'%}?place={{ pk }}" title="Группы чертежей">
+                                <img class="nav__menu_img" src="{% static  'supervision/image/group2.png' %}" alt="" >
+                            </a>
+                        </li>
+                        <hr>
+                        {% endif %}
+
                         {% if user.profile.is_liner == 0 %}
                         <li class="nav__menu_item">
                             <a class="nav__menu_link" href="{% url 'employee_list' %}" title="Сотрудники">

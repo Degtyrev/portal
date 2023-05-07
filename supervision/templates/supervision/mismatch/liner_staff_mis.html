@@ -25,17 +25,19 @@
                     </div>
                 </div>
                 <div class="mismatch__block_status">
-                  <div class="mismatch__type">{{ mismatch.get_type_display }}</div>
-                    <div class="mismatch__place">{{ mismatch.plaсe.name}}</div>
-                    <div class="mismatch__status">{{ mismatch.tracking_set}}</div>
-                    <div class="mismatch__date">дата: {{ mismatch.date_finding|date:"d.m.Y"}}</div>
+                  <div class="mismatch__type">{{ mismatch.type }}</div>
+                    <div class="mismatch__place">{{ mismatch.place.name }}</div>
+                    <div class="mismatch__status">{{ mismatch.status}}</div>
+                    <div class="mismatch__date">дата: {{ mismatch.date_status|date:"d.m.Y"}}</div>
                 </div>
             </div>
         {% endfor %}
         </div>
 
     {% elif mismatches %}
-
+    {% comment %}
+    если нет действующей коммандировки выводятся все коомандировки как у менеджера
+    {% endcomment %}
         {% include 'supervision/mismatch/manager_staff_mis.html' %}
 
     {% else %}

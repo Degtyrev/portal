@@ -200,3 +200,26 @@ class CreateSolutionForm(forms.ModelForm):
             'mismatch': forms.Select(attrs={'class': 'form_input', 'disabled': True}),
             'file': forms.FileInput(attrs={'class': 'form_input'}),
         }
+
+class CreateGroupForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['parent'].empty_label = 'Выберите Родительскую Группу'
+
+    class Meta:
+        model = Group
+        fields = ['place', 'parent', 'number', 'suffix', 'name']
+        labels = {'place': 'Объект',
+                  'parent': 'Номер родительской группы',
+                  'number': 'Номер группы',
+                  'suffix': 'Суффекс',
+                  'name': 'Наименование группы',
+                  }
+        widgets = {
+            'place': forms.Select(attrs={'class': 'form_input'}),
+            'parent': forms.Select(attrs={'class': 'form_input'}),
+            'number': forms.NumberInput(attrs={'class': 'form_input'}),
+            'suffix': forms.TextInput(attrs={'class': 'form_input'}),
+            'name': forms.TextInput(attrs={'class': 'form_input'}),
+
+        }
