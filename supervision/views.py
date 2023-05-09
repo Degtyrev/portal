@@ -421,7 +421,7 @@ class PlaceDelete(DeleteView):
 #--------------- Группы  ----------------
 def group_list(request):
     pk = request.session['activ_place']
-    group_list = Group.objects.filter(place_id__exact=pk)
+    group_list = Group.objects.filter(place_id__exact=pk).order_by('number')
     place_pk = pk
     return render(
         request,
@@ -473,6 +473,8 @@ def group_create(request):
 class GroupUpdate(UpdateView):
     model = Group
     fields = '__all__'
+    template_name = 'supervision/group/groupcreate_form.html'
+    success_url = reverse_lazy('group_list')
 
 class GroupDelete(DeleteView):
     model = Group
@@ -483,7 +485,8 @@ class GroupDelete(DeleteView):
 #--------------- Чертежи----------------
 
 def drawing_list(request):
-    drawing_list = Drawing.objects.all()
+    activ_place_pk = request.session['activ_place']
+    drawing_list = Drawing.objects.filter(group__place_id=activ_place_pk)
 
     return render(
         request,
@@ -491,7 +494,6 @@ def drawing_list(request):
         context={
             'title': 'Список Чертежей',
             'drawing_list': drawing_list,
-            'menu': menu
         },
     )
 
@@ -504,66 +506,78 @@ def drawing_detail(request, pk):
         context={
             'title': 'Чертёж',
             'drawing_detail': drawing_detail,
-            'menu': menu
         },
     )
 
 # --------- Редактирование, обновление, удаление  формы чертеж
 
-class DrawingCreate(CreateView):
-    model = Drawing
-    fields = '__all__'
+def drawing_create(request):
+    activ_place_pk = request.session['activ_place']
+
+    if request.method == 'POST':
+        form = CreateDrawingForm(request.POST)
+
+        if form.is_valid():
+            # print(form.cleaned_data)
+            form.save()
+            return redirect('drawing_list')
+        # return HttpResponseRedirect(reverse('mismatch'))
+    else:
+        form = CreateDrawingForm()
+    return render(request, 'supervision/drawing/drawingcreate_form.html',
+                  {'form': form, 'title': 'Перечень чертежей'})
 
 class DrawingUpdate(UpdateView):
     model = Drawing
     fields = '__all__'
+    template_name = 'supervision/drawing/drawingcreate_form.html'
+    success_url = reverse_lazy('drawing_list')
 
 class DrawingDelete(DeleteView):
     model = Drawing
     success_url = reverse_lazy('drawing_list')
 
 
-#--------------- Детали----------------
-
-def detail_list(request):
-    detail_list = Detail.objects.all()
-
-    return render(
-        request,
-        'supervision/detail/detail_list.html',
-        context={
-            'title': 'Список Деталей',
-            'detail_list': detail_list,
-            'menu': menu
-        },
-    )
-
-def detail_detail(request, pk):
-    detail_detail = Detail.objects.get(pk=pk)
-
-    return render(
-        request,
-        'supervision/detail/detail_detail.html',
-        context={
-            'title': 'Деталь',
-            'detail_detail': detail_detail,
-            'menu': menu
-        },
-    )
-
-# --------- Редактирование, обновление, удаление  формы чертеж
-
-class DetailCreate(CreateView):
-    model = Detail
-    fields = '__all__'
-
-class DetailUpdate(UpdateView):
-    model = Detail
-    fields = '__all__'
-
-class DetailDelete(DeleteView):
-    model = Detail
-    success_url = reverse_lazy('detail_list')
+# #--------------- Детали----------------
+#
+# def detail_list(request):
+#     detail_list = Detail.objects.all()
+#
+#     return render(
+#         request,
+#         'supervision/detail/detail_list.html',
+#         context={
+#             'title': 'Список Деталей',
+#             'detail_list': detail_list,
+#         },
+#     )
+#
+# def detail_detail(request, pk):
+#     detail_detail = Detail.objects.get(pk=pk)
+#
+#     return render(
+#         request,
+#         'supervision/detail/detail_detail.html',
+#         context={
+#             'title': 'Деталь',
+#             'detail_detail': detail_detail,
+#             'menu': menu
+#         },
+#     )
+#
+# # --------- Редактирование, обновление, удаление  формы чертеж
+#
+# class DetailCreate(CreateView):
+#     model = Detail
+#     fields = '__all__'
+#
+# class DetailUpdate(UpdateView):
+#     model = Detail
+#     fields = '__all__'
+#
+# class DetailDelete(DeleteView):
+#     model = Detail
+#     success_url = reverse_lazy('detail_list')
 
 
 #--------------- Сотрудники----------------

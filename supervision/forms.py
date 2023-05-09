@@ -223,3 +223,28 @@ class CreateGroupForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form_input'}),
 
         }
+
+class CreateDrawingForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['group'].empty_label = 'Выберите Группу'
+
+    class Meta:
+        model = Drawing
+        fields = ['group', 'number', 'name', 'mass', 'steel', 'file']
+        labels = {'group': 'Группа',
+                  'number': 'Обозначение',
+                  'name': 'Наименование',
+                  'mass': 'Масса',
+                  'steel': 'Материал',
+                  'file': 'Файлы',
+                  }
+        widgets = {
+            'group': forms.Select(attrs={'class': 'form_input'}),
+            'number': forms.TextInput(attrs={'class': 'form_input'}),
+            'name': forms.TextInput(attrs={'class': 'form_input'}),
+            'mass': forms.NumberInput(attrs={'class': 'form_input'}),
+            'steel': forms.TextInput(attrs={'class': 'form_input'}),
+            'file': forms.FileInput(attrs={'class': 'form_input'}),
+
+        }

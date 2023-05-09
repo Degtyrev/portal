@@ -142,17 +142,17 @@ class Drawing(models.Model):
         unique_together = ('number', 'name')
 
 
-class Detail(models.Model):
-    drawing = models.ForeignKey('Drawing', on_delete=models.SET_NULL, null=True, blank=True)
-    mfnumber = models.IntegerField(verbose_name='Заводской номер', null=True, blank=True)
-    quantity = models.IntegerField(verbose_name='Количество', null=True, blank=True)
-    factory = models.CharField(max_length=150, verbose_name='Изготовитель', null=True, blank=True)
-
-    def __str__(self):
-        return f'{self.drawing.number} {self.drawing.name}'
-
-    def get_absolute_url(self):
-        return reverse('detail_detail', args=[str(self.id)])
+# class Detail(models.Model):
+#     drawing = models.ForeignKey('Drawing', on_delete=models.SET_NULL, null=True, blank=True)
+#     mfnumber = models.IntegerField(verbose_name='Заводской номер', null=True, blank=True)
+#     quantity = models.IntegerField(verbose_name='Количество', null=True, blank=True)
+#     factory = models.CharField(max_length=150, verbose_name='Изготовитель', null=True, blank=True)
+#
+#     def __str__(self):
+#         return f'{self.drawing.number} {self.drawing.name}'
+#
+#     def get_absolute_url(self):
+#         return reverse('detail_detail', args=[str(self.id)])
 
 
 class Mismatch(models.Model):
@@ -163,7 +163,7 @@ class Mismatch(models.Model):
     type = models.ForeignKey('TypeMismatch', on_delete=models.SET_NULL, null=True, blank=True)
     file = models.FileField(upload_to='media/mismatch/', null=True, blank=True, verbose_name='Файлы')
     image = models.ImageField(upload_to='media/mismatch/images/', null=True, blank=True, verbose_name='Фото')
-    details = models.ManyToManyField('Detail', through='Irrelevant')
+    details = models.ManyToManyField('Drawing', through='Irrelevant')
     status = models.ManyToManyField('Status', through='Tracking')
 
     def __str__(self):
@@ -203,8 +203,8 @@ class TypeMismatch(models.Model):
         return receiver('type_mismatch', args=[int(self.pk)])
 
 class Irrelevant(models.Model):
-    mismatch = models.ForeignKey('Mismatch', on_delete=models.CASCADE)
-    detail = models.ForeignKey('Detail', on_delete=models.CASCADE)
+    mismatch = models.ForeignKey('Mismatch', on_delete=models.CASCADE, null=True, blank=True)
+    detail = models.ForeignKey('Drawing', on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.IntegerField(verbose_name='Количество', null=True, blank=True)
 
     class Meta:

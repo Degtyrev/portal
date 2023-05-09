@@ -7,7 +7,7 @@
 {% block content %}
     <div class="bread_crumbs">
         <ul class="bread_crumbs__list">
-            <li class="bread_crumbs_item"><a href="{% url 'group_list' %}">Список групп чертежей </a></li>
+            <li class="bread_crumbs_item"><a href="{% url 'drawing_list' %}">Список чертежей </a></li>
 {#            <li class="bread_crumbs_item">  ->{{ employee_detail.last_name }}#}
 {#                          {{ employee_detail.first_name}} {{ employee_detail.profile.surname}}#}
 {#            </li>#}
@@ -18,7 +18,7 @@
 <form action="" method="post" class="business_trip__form_create">
     {% csrf_token %}
        <div class="form_title">
-        <h2>Группа чертежей</h2>
+        <h2>Чертежи</h2>
     </div>
      <div class="form_error">
         {{ form.non_field_errors }}
@@ -26,24 +26,17 @@
 
     <div class="form_section">
         <div class="form_section_name">
-            <h2>сведения о группе</h2>
+            <h2>сведения о чертеже</h2>
         </div>
 
         <div class="form_block">
             <div class="form_content">
-              <label class="form_label" for="{{ form.place.id_for_label }}">{{ form.place.label }}</label>
-                {{ form.place }}
+              <label class="form_label" for="{{ form.group.id_for_label }}">{{ form.group.label }}</label>
+                {{ form.group }}
             </div>
-            <div class="form_error">{{ form.place.errors }}</div>
+            <div class="form_error">{{ form.group.errors }}</div>
         </div>
 
-        <div class="form_block">
-            <div class="form_content">
-              <label class="form_label" for="{{ form.parent.id_for_label }}">{{ form.parent.label }}</label>
-                {{ form.parent }}
-            </div>
-            <div class="form_error">{{ form.parent.errors }}</div>
-        </div>
         <div class="form_block">
             <div class="form_content">
               <label class="form_label" for="{{ form.number.id_for_label }}">{{ form.number.label }}</label>
@@ -58,14 +51,34 @@
             </div>
             <div class="form_error">{{ form.name.errors }}</div>
         </div>
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.mass.id_for_label }}">{{ form.mass.label }}</label>
+                {{ form.mass }}
+            </div>
+            <div class="form_error">{{ form.mass.errors }}</div>
+        </div>
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.steel.id_for_label }}">{{ form.steel.label }}</label>
+                {{ form.steel }}
+            </div>
+            <div class="form_error">{{ form.steel.errors }}</div>
+        </div>
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ form.file.id_for_label }}">{{ form.file.label }}</label>
+                {{ form.file }}
+            </div>
+            <div class="form_error">{{ form.file.errors }}</div>
+        </div>
 
 </div>
-
         <biv class="form_btn">
-            <input type="submit" value="Сохранить" class="btn create_group"/>
+            <input type="submit" value="Сохранить" class="btn create_drawing"/>
         </biv>
         <biv class="form_btn">
-            <a href="{% url 'group_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
+            <a href="{% url 'drawing_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
         </biv>
 
 </form>

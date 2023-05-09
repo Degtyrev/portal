@@ -26,7 +26,7 @@
 {#                    {% endif %}#}
 
                         <div class="card__item">
-                            <p class="card__label">Группа </p>
+                            <p class="card__label"></p>
                             <a href="{{group.get_absolute_url}}"><p class="card__text">
                                 {% if group.parent %}{{ group.parent.number }}.{% endif %}{{ group.number }}. {{ group.name}}</p></a>
                         </div>

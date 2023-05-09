@@ -50,18 +50,18 @@ urlpatterns += [
 urlpatterns += [
     path('drawing/', views.drawing_list, name='drawing_list'),
     path('drawing/<int:pk>/', views.drawing_detail, name='drawing_detail'),
-    path('drawing/create/', views.DrawingCreate.as_view(), name='drawing_create'),
+    path('drawing/create/', views.drawing_create, name='drawing_create'),
     path('drawing/<int:pk>/update/', views.DrawingUpdate.as_view(), name='drawing_update'),
     path('drawing/<int:pk>/delete/', views.DrawingDelete.as_view(), name='drawing_delete'),
 ]
 
-urlpatterns += [
-    path('detail/', views.detail_list, name='detail_list'),
-    path('detail/<int:pk>/', views.detail_detail, name='detail_detail'),
-    path('detail/create/', views.DetailCreate.as_view(), name='detail_create'),
-    path('detail/<int:pk>/update/', views.DetailUpdate.as_view(), name='detail_update'),
-    path('detail/<int:pk>/delete/', views.DetailDelete.as_view(), name='detail_delete'),
-]
+# urlpatterns += [
+#     path('detail/', views.detail_list, name='detail_list'),
+#     path('detail/<int:pk>/', views.detail_detail, name='detail_detail'),
+#     path('detail/create/', views.DetailCreate.as_view(), name='detail_create'),
+#     path('detail/<int:pk>/update/', views.DetailUpdate.as_view(), name='detail_update'),
+#     path('detail/<int:pk>/delete/', views.DetailDelete.as_view(), name='detail_delete'),
+# ]
 
 urlpatterns += [
     path('employee/', views.employee_list, name='employee_list'),

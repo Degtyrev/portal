@@ -5,63 +5,48 @@
     {% endblock %}
 
 
-    {% block sidebar %}
-        <div class="sidebar">
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'element_list' %}">Список чертежей </a></li>
-                <li class="sidebar__item"><a href="#">Добавить чертёж</a></li>
-                <li class="sidebar__item"><a href="#">Редактировать чертёж</a></li>
-            </ul>
-
-
-
-        </div>
-
-    {% endblock %}
-
     {% block content %}
         <section class="element_detail">
             <div class="content_title">
-                 <h1 class="title">{{ title }} <span class="title_number"> {{ element_detail.number }} {{ element_detail.name }}</span></h1>
+                 <h1 class="title">{{ title }} <span class="title_number"> {{ drawing_detail.number }} {{ drawing_detail.name }}</span></h1>
+                <div class="new_btn">
+                    <a href="{% url 'drawing_update' drawing_detail.pk %}" class="new_link">Радактировать</a>
+                </div>
             </div>
         <hr>
 
-            <div class="element_detail__block">
-                {% if element_detail %}
-                                  <div class="element__item">
-                            <div class="element__ladel">Узел</div>
-                            <div class="element__parent">{{ element_detail.unit.number }} {{ element_detail.unit.name }}</div>
+            <div class="detail__block">
+                {% if drawing_detail %}
+                    <div class="detail__item">
+                        <div class="detail__label">Узел</div>
+                        <div class="detail__text">{{ drawing_detail.group.number }} {{ drawing_detail.group.name }}</div>
+                    </div>
+                        <div class="detail__item">
+                            <div class="detail__label">Чертёж</div>
+                            <div class="detail__text" >
+                                {{ drawing_detail.number }} {{ drawing_detail.name}}                           </div>
                         </div>
-                        <div class="element__item">
-                            <div class="element__ladel">Чертёж</div>
-                            <div class="element__title" >
-                                {{ element_detail.number }} {{ element_detail.name}}                           </div>
-                        </div>
-                        {% if element.fac_number %}
-                        <div class="element__item">
-                             <div class="element__ladel">заводской номер</div>
-                            <div class="element__title" >{{ element_detail.fac_number }}</div>
-                        </div>
-                        {% endif %}
 
-                        {% if element.order %}
-                        <div class="element__item">
-                            <div class="element__ladel">номер заказа</div>
-                            <div class="element__title" >{{ element_detail.order }}</div>
-                        </div>
-                        {% endif %}
-                        {% if element.mass %}
-                        <div class="element__item">
+                        {% if drawing_detail.mass %}
+                        <div class="detail__item">
 
-                             <div class="element__ladel">масса</div>
-                            <div class="element__title" >{{ element_detail.mass }}</div>
+                             <div class="detail__label">масса</div>
+                            <div class="detail__text" >{{ drawing_detail.mass }} кг.</div>
 
                         </div>
                         {% endif %}
-                        {% if element.steel %}
-                        <div class="element__item">
-                            <div class="element__ladel">сталь</div>
-                            <div class="element__title" >{{ element_detail.steel }}</div>
+
+                        {% if drawing_detail.steel %}
+                        <div class="detail__item">
+                            <div class="detail__label">сталь</div>
+                            <div class="detail__text" >{{ drawing_detail.steel }}</div>
+                        </div>
+                        {% endif %}
+
+                        {% if drawing_detail.file %}
+                        <div class="detail__item">
+                            <div class="detail__label">Файлы</div>
+                            <div class="detail__text" >{{ drawing_detail.file }}</div>
                         </div>
                         {% endif %}
 
