@@ -44,13 +44,13 @@ def change_status_trip(request):
     business_trip = BusinessTrip.objects.all()
 
     for trip in business_trip:
-        if trip.end <= datetime.date.today():
+        if trip.end < datetime.date.today():
             BusinessTrip.objects.filter(pk=trip.pk).update(status_id=3) #завершена
 
         if trip.start == datetime.date.today():
             BusinessTrip.objects.filter(pk=trip.pk).update(status_id=2) #действующая
 
-        if trip.start < datetime.date.today() and trip.end > datetime.date.today():
+        if trip.start < datetime.date.today() and trip.end >= datetime.date.today():
             BusinessTrip.objects.filter(pk=trip.pk).update(status_id=2) #действующая
 
         if trip.start > datetime.date.today():
@@ -63,8 +63,8 @@ def change_status_trip(request):
 def index(request):
 
 # проверка и изменение статуса командировок  если
-    session_heck = request.session.get('change_status', 0)
-    if session_heck == 0:
+    session_check = request.session.get('change_status', 0)
+    if session_check == 0:
         change_status_trip(request)
 
 
@@ -87,12 +87,22 @@ def index(request):
     # request.GET - список параметров передаваемых GET запросом /?name=gggg&age=233
     # request.POST - список параметров передаваемых POST запросом
 
+    if request.session.get('activ_trip'):
+        activ_tp = request.session.get('activ_trip')
+    else:
+        activ_tp=False
+
+    if request.session.get('activ_place'):
+        activ_plc = request.session.get('activ_place')
+    else:
+        activ_plc=False
+
     context = {
         'title': "Портал",
         'num_employeer': num_employeer,
         'num_place': num_place,
         'activ_trip': activ_trip,
-        'pk': request.session['activ_place']
+        'pk': activ_plc
     }
 
     return render(
@@ -135,10 +145,11 @@ def business_trip(request):
     else:
         balanse = False
 
-    print(trips_user[0].end)
-    print(date_today)
+    # print(trips_user[0].end)
+    # print(date_today)
+    #
+    # print(balanse)
 
-    print(balanse)
     return render(
         request,
         'supervision/business_trip/business_trip.html',
@@ -597,12 +608,14 @@ def employee_list(request):
 def employee_detail(request, pk):
     employee_detail = User.objects.get(id=pk)
     # profile_detail = Profile.objects.get(id=pk)
-    career_list = Career.objects.filter(user_id=pk)
-    current_position = Career.objects.filter(user_id=pk, end_date__exact=None)
+    career_list = Profile.objects.filter(user_id=pk)
+    current_position = Profile.objects.filter(position__career__user_id__exact=pk, position__career__end_date__exact=None)
+    # current_position = Career.objects.filter(user_id=pk).last()
     context = {
         'title': 'Сотрудник', 'employee_detail': employee_detail,
         'career_list': career_list, 'current_position': current_position
     }
+    print(current_position.last())
     return render(
         request,
         'supervision/employee/employee_detail.html',
@@ -637,9 +650,32 @@ def employee_detail(request, pk):
     # def get_queryset(self):
     #     return Profile.objects.filter(параметы выборки)
 
-class EmployeeUpdate(UpdateView):
-    model = Profile
-    fields = '__all__'
+# class EmployeeUpdate(UpdateView):
+#     model = Profile
+#     fields = '__all__'
+#     template_name = 'supervision/employee/employeeupdate_form.html'
+#     # template_name = 'supervision/employee/profile_form.html'
+#     success_url = reverse_lazy('employee_list')
+
+
+def employee_update(request, pk):
+    user = User.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=user)
+        profile_form = UpdateProfileForm(request.POST,  instance=user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('employee_list')
+
+    else:
+        user_form = UpdateUserForm(instance=user)
+        profile_form = UpdateProfileForm(instance=user.profile)
+    return render(request, 'supervision/employee/employeeupdate_form.html',
+                  {'user_form': user_form, 'profile_form': profile_form, 'title': 'Редактирование профиля'})
+
 
 
 #--------------- Служебные письма----------------

@@ -18,7 +18,7 @@
             </div>
             <div class="list__filter">
                <ul class="list__filter_list">
-                   <li class="list__filter_item selected_item">Действующий</li>
+                   <li class="list__filter_item selected_item">Действующие</li>
                    <li class="list__filter_item"><a class="list__filter_link" href="">Уволеные</a></li>
                 </ul>
            </div>
@@ -29,8 +29,16 @@
                     <div class="card__block">
                         <div class="card__head">
                             <div class="card__title">
-                                <a href="{{employee.profile.get_absolute_url}}"> {{ forloop.counter }}  {{ employee.first_name }}
+                                <a href="{{employee.profile.get_absolute_url}}"> {{ forloop.counter }}.  {{ employee.first_name }}
                                   {{ employee.last_name}} {{ employee.profile.surname}}</a>
+
+                            </div>
+                            <div class="card__title_liner">
+                                {% if  employee.profile.is_liner == 0%}
+                                <p>Не линейный</p>
+                                {% else %}
+                                    <p>Линейный</p>
+                                {% endif %}
                             </div>
                         </div>
 

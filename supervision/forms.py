@@ -248,3 +248,35 @@ class CreateDrawingForm(forms.ModelForm):
             'file': forms.FileInput(attrs={'class': 'form_input'}),
 
         }
+
+class UpdateUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
+        labels = {'username': 'Логин',
+                  'first_name': 'Имя',
+                  'last_name': 'Фималия',
+                  'email': 'Почта',
+                  }
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form_input'}),
+            'first_name': forms.TextInput(attrs={'class': 'form_input'}),
+            'last_name': forms.TextInput(attrs={'class': 'form_input'}),
+            'email': forms.TextInput(attrs={'class': 'form_input'}),
+        }
+
+class UpdateProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['surname', 'birth_date', 'death_date', 'is_liner']
+        labels = {'surname': 'Отчество',
+                  'birth_date': 'Дата рождения',
+                  'death_date': 'Дата смерти',
+                  'is_liner': 'Линейный',
+                  }
+        widgets = {
+            'surname': forms.TextInput(attrs={'class': 'form_input'}),
+            'birth_date': forms.DateInput(attrs={'class': 'form_input'}),
+            'death_date': forms.DateInput(attrs={'class': 'form_input'}),
+            'is_liner': forms.CheckboxInput(attrs={'class': 'form_input checkbox_input'}),
+        }

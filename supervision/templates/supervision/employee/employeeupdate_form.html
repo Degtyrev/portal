@@ -1,0 +1,110 @@
+{% extends "base_generic.html" %}
+
+ {% block title %}
+     <title>{{ title }}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="bread_crumbs">
+        <ul class="bread_crumbs__list">
+            <li class="bread_crumbs_item"><a href="{% url 'employee_list' %}">Список сотрудников </a></li>
+{#            <li class="bread_crumbs_item">  ->{{ employee_detail.last_name }}#}
+{#                          {{ employee_detail.first_name}} {{ employee_detail.profile.surname}}#}
+{#            </li>#}
+        </ul>
+    </div>
+
+
+<form action="" method="post" class="business_trip__form_create">
+    {% csrf_token %}
+       <div class="form_title">
+        <h2>Сотрудник</h2>
+    </div>
+     <div class="form_error">
+        {{ user_form.non_field_errors }}
+        {{ profile_form.non_field_errors }}
+     </div>
+
+    <div class="form_section">
+        <div class="form_section_name">
+            <h2>сведения о сотруднике</h2>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ user_form.username.id_for_label }}">{{ user_form.username.label }}</label>
+                {{ user_form.username }}
+            </div>
+            <div class="form_error">{{ user_form.username.errors }}</div>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ user_form.first_name.id_for_label }}">{{ user_form.first_name.label }}</label>
+                {{ user_form.first_name }}
+            </div>
+            <div class="form_error">{{ user_form.first_name.errors }}</div>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ user_form.last_name.id_for_label }}">{{ user_form.last_name.label }}</label>
+                {{ user_form.last_name }}
+            </div>
+            <div class="form_error">{{ user_form.last_name.errors }}</div>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ profile_form.surname.id_for_label }}">{{ profile_form.surname.label }}</label>
+                {{ profile_form.surname }}
+            </div>
+            <div class="form_error">{{ profile_form.surname.errors }}</div>
+        </div>
+
+
+     <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ user_form.email.id_for_label }}">{{ user_form.email.label }}</label>
+                {{ user_form.email }}
+            </div>
+            <div class="form_error">{{ user_form.email.errors }}</div>
+        </div>
+
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ profile_form.birth_date.id_for_label }}">{{ profile_form.birth_date.label }}</label>
+                {{ profile_form.birth_date }}
+            </div>
+            <div class="form_error">{{ profile_form.birth_date.errors }}</div>
+        </div>
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ profile_form.death_date.id_for_label }}">{{ profile_form.death_date.label }}</label>
+                {{ profile_form.death_date }}
+            </div>
+            <div class="form_error">{{ profile_form.death_date.errors }}</div>
+        </div>
+
+        {% if user.profile.is_liner == 0 %}
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ profile_form.is_liner.id_for_label }}">{{ profile_form.is_liner.label }}</label>
+                    {{ profile_form.is_liner }}
+                </div>
+                <div class="form_error">{{ profile_form.is_liner.errors }}</div>
+            </div>
+        {% endif %}
+
+</div>
+        <biv class="form_btn">
+            <input type="submit" value="Сохранить" class="btn update_employee"/>
+        </biv>
+        <biv class="form_btn">
+            <a href="{% url 'employee_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
+        </biv>
+
+</form>
+{% endblock %}

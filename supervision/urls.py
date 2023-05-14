@@ -66,7 +66,8 @@ urlpatterns += [
 urlpatterns += [
     path('employee/', views.employee_list, name='employee_list'),
     path('employee/<int:pk>/', views.employee_detail, name='employee_detail'),
-    path('employee/<int:pk>/update/', views.EmployeeUpdate.as_view(), name='employee_update'),
+    path('employee/<int:pk>/update/', views.employee_update, name='employee_update'),
+    # path('employee/<int:pk>/update/', views.EmployeeUpdate.as_view(), name='employee_update'),
 
 ]
 

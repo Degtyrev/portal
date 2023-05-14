@@ -9,26 +9,29 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    surname = models.CharField(max_length=50, help_text="Отчество", null=True, blank=True)
+    surname = models.CharField(max_length=50, verbose_name="Отчество", null=True, blank=True)
     birth_date = models.DateField(verbose_name='Дата рождения', null=True, blank=True)
     death_date = models.DateField(verbose_name='Дата смерти', null=True, blank=True)
     position = models.ManyToManyField('Position', through='Career')
-    is_liner = models.BooleanField(default=True)
+    is_liner = models.BooleanField(default=True, verbose_name='Если линейный специалист')
 
-    # @receiver(post_save, sender=User)
-    # def create_user_profile(sender, instance, created, **kwargs):
-    #     if created:
-    #         Profile.objects.create(user=instance)
-    #
-    # @receiver(post_save, sender=User)
-    # def save_user_profile(sender, instance, **kwargs):
-    #     instance.profile.save()
+
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
 
     def get_absolute_url(self):
         return reverse('employee_detail', args=[str(self.user.id)])
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
 
 # Дата рождения: {{ user.profile.birth_date }}
 

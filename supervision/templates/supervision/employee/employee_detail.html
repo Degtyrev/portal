@@ -5,15 +5,6 @@
     {% endblock %}
 
 
-{#    {% block sidebar %}#}
-{#        <div class="sidebar">#}
-{#            <ul class="sidebar__list">#}
-{#                <li class="sidebar__item"><a href="{% url 'employee_list' %}">Список сотрудников</a></li>#}
-{#                <li class="sidebar__item"><a href="{% url 'employee_create' %}">Добавить сотрудника</a></li>#}
-{##}
-{#            </ul>#}
-{#        </div>#}
-{#    {% endblock %}#}
 
     {% block content %}
         <section class="employee">
@@ -69,10 +60,22 @@
 
                         <div class="detail__item">
                             <div class="detail__label">Должность</div>
-                            <div class="detail__text">{{ current_position }}</div>
+                            <div class="detail__text">{{ current_position.position}}</div>
                         </div>
+                    {% if career_list %}
+                        {% for career in career_list %}
+                        <div class="detail__item">
+                            <div class="detail__text">{{ career.position.name }}</div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
                      </div>
 
+                    <div class="detail__item detail__block">
+                        <div class="new_btn ">
+                            <a href="{% url 'employee_update' employee_detail.pk %}" class="new_link">Радактировать</a>
+                        </div>
+                    </div>
                 </div>
 
 

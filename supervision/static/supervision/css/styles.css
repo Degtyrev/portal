@@ -221,10 +221,15 @@ text-align: right;
 .radio_input{
     min-width: 10px;
 }
+.checkbox_input{
+    min-width: 13px;
+    justify-self: start;
+}
 .form_content{
     display: grid;
     grid-template-columns: 1fr 3fr;
     gap: 20px;
+    align-items: center;
 }
 .form_btn{
     margin-left: 195px;
@@ -375,6 +380,11 @@ tr:hover td {
     font-size: 18px;
     font-weight: 500;
 }
+.card__title_liner{
+    font-style: italic;
+    font-size: 12px;
+}
+
 .card__extra{
     font-style: italic;
     font-size: 12px;
