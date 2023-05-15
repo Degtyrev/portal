@@ -15,16 +15,20 @@
 
         <section class="mismatch_detail">
             <div class="content_title non_flex">
-                 <h1 class="title marg_bot">{{ title }}</h1> Кас: {{ mismatch.title }}
+                 <h1 class="title marg_bot">{{ title }}</h1>
+                Кас: {{ mismatch.title }}
             </div>
-
-        <div class="status_track">
-            Статус:
-            <div class="status__done">&nbsp;&nbsp;новое&nbsp;</div>
-            <div class="status__done"> -->&nbsp;не решённое&nbsp;</div>
-            <div class="status__progress"> -->&nbsp;закрыто</div>
-        </div>
-
+            <div class="mismatch_status">
+                <div class="status_track">
+                    Статус:
+                    <div class="status__done">&nbsp;&nbsp;новое&nbsp;</div>
+                    <div class="status__activ"> -->&nbsp;не решённое&nbsp;</div>
+                    <div class="status__progress"> -->&nbsp;закрыто</div>
+                </div>
+                <div class="mismatch_edit">
+                    <a href="{% url 'mismatch_update' mismatch.pk %}?mismatch_id={{ mismatch.pk }}&place_id={{ mismatch.place_id }}" class="btn">Редактировать</a>
+                </div>
+            </div>
             <div class="detail__block">
                 {% if mismatch %}
 
@@ -33,20 +37,20 @@
                         <div class="detail__text">{{ mismatch.place.name }}</div>
                     </div>
 
-                    <div class="detail__item">
-                        <div class="detail__ladel">статус</div>
-                        <div class="detail__text">gggggg</div>
-                    </div>
+{#                    <div class="detail__item">#}
+{#                        <div class="detail__ladel">статус</div>#}
+{#                        <div class="detail__text">gggggg</div>#}
+{#                    </div>#}
 
                     <div class="detail__item">
                         <div class="detail__ladel">тип</div>
                         <div class="detail__text">{{ mismatch.type }}</div>
                     </div>
 
-                    <div class="detail__item">
-                        <div class="detail__ladel">описание</div>
-                        <div class="detail__text">{{ mismatch.title}}</div>
-                    </div>
+{#                    <div class="detail__item">#}
+{#                        <div class="detail__ladel">описание</div>#}
+{#                        <div class="detail__text">{{ mismatch.title}}</div>#}
+{#                    </div>#}
 
                     <div class="detail__item">
                         <div class="detail__ladel">подробное описание</div>
@@ -58,45 +62,45 @@
                         <div class="detail__text">{{ mismatch.correct}}</div>
                     </div>
 
-                    <div class="detail__item">
-                        <div class="detail__ladel">производитель</div>
-                        <div class="detail__text">{{ mismatch.factory}} </div>
-                    </div>
+{#                    <div class="detail__item">#}
+{#                        <div class="detail__ladel">производитель</div>#}
+{#                        <div class="detail__text">{{ mismatch.factory}} </div>#}
+{#                    </div>#}
 
-                    <div class="detail__item">
-                        <div class="detail__ladel">узел</div>
-                        <div class="detail__text">{{ mismatch.unit}}</div>
-                    </div>
+{#                    <div class="detail__item">#}
+{#                        <div class="detail__ladel">узел</div>#}
+{#                        <div class="detail__text">{{ mismatch.unit}}</div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="detail__item">#}
+{#                        <div class="detail__ladel">чертеж</div>#}
+{#                        <div class="detail__text">{{ mismatch.element}} </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="detail__item">#}
+{#                        <div class="detail__ladel">количество</div>#}
+{#                        <div class="detail__text">{{ mismatch.amount}}</div>#}
+{#                    </div>#}
 
-                    <div class="detail__item">
-                        <div class="detail__ladel">чертеж</div>
-                        <div class="detail__text">{{ mismatch.element}} </div>
-                    </div>
+{#                    <div class="detail__item">#}
+{#                        <div class="detail__ladel">зав.номер</div>#}
+{#                        <div class="detail__text"> </div>#}
+{#                    </div>#}
 
-                    <div class="detail__item">
-                        <div class="detail__ladel">количество</div>
-                        <div class="detail__text">{{ mismatch.amount}}</div>
-                    </div>
+{#                    <div class="detail__item">#}
+{#                        <div class="detail__ladel">заказ</div>#}
+{#                        <div class="detail__text"></div>#}
+{#                    </div>#}
 
-                    <div class="detail__item">
-                        <div class="detail__ladel">зав.номер</div>
-                        <div class="detail__text"> </div>
-                    </div>
+{#                    <div class="detail__item">#}
+{#                        <div class="detail__ladel">грузовое место</div>#}
+{#                        <div class="detail__text">{{ mismatch.pack}}</div>#}
+{#                    </div>#}
 
-                    <div class="detail__item">
-                        <div class="detail__ladel">заказ</div>
-                        <div class="detail__text"></div>
-                    </div>
-
-                    <div class="detail__item">
-                        <div class="detail__ladel">грузовое место</div>
-                        <div class="detail__text">{{ mismatch.pack}}</div>
-                    </div>
-
-                    <div class="detail__item">
-                        <div class="detail__ladel">принятое решение</div>
-                        <div class="detail__text">{{ mismatch.solution}}</div>
-                    </div>
+{#                    <div class="detail__item">#}
+{#                        <div class="detail__ladel">принятое решение</div>#}
+{#                        <div class="detail__text">{{ mismatch.solution}}</div>#}
+{#                    </div>#}
 
                     <div class="detail__item">
                         <div class="detail__ladel">фото, файлы</div>
@@ -117,7 +121,7 @@
                             {% if letters %}
 
                                 {% for letter in letters %}
-                                    <div class="detail__block">
+                                    <div class="detail__block letter_item">
                                         <div class="detail__item">
                                             <div class="detail__ladel">Номер письма</div>
                                             <div class="detail__text">
@@ -161,7 +165,7 @@
                         </div>
                         <div class="block__add__content">
                        {% if solutions %}
-                                <div class="detail__block">
+                                <div class="detail__block solution_item">
                                 {% for solution in solutions %}
 
                                     <div class="detail__item">

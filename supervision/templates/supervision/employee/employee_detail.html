@@ -8,6 +8,7 @@
 
     {% block content %}
         <section class="employee">
+        {% if user.profile.is_liner == 0 %}
             <div class="bread_crumbs">
                 <ul class="bread_crumbs__list">
                     <li class="bread_crumbs_item"><a href="{% url 'employee_list' %}">Сотрудники </a></li>
@@ -16,7 +17,7 @@
                     </li>
                 </ul>
             </div>
-
+        {% endif %}
 
 {#            <div class="content_title">#}
 {#                 <h1 class="title">{{ title }} </h1>#}

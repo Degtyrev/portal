@@ -6,21 +6,6 @@
         <title>{{ title }}</title>
     {% endblock %}
 
-{% block sidebar %}
-      <div class="sidebar">
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="{% url 'place_list' %}">список Объектов </a></li>
-                <li class="sidebar__item"><a href="#"> </a></li>
-            </ul>
-            <hr>
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="#">Планируемые </a></li>
-                <li class="sidebar__item"><a href="#">Завершенные </a></li>
-            </ul>
-
-
-        </div>
-{% endblock %}
 
 {% block content %}
 {#    <div class="content_title">#}
@@ -139,6 +124,8 @@
     <biv class="form_btn">
       <input type="submit" value="Сохранить" id="create_place" class="btn ">
     </biv>
-
+    <biv class="form_btn">
+        <a href="{% url 'place_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
+    </biv>
     </form>
 {% endblock %}

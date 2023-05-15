@@ -2,30 +2,47 @@
 <section class="mismatch">
     <div class="content_title">
          <h1 class="title">{{ title }}</h1>
-{#        <div class="new_btn">#}
-{#            <a href="{% url 'mismatch_create' %}" class="new_link">+ Добавить</a>#}
-{#        </div>#}
     </div>
-    <hr>
+
+    <div class="list__filter">
+       <ul class="list__filter_list">
+           {% for condition in conditions %}
+               {% if condition.pk == condition_selected %}
+           <li class="list__filter_item selected_item">{{ condition.name}}</li>
+               {% else %}
+           <li class="list__filter_item"><a class="list__filter_link" href="{% url 'condition' condition.pk %}">{{ condition.name}}</a></li>
+               {% endif %}
+       {% endfor %}
+       </ul>
+    </div>
+
     <div class="mismatches">
     {% if mismatches %}
-        {% for mismatch in mismatches %}
-            <div class="mismatch__block">
-                <div class="mismatch__block_title">
-                    <div class="mismatch__id">{{ mismatch.pk}}</div>
-                    <div class="mismatch__title">
-                        <a href="{% url 'mismatch_detail' mismatch.pk %}">{{ mismatch.title}}</a>
-                    </div>
-                </div>
-                <div class="mismatch__block_status">
-                  <div class="mismatch__type">{{ mismatch.get_type_display }}</div>
-                    <div class="mismatch__place">{{ mismatch.plaсe.name}}</div>
-                    <div class="mismatch__status">{{ mismatch.name}}</div>
-                    <div class="mismatch__date">Дата: {{ mismatch.date_finding|date:"d.m.Y"}}</div>
-                </div>
+       <div class="list__section">
+            <div class="list_section_name">
+                <h2>Несоответствия</h2>
             </div>
-        {% endfor %}
 
+            <table class="list__block">
+                <tr class="list__row">
+                    <th class="list__head">№</th>
+                    <th class="list__head">Объект</th>
+                    <th class="list__head">Описание</th>
+                    <th class="list__head">Статус</th>
+                </tr>
+
+            {% for mismatch in mismatches %}
+                <tr class="list__row">
+                    <td class="list__data">{{ forloop.counter }}</td>
+                    <td class="list__data"><a href="{% url 'mismatch_detail' mismatch.pk %}">{{ mismatch.place.name }}</a></td>
+                    <td class="list__data"><a href="{% url 'mismatch_detail' mismatch.pk %}">{{ mismatch.title}}</a></td>
+
+                    <td class="list__data list__action">
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
 
     {% else %}
         <p>Несоответствий не выявленно</p>

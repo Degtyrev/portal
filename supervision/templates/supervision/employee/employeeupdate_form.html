@@ -5,15 +5,13 @@
 {% endblock %}
 
 {% block content %}
+    {% if user.profile.is_liner == 0 %}
     <div class="bread_crumbs">
         <ul class="bread_crumbs__list">
             <li class="bread_crumbs_item"><a href="{% url 'employee_list' %}">Список сотрудников </a></li>
-{#            <li class="bread_crumbs_item">  ->{{ employee_detail.last_name }}#}
-{#                          {{ employee_detail.first_name}} {{ employee_detail.profile.surname}}#}
-{#            </li>#}
         </ul>
     </div>
-
+    {% endif %}
 
 <form action="" method="post" class="business_trip__form_create">
     {% csrf_token %}
@@ -102,9 +100,18 @@
         <biv class="form_btn">
             <input type="submit" value="Сохранить" class="btn update_employee"/>
         </biv>
+
+    {% if user.profile.is_liner == 0 %}
         <biv class="form_btn">
             <a href="{% url 'employee_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
         </biv>
+    {% endif %}
+
+    {% if user.profile.is_liner == 1 %}
+        <biv class="form_btn">
+            <a href="{% url 'index' %}" class="confirm_delete__cancel btn" >Отменить</a>
+        </biv>
+    {% endif %}
 
 </form>
 {% endblock %}

@@ -286,6 +286,7 @@ text-align: right;
     /*border-radius: 10px;*/
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    background: linear-gradient(9deg, #028770, #50c4ff);
 }
 .list__block{
     padding: 5px 25px;
@@ -303,7 +304,7 @@ text-align: right;
     border-bottom: 2px solid #006266;
 }
 .list__data{
-    padding: 4px 0;
+    padding: 6px 0;
     color: #028770;
     border-bottom: 1px solid #ccc;
 }
@@ -604,6 +605,13 @@ td>input{
 .block__add__title{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 7px 5px 7px 20px;
+    background-color: #ddd;
+    border-radius: 10px;
+    border-bottom: 2px solid #c0c0c0;
+    border-right: 2px solid #c0c0c0;
+    align-items: center;
 }
 .block__add__content{
 
@@ -694,21 +702,48 @@ td>input{
 }
 
 /*---------------- Профиль end -----------*/
-
-.status_track{
+.mismatch_status{
     display: flex;
+    justify-content: space-between;
     margin-bottom: 20px;
-    padding: 7px 5px  7px 20px;
+    padding: 7px 5px 7px 20px;
     background-color: #ddd;
     border-radius: 10px;
     border-bottom: 2px solid #c0c0c0;
     border-right: 2px solid #c0c0c0;
+    align-items: center;
+}
+.status_track{
+    display: flex;
+    font-size: 16px;
+    /*margin-bottom: 20px;*/
+    /*padding: 7px 5px  7px 20px;*/
+    /*background-color: #ddd;*/
+    /*border-radius: 10px;*/
+    /*border-bottom: 2px solid #c0c0c0;*/
+    /*border-right: 2px solid #c0c0c0;*/
 }
 .status__done{
-    color: #fd490f;
+    color: #007264;
     font-weight: bolder;
 }
 .status__progress{
     color: #c0c0c0;
     color: #fff;
+}
+.status__activ{
+    color: #fd490f;
+    font-weight: bolder;
+}
+.letter_item{
+    background-color: #f3f3f3;
+    padding: 13px;
+    border-bottom: 1px solid #c0c0c0;
+    border-radius: 10px;
+}
+.solution_item{
+    background-color: #f3f3f3;
+    padding: 13px;
+    border-bottom: 1px solid #c0c0c0;
+    border-radius: 10px;
 }

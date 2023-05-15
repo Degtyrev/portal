@@ -30,14 +30,6 @@ def pageNotFound(request, exception):
 
 
 
-menu = [
-    {'title_menu': 'Главная', 'url_menu': 'index', 'image': 'supervision/image/home.png'},
-    {'title_menu': 'Командировки', 'url_menu': 'business_trip', 'image': 'supervision/image/trip.png'},
-    {'title_menu': 'Несоответствия', 'url_menu': 'mismatch', 'image': 'supervision/image/mismatch.png'},
-    {'title_menu': 'Сотрудники', 'url_menu': 'employee', 'image': 'supervision/image/employee.png'},
-    {'title_menu': 'Объекты', 'url_menu': 'place', 'image': 'supervision/image/place.png'},
-
-]
 
 #установка статуса командировки
 def change_status_trip(request):
@@ -362,6 +354,7 @@ def mismatch_create(request):
 class MismatchUpdate(UpdateView):
     model = Mismatch
     fields = '__all__'
+    template_name = 'supervision/mismatch/mismatch_create.html'
 
 class MismatchDelete(DeleteView):
     model = Mismatch
@@ -454,7 +447,6 @@ def group_detail(request, pk):
         context={
             'title': 'Группа',
             'group_detail': group_detail,
-            'menu': menu
         },
     )
 
@@ -683,12 +675,12 @@ def employee_update(request, pk):
 def letter_list(request):
     letter_list = Letter.objects.all()
 
-    if request.session['activ_place']:
-        letter_list_place = Letter.objects.filter(mismatch__place_id__exact =request.session['activ_place'])
+    if request.session.get('activ_place'):
+        letter_list_place = Letter.objects.filter(mismatch__place_id__exact=request.session['activ_place'])
     else:
         letter_list_place = False
 
-    print(letter_list_place)
+
     return render(
         request,
         'supervision/letter/letter_list.html',

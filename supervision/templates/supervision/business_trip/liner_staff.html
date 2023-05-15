@@ -36,8 +36,16 @@
                             <th class="list__head">Объект</th>
                             <th class="list__head">Начало</th>
                             <th class="list__head">Завершена</th>
+
+                            {% if condition_selected == 2 %}
                             <th class="list__head">Цель</th>
                             <th class="list__head">Осталось дней</th>
+                                {% endif %}
+
+                            {% if condition_selected == 3 %}
+                            <th class="list__head">Модель </th>
+                            <th class="list__head">Тип оборудования</th>
+                                {% endif %}
                         </tr>
 
                             {% for trip in trips_user %}
@@ -46,14 +54,30 @@
                                 <td class="list__data"><a href="{{ trip.get_absolute_url  }}">{{ trip.place.name }}</a></td>
                                 <td class="list__data">{{ trip.start|date:"d.m.Y"}}</td>
                                 <td class="list__data">{{ trip.end|date:"d.m.Y" }}</td>
+                                {% if condition_selected == 2 %}
                                 <td class="list__data">{{ trip.purpose }}</td>
                                 <td class="list__data">{{ balanse }}</td>
+                                {% endif %}
+                            {% if condition_selected == 3 %}
+                                <td class="list__data">{{ trip.place.equipment }}</td>
+                                <td class="list__data">{{ trip.place.equipment_type }}</td>
+                                {% endif %}
+
                             </tr>
                             {% endfor %}
                     </table>
             </div>
             {% else %}
-                <p> Здесь пока нет командировок</p>
+                {% if condition_selected == 2 %}
+                  <p>У Вас нет Текущей командировки.</p>
+                {% endif %}
+                {% if condition_selected == 3 %}
+                  <p>У Вас нет Завершенных командировок</p>
+                {% endif %}
+                {% if condition_selected == 1 %}
+                  <p>У Вас нет Запланированных командировок</p>
+                {% endif %}
+
             {% endif %}
 
         </section>

@@ -16,10 +16,10 @@
 
     <div class="bread_crumbs">
         <ul class="bread_crumbs__list">
-            <li class="bread_crumbs_item"><a href="{% url 'employee_list' %}">Сотрудники </a></li>
-            <li class="bread_crumbs_item">  ->{{ employee_detail.last_name }}
-                          {{ employee_detail.first_name}} {{ employee_detail.profile.surname}}
-            </li>
+            <li class="bread_crumbs_item"><a href="{% url 'mismatch_list' %}">Список несоответствий </a></li>
+{#            <li class="bread_crumbs_item">  ->{{ employee_detail.last_name }}#}
+{#                          {{ employee_detail.first_name}} {{ employee_detail.profile.surname}}#}
+{#            </li>#}
         </ul>
     </div>
 
@@ -35,7 +35,7 @@
 
     <div class="form_section">
         <div class="form_section_name">
-            <h2>общие данные</h2>
+            <h2>Общие сведения</h2>
         </div>
 
         <div class="form_block">
@@ -65,7 +65,7 @@
 
     <div class="form_section">
         <div class="form_section_name">
-            <h2>детали</h2>
+            <h2>Детали</h2>
         </div>
 
         <div class="form_block">
@@ -81,7 +81,7 @@
 
         <div class="form_section">
             <div class="form_section_name">
-                <h2>описание</h2>
+                <h2>Описание несоответствия</h2>
             </div>
 
             <div class="form_block">
@@ -102,10 +102,10 @@
 
             <div class="form_block">
                 <div class="form_content">
-                  <label class="form_label" for="{{ form.quantity.id_for_label }}">{{ form.quantity.label }}</label>
-                    {{ form.quantity }}
+                  <label class="form_label" for="{{ form.correct.id_for_label }}">{{ form.correct.label }}</label>
+                    {{ form.correct }}
                 </div>
-                <div class="form_error">{{ form.quantity.errors }}</div>
+                <div class="form_error">{{ form.correct.errors }}</div>
             </div>
 
             <div class="form_block">
