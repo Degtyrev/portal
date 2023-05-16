@@ -127,22 +127,22 @@ class Group(models.Model):
         return reverse('group_detail', args=[str(self.id)])
 
 
-class Drawing(models.Model):
-    group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True, blank=True)
-    number = models.CharField(max_length=50, verbose_name='Обозначение детали')
-    name = models.CharField(max_length=250, verbose_name='Наименование детали')
-    mass = models.DecimalField(verbose_name='Масса', max_digits=11, decimal_places=3, null=True, blank=True)
-    steel = models.CharField(max_length=250, verbose_name='Марка стали', null=True, blank=True)
-    file = models.FileField(upload_to='media/detail/', null=True, blank=True, verbose_name='Файлы')
-
-    def __str__(self):
-        return f'{self.number} {self.name}'
-
-    def get_absolute_url(self):
-        return reverse('drawing_detail', args=[str(self.id)])
-
-    class Meta:
-        unique_together = ('number', 'name')
+# class Drawing(models.Model):
+#     group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True, blank=True)
+#     number = models.CharField(max_length=50, verbose_name='Обозначение детали')
+#     name = models.CharField(max_length=250, verbose_name='Наименование детали')
+#     mass = models.DecimalField(verbose_name='Масса', max_digits=11, decimal_places=3, null=True, blank=True)
+#     steel = models.CharField(max_length=250, verbose_name='Марка стали', null=True, blank=True)
+#     file = models.FileField(upload_to='media/detail/', null=True, blank=True, verbose_name='Файлы')
+#
+#     def __str__(self):
+#         return f'{self.number} {self.name}'
+#
+#     def get_absolute_url(self):
+#         return reverse('drawing_detail', args=[str(self.id)])
+#
+#     class Meta:
+#         unique_together = ('number', 'name')
 
 
 # class Detail(models.Model):
@@ -166,8 +166,9 @@ class Mismatch(models.Model):
     type = models.ForeignKey('TypeMismatch', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Тип несоответствия')
     file = models.FileField(upload_to='media/mismatch/', null=True, blank=True, verbose_name='Файлы')
     image = models.ImageField(upload_to='media/mismatch/images/', null=True, blank=True, verbose_name='Фото')
-    details = models.ManyToManyField('Drawing', through='Irrelevant', verbose_name='Детали')
-    status = models.ManyToManyField('Status', through='Tracking', verbose_name='Статус несоответствия')
+    # details = models.ManyToManyField('Drawing', through='Irrelevant', verbose_name='Детали')
+    details = models.TextField(verbose_name='Детали', null=True, blank=True)
+    status = models.ForeignKey('Status', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Статус несоответствия') #through='Tracking',
 
     def __str__(self):
         return self.title
@@ -184,13 +185,13 @@ class Status(models.Model):
     # def get_absolute_url(self):
     #     return reverse('solution_detail', args=[str(self.id)])
 
-class Tracking(models.Model):
-    mismatch = models.ForeignKey('Mismatch', on_delete=models.SET_NULL, null=True, blank=True)
-    status = models.ForeignKey('Status', on_delete=models.SET_NULL, null=True, blank=True)
-    date_status = models.DateField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.mismatch.title} {self.status.name}'
+# class Tracking(models.Model):
+#     mismatch = models.ForeignKey('Mismatch', on_delete=models.SET_NULL, null=True, blank=True)
+#     status = models.ForeignKey('Status', on_delete=models.SET_NULL, null=True, blank=True)
+#     date_status = models.DateField(auto_now_add=True)
+#
+#     def __str__(self):
+#         return f'{self.mismatch.title} {self.status.name}'
 
     # class Meta:
     #     unique_together = ('mismatch', 'status')
@@ -205,13 +206,13 @@ class TypeMismatch(models.Model):
     def get_absolute_url(self):
         return receiver('type_mismatch', args=[int(self.pk)])
 
-class Irrelevant(models.Model):
-    mismatch = models.ForeignKey('Mismatch', on_delete=models.CASCADE, null=True, blank=True)
-    detail = models.ForeignKey('Drawing', on_delete=models.CASCADE, null=True, blank=True)
-    quantity = models.IntegerField(verbose_name='Количество', null=True, blank=True)
-
-    class Meta:
-        unique_together = ('mismatch', 'detail')
+# class Irrelevant(models.Model):
+#     mismatch = models.ForeignKey('Mismatch', on_delete=models.CASCADE, null=True, blank=True)
+#     detail = models.ForeignKey('Drawing', on_delete=models.CASCADE, null=True, blank=True)
+#     quantity = models.IntegerField(verbose_name='Количество', null=True, blank=True)
+#
+#     class Meta:
+#         unique_together = ('mismatch', 'detail')
 
 
 class Letter(models.Model):

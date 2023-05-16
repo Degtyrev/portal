@@ -311,7 +311,7 @@ def mismatch_list(request):
 
 def mismatch_detail(request, pk):
     mismatch = Mismatch.objects.get(pk=pk)
-    status = Tracking.objects.filter(mismatch=mismatch.pk)
+    statuses = Status.objects.all()
     letters = Letter.objects.filter(mismatch=mismatch.pk)
     solutions = Solution.objects.filter(mismatch=mismatch.pk)
 
@@ -321,7 +321,7 @@ def mismatch_detail(request, pk):
             context={
                 'title': 'Карточка Неоответствия',
                 'mismatch': mismatch,
-                'status': status,
+                'statuses': statuses,
                 'letters': letters,
                 'solutions': solutions,
             },
@@ -346,7 +346,7 @@ def mismatch_create(request):
                 form.add_error(None, "ошибка добавления несоответстия")
         # return HttpResponseRedirect(reverse('mismatch'))
     else:
-        form = CreateMismatchForm(initial={'place': request.session['activ_place']})
+        form = CreateMismatchForm(initial={'place': request.session['activ_place'], 'status': 1})
 
     return render(request, 'supervision/mismatch/mismatch_create.html',
                       {'form': form, 'title': 'Несоответстиве'})
@@ -487,58 +487,58 @@ class GroupDelete(DeleteView):
 
 #--------------- Чертежи----------------
 
-def drawing_list(request):
-    activ_place_pk = request.session['activ_place']
-    drawing_list = Drawing.objects.filter(group__place_id=activ_place_pk)
+# def drawing_list(request):
+#     activ_place_pk = request.session['activ_place']
+#     drawing_list = Drawing.objects.filter(group__place_id=activ_place_pk)
+#
+#     return render(
+#         request,
+#         'supervision/drawing/drawing_list.html',
+#         context={
+#             'title': 'Список Чертежей',
+#             'drawing_list': drawing_list,
+#         },
+#     )
 
-    return render(
-        request,
-        'supervision/drawing/drawing_list.html',
-        context={
-            'title': 'Список Чертежей',
-            'drawing_list': drawing_list,
-        },
-    )
-
-def drawing_detail(request, pk):
-    drawing_detail = Drawing.objects.get(pk=pk)
-
-    return render(
-        request,
-        'supervision/drawing/drawing_detail.html',
-        context={
-            'title': 'Чертёж',
-            'drawing_detail': drawing_detail,
-        },
-    )
+# def drawing_detail(request, pk):
+#     drawing_detail = Drawing.objects.get(pk=pk)
+#
+#     return render(
+#         request,
+#         'supervision/drawing/drawing_detail.html',
+#         context={
+#             'title': 'Чертёж',
+#             'drawing_detail': drawing_detail,
+#         },
+#     )
 
 # --------- Редактирование, обновление, удаление  формы чертеж
 
-def drawing_create(request):
-    activ_place_pk = request.session['activ_place']
-
-    if request.method == 'POST':
-        form = CreateDrawingForm(request.POST)
-
-        if form.is_valid():
-            # print(form.cleaned_data)
-            form.save()
-            return redirect('drawing_list')
-        # return HttpResponseRedirect(reverse('mismatch'))
-    else:
-        form = CreateDrawingForm()
-    return render(request, 'supervision/drawing/drawingcreate_form.html',
-                  {'form': form, 'title': 'Перечень чертежей'})
-
-class DrawingUpdate(UpdateView):
-    model = Drawing
-    fields = '__all__'
-    template_name = 'supervision/drawing/drawingcreate_form.html'
-    success_url = reverse_lazy('drawing_list')
-
-class DrawingDelete(DeleteView):
-    model = Drawing
-    success_url = reverse_lazy('drawing_list')
+# def drawing_create(request):
+#     activ_place_pk = request.session['activ_place']
+#
+#     if request.method == 'POST':
+#         form = CreateDrawingForm(request.POST)
+#
+#         if form.is_valid():
+#             # print(form.cleaned_data)
+#             form.save()
+#             return redirect('drawing_list')
+#         # return HttpResponseRedirect(reverse('mismatch'))
+#     else:
+#         form = CreateDrawingForm()
+#     return render(request, 'supervision/drawing/drawingcreate_form.html',
+#                   {'form': form, 'title': 'Перечень чертежей'})
+#
+# class DrawingUpdate(UpdateView):
+#     model = Drawing
+#     fields = '__all__'
+#     template_name = 'supervision/drawing/drawingcreate_form.html'
+#     success_url = reverse_lazy('drawing_list')
+#
+# class DrawingDelete(DeleteView):
+#     model = Drawing
+#     success_url = reverse_lazy('drawing_list')
 
 
 # #--------------- Детали----------------
@@ -730,7 +730,8 @@ def letter_create(request):
 
 class LetterUpdate(UpdateView):
     model = Letter
-    fields = '__all__'
+    fields = ['number', 'date', 'title', 'text', 'user',
+                  'to', 'mismatch', 'file', 'image']
     template_name = 'supervision/letter/lettercreate_form.html'
     success_url = reverse_lazy('letter_list')
     complex = {

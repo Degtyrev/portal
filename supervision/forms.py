@@ -94,11 +94,12 @@ class CreateMismatchForm(forms.ModelForm):
         widgets = {
             'place': forms.Select(attrs={'class': 'form_input'}),
             'type': forms.RadioSelect(attrs={'class': 'form_input radio_input', 'checked':1}),
-            # 'details': forms.Select(attrs={'class': 'form_input', 'required': 'False'}),
+            'details': forms.Select(attrs={'class': 'form_input', 'required': 'False'}),
             'title': forms.TextInput(attrs={'class': 'form_input'}),
             'text': forms.Textarea(attrs={'class': 'form_input', 'cols': 80, 'rows': 5}),
             'file': forms.FileInput(attrs={'class': 'form_input'}),
             'image': forms.FileInput(attrs={'class': 'form_input'}),
+            'status': forms.HiddenInput()
         }
 
     # place = forms.ModelChoiceField(queryset=Place.objects.all(),
@@ -164,9 +165,9 @@ class CreateLetterForm(forms.ModelForm):
             'date': forms.DateInput(attrs={'class': 'form_input'}),
             'title': forms.TextInput(attrs={'class': 'form_input'}),
             'text': forms.Textarea(attrs={'class': 'form_input', 'cols': 80, 'rows': 5}),
-            'user': forms.Select(attrs={'class': 'form_input', 'disabled': True}),
+            'user': forms.Select(attrs={'class': 'form_input'}),
             'to': forms.TextInput(attrs={'class': 'form_input'}),
-            'mismatch': forms.Select(attrs={'class': 'form_input', 'disabled': True}),
+            'mismatch': forms.Select(attrs={'class': 'form_input'}), # 'disabled': True
             'file': forms.FileInput(attrs={'class': 'form_input'}),
             'image': forms.FileInput(attrs={'class': 'form_input'}),
         }
@@ -224,30 +225,30 @@ class CreateGroupForm(forms.ModelForm):
 
         }
 
-class CreateDrawingForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['group'].empty_label = 'Выберите Группу'
-
-    class Meta:
-        model = Drawing
-        fields = ['group', 'number', 'name', 'mass', 'steel', 'file']
-        labels = {'group': 'Группа',
-                  'number': 'Обозначение',
-                  'name': 'Наименование',
-                  'mass': 'Масса',
-                  'steel': 'Материал',
-                  'file': 'Файлы',
-                  }
-        widgets = {
-            'group': forms.Select(attrs={'class': 'form_input'}),
-            'number': forms.TextInput(attrs={'class': 'form_input'}),
-            'name': forms.TextInput(attrs={'class': 'form_input'}),
-            'mass': forms.NumberInput(attrs={'class': 'form_input'}),
-            'steel': forms.TextInput(attrs={'class': 'form_input'}),
-            'file': forms.FileInput(attrs={'class': 'form_input'}),
-
-        }
+# class CreateDrawingForm(forms.ModelForm):
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields['group'].empty_label = 'Выберите Группу'
+#
+#     class Meta:
+#         model = Drawing
+#         fields = ['group', 'number', 'name', 'mass', 'steel', 'file']
+#         labels = {'group': 'Группа',
+#                   'number': 'Обозначение',
+#                   'name': 'Наименование',
+#                   'mass': 'Масса',
+#                   'steel': 'Материал',
+#                   'file': 'Файлы',
+#                   }
+#         widgets = {
+#             'group': forms.Select(attrs={'class': 'form_input'}),
+#             'number': forms.TextInput(attrs={'class': 'form_input'}),
+#             'name': forms.TextInput(attrs={'class': 'form_input'}),
+#             'mass': forms.NumberInput(attrs={'class': 'form_input'}),
+#             'steel': forms.TextInput(attrs={'class': 'form_input'}),
+#             'file': forms.FileInput(attrs={'class': 'form_input'}),
+#
+#         }
 
 class UpdateUserForm(forms.ModelForm):
     class Meta:

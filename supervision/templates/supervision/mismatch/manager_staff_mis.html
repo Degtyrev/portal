@@ -36,10 +36,7 @@
                     <td class="list__data">{{ forloop.counter }}</td>
                     <td class="list__data"><a href="{% url 'mismatch_detail' mismatch.pk %}">{{ mismatch.place.name }}</a></td>
                     <td class="list__data"><a href="{% url 'mismatch_detail' mismatch.pk %}">{{ mismatch.title}}</a></td>
-
-                    <td class="list__data list__action">
-
-                    </td>
+                    <td class="list__data ">{{ mismatch.status}}</td>
                 </tr>
                 {% endfor %}
             </table>
