@@ -163,7 +163,7 @@ class Mismatch(models.Model):
     title = models.CharField(max_length=400, verbose_name=' Краткое описание')
     text = models.TextField(verbose_name=' Полное описание')
     correct = models.TextField(verbose_name='Предложения по устранению', null=True, blank=True)
-    type = models.ForeignKey('TypeMismatch', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Тип несоответствия')
+    type = models.ForeignKey('TypeMismatch', on_delete=models.SET_NULL, null=True, blank=False, default=1, verbose_name='Тип несоответствия')
     file = models.FileField(upload_to='media/mismatch/', null=True, blank=True, verbose_name='Файлы')
     image = models.ImageField(upload_to='media/mismatch/images/', null=True, blank=True, verbose_name='Фото')
     # details = models.ManyToManyField('Drawing', through='Irrelevant', verbose_name='Детали')

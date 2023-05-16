@@ -82,24 +82,27 @@ class CreateMismatchForm(forms.ModelForm):
 
     class Meta:
         model = Mismatch
-        fields = ['place', 'type',  'title', 'text', 'file', 'image']
+        fields = ['place', 'type',  'title', 'text', 'file', 'image', 'details', 'correct','status']
         labels = {'place': 'Объект',
                   'type': 'Тип несоответстия',
-                  'details': 'Деталь',
+                  'details': 'Детали',
                   'title': 'Короткое описание',
+                  'correct': 'Предложения по устранению',
                   'text': 'Описание',
                   'file': 'Файлы',
                   'image': 'Фото',
                   }
         widgets = {
             'place': forms.Select(attrs={'class': 'form_input'}),
-            'type': forms.RadioSelect(attrs={'class': 'form_input radio_input', 'checked':1}),
-            'details': forms.Select(attrs={'class': 'form_input', 'required': 'False'}),
+            'type': forms.RadioSelect(attrs={'class': 'form_input radio_input'}), #, 'checked': 1
+            'details': forms.Textarea(attrs={'class': 'form_input', 'required': 'False', 'cols': 80, 'rows': 5}),
+            'correct': forms.Textarea(attrs={'class': 'form_input', 'required': 'False', 'cols': 80, 'rows': 5}),
             'title': forms.TextInput(attrs={'class': 'form_input'}),
             'text': forms.Textarea(attrs={'class': 'form_input', 'cols': 80, 'rows': 5}),
             'file': forms.FileInput(attrs={'class': 'form_input'}),
             'image': forms.FileInput(attrs={'class': 'form_input'}),
-            'status': forms.HiddenInput()
+            # 'status': forms.Select(attrs={'class': 'form_input', 'disabled': True, 'checked': 1}),
+            'status': forms.HiddenInput(),
         }
 
     # place = forms.ModelChoiceField(queryset=Place.objects.all(),
