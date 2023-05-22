@@ -267,20 +267,23 @@ class UpdateUserForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class': 'form_input'}),
             'last_name': forms.TextInput(attrs={'class': 'form_input'}),
             'email': forms.TextInput(attrs={'class': 'form_input'}),
+
         }
 
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['surname', 'birth_date', 'death_date', 'is_liner']
+        fields = ['surname', 'birth_date', 'death_date', 'is_liner', 'photo']
         labels = {'surname': 'Отчество',
                   'birth_date': 'Дата рождения',
                   'death_date': 'Дата смерти',
                   'is_liner': 'Линейный',
+                  'photo': 'Фото',
                   }
         widgets = {
             'surname': forms.TextInput(attrs={'class': 'form_input'}),
-            'birth_date': forms.DateInput(attrs={'class': 'form_input'}),
-            'death_date': forms.DateInput(attrs={'class': 'form_input'}),
+            'birth_date': forms.DateInput(attrs={'class': 'form_input input_date'}),
+            'death_date': forms.DateInput(attrs={'class': 'form_input input_date'}),
             'is_liner': forms.CheckboxInput(attrs={'class': 'form_input checkbox_input'}),
+            'photo': forms.FileInput(attrs={'class': 'form_input'}),
         }

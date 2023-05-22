@@ -26,7 +26,12 @@
         {% block navigation %}
             <div class="auth_user">
                     <a href="{% url 'employee_detail' user.pk %}">
-                        <img class="auth_user__photo" src="{% static 'supervision/image/user.png'%}" alt="">
+                         {% if user.profile.photo %}
+                        <img class="auth_user__photo" src="{{user.profile.photo.url }}" alt="">
+                        {% else %}
+                        <img class="auth_user__photo" src="{% static 'supervision/image/user.png' %}" alt="">
+                        {% endif %}
+{#                        <img class="auth_user__photo" src="{% static 'supervision/image/user.png'%}" alt="">#}
                     </a>
                     <div class="auth_user__name">
                         <p class="auth_user__info">{{ user.first_name }}</p>

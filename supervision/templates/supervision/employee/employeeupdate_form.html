@@ -1,4 +1,6 @@
 {% extends "base_generic.html" %}
+{% load static %}
+
 
  {% block title %}
      <title>{{ title }}</title>
@@ -78,6 +80,7 @@
             <div class="form_error">{{ profile_form.birth_date.errors }}</div>
         </div>
 
+    {% if user.profile.is_liner == 0 %}
         <div class="form_block">
             <div class="form_content">
               <label class="form_label" for="{{ profile_form.death_date.id_for_label }}">{{ profile_form.death_date.label }}</label>
@@ -86,7 +89,7 @@
             <div class="form_error">{{ profile_form.death_date.errors }}</div>
         </div>
 
-        {% if user.profile.is_liner == 0 %}
+
             <div class="form_block">
                 <div class="form_content">
                   <label class="form_label" for="{{ profile_form.is_liner.id_for_label }}">{{ profile_form.is_liner.label }}</label>
@@ -95,6 +98,14 @@
                 <div class="form_error">{{ profile_form.is_liner.errors }}</div>
             </div>
         {% endif %}
+
+        <div class="form_block">
+            <div class="form_content">
+              <label class="form_label" for="{{ profile_form.photo.id_for_label }}">{{ profile_form.photo.label }}</label>
+                {{ profile_form.photo }}
+            </div>
+            <div class="form_error">{{ profile_form.photo.errors }}</div>
+        </div>
 
 </div>
         <biv class="form_btn">

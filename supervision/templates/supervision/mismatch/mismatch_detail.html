@@ -1,4 +1,5 @@
 {% extends "base_generic.html" %}
+{% load static %}
 
     {% block title %}
         <title>{{ title }}</title>
@@ -103,8 +104,15 @@
 {#                    </div>#}
 
                     <div class="detail__item">
-                        <div class="detail__ladel">фото, файлы</div>
-                        <div class="detail__text"></div>
+                        <div class="detail__ladel">Файлы</div>
+                        <div class="detail__text">
+                            <a href="{% static mismatch.file %}">{{ mismatch.file.name }}</a></div>
+                    </div>
+
+                    <div class="detail__item">
+                        <div class="detail__ladel">Фото</div>
+                        <div class="detail__text">
+                            <a href="{% static mismatch.image %}"><img src="{% static mismatch.image %}" alt=""> {{ mismatch.image.name}}</a></div>
                     </div>
 
                     <hr>

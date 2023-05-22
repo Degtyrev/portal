@@ -116,7 +116,16 @@ h1{
     margin: 20px;
 }
 
+.main_info{
+    padding-top: 20px;
 
+}
+.main_info_block{
+
+}
+.main_info_item{
+    margin-bottom: 20px;
+}
 
 .title_number{
     font-weight: bolder;
@@ -550,7 +559,16 @@ td>input{
 .mismatch__status{
 
 }
-
+.mismatch_edit>a{
+    display: inline-block;
+}
+.form_input::before{
+    display: block;
+    content: "rrr";
+    width: 15px;
+    height: 15px;
+    background-image: url("../icon/calendar.png");
+}
 /*------------------ несоответстия фильтр------  */
 .mismatch_filter__block{
     margin-top: 20px;
@@ -660,6 +678,7 @@ td>input{
     padding: 15px;
     border: 1px solid #cccccc;
     border-radius: 15px;
+    min-width: 600px;
 }
 .person_career{
     grid-column-start: 2;
@@ -678,7 +697,7 @@ td>input{
 }
 .profile__photo{
     width: 200px;
-    height: 200px;
+    /*height: 200px;*/
     margin: 0 auto;
 }
 .user__photo{

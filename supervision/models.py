@@ -14,6 +14,7 @@ class Profile(models.Model):
     death_date = models.DateField(verbose_name='Дата смерти', null=True, blank=True)
     position = models.ManyToManyField('Position', through='Career')
     is_liner = models.BooleanField(default=True, verbose_name='Если линейный специалист')
+    photo = models.ImageField(upload_to='users/photo', null=True, blank=True, verbose_name='Фото')
 
 
 
@@ -33,7 +34,6 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
-# Дата рождения: {{ user.profile.birth_date }}
 
 class Career(models.Model):
     user = models.ForeignKey('Profile', on_delete=models.CASCADE)
@@ -164,8 +164,8 @@ class Mismatch(models.Model):
     text = models.TextField(verbose_name=' Полное описание')
     correct = models.TextField(verbose_name='Предложения по устранению', null=True, blank=True)
     type = models.ForeignKey('TypeMismatch', on_delete=models.SET_NULL, null=True, blank=False, default=1, verbose_name='Тип несоответствия')
-    file = models.FileField(upload_to='media/mismatch/', null=True, blank=True, verbose_name='Файлы')
-    image = models.ImageField(upload_to='media/mismatch/images/', null=True, blank=True, verbose_name='Фото')
+    file = models.FileField(upload_to='mismatch/file', null=True, blank=True, verbose_name='Файлы')
+    image = models.ImageField(upload_to='mismatch/images/', null=True, blank=True, verbose_name='Фото')
     # details = models.ManyToManyField('Drawing', through='Irrelevant', verbose_name='Детали')
     details = models.TextField(verbose_name='Детали', null=True, blank=True)
     status = models.ForeignKey('Status', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Статус несоответствия') #through='Tracking',

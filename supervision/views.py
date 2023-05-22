@@ -603,9 +603,13 @@ def employee_detail(request, pk):
     career_list = Profile.objects.filter(user_id=pk)
     current_position = Profile.objects.filter(position__career__user_id__exact=pk, position__career__end_date__exact=None)
     # current_position = Career.objects.filter(user_id=pk).last()
+    employee_business_trips = BusinessTrip.objects.filter(user_id__exact=pk)
+
+
     context = {
         'title': 'Сотрудник', 'employee_detail': employee_detail,
-        'career_list': career_list, 'current_position': current_position
+        'career_list': career_list, 'current_position': current_position,
+        'employee_business_trips': employee_business_trips
     }
     print(current_position.last())
     return render(

@@ -29,7 +29,12 @@
             <div class="profile_user">
                 <div class="person_info">
                     <div class="profile__photo">
+
+                        {% if user.profile.photo %}
+                        <img class="user__photo" src="{{ user.profile.photo.url }}" alt="">
+                        {% else %}
                         <img class="user__photo" src="{% static 'supervision/image/user.png' %}" alt="">
+                        {% endif %}
                     </div>
 
                     <div class="detail__block">
@@ -52,12 +57,14 @@
                             <div class="detail__text">{{ employee_detail.profile.birth_date }}</div>
                         </div>
 
+                    {% if user.profile.is_liner == 0 %}
                         {% if death_date %}
                         <div class="detail__item">
                             <div class="detail__label">Дата смерти</div>
                             <div class="detail__text">{{ employee_detail.profile.death_date }}</div>
                         </div>
                         {% endif %}
+                    {% endif %}
 
                         <div class="detail__item">
                             <div class="detail__label">Должность</div>
@@ -80,59 +87,59 @@
                 </div>
 
 
-                <div class="person_attestation">
+{#                <div class="person_attestation">#}
 {#                {% if career_list %}#}
-                        <div class="person__block">
-
-                            <table class="person__table">
-                                <tr>
-                                    <th class="person__table_head">Аттестация</th>
-                                    <th class="person__table_head">сдана</th>
-                                    <th class="person__table_head">годна до</th>
-                                    <th class="person__table_head">осталось</th>
-                                </tr>
+{#                        <div class="person__block">#}
+{##}
+{#                            <table class="person__table">#}
+{#                                <tr>#}
+{#                                    <th class="person__table_head">Аттестация</th>#}
+{#                                    <th class="person__table_head">сдана</th>#}
+{#                                    <th class="person__table_head">годна до</th>#}
+{#                                    <th class="person__table_head">осталось</th>#}
+{#                                </tr>#}
 {#                              {% for career in career_list %}#}
-                                 <tr>
-                                    <td class="person__table_data">АЭС</td>
-                                    <td class="person__table_data">26.07.2005</td>
-                                    <td class="person__table_data">14.02.2008</td>
-                                    <td class="person__table_data">45 мес</td>
-                                </tr>
+{#                                 <tr>#}
+{#                                    <td class="person__table_data">АЭС</td>#}
+{#                                    <td class="person__table_data">26.07.2005</td>#}
+{#                                    <td class="person__table_data">14.02.2008</td>#}
+{#                                    <td class="person__table_data">45 мес</td>#}
+{#                                </tr>#}
 {#                              {% endfor %}#}
-                                <tr>
-                                    <td class="person__table_data">БП</td>
-                                    <td class="person__table_data">26.07.2005</td>
-                                    <td class="person__table_data">14.02.2008</td>
-                                    <td class="person__table_data">156 дней</td>
-                                </tr>
-                                <tr>
-                                    <td class="person__table_data">АТРМОАЛ</td>
-                                    <td class="person__table_data">26.07.2005</td>
-                                    <td class="person__table_data">14.02.2008</td>
-                                    <td class="person__table_data">5 мес 156 дней</td>
-                                </tr>
-                                <tr>
-                                    <td class="person__table_data">ТЬЛАП</td>
-                                    <td class="person__table_data">26.07.2005</td>
-                                    <td class="person__table_data">14.02.2008</td>
-                                    <td class="person__table_data">5 мес 156 дней</td>
-                                </tr>
-                                <tr>
-                                    <td class="person__table_data">Электробезопасность</td>
-                                    <td class="person__table_data">26.07.2005</td>
-                                    <td class="person__table_data">14.02.2008</td>
-                                    <td class="person__table_data">5 мес 156 дней</td>
-                                </tr>
-
-                            </table>
-
-                        </div>
+{#                                <tr>#}
+{#                                    <td class="person__table_data">БП</td>#}
+{#                                    <td class="person__table_data">26.07.2005</td>#}
+{#                                    <td class="person__table_data">14.02.2008</td>#}
+{#                                    <td class="person__table_data">156 дней</td>#}
+{#                                </tr>#}
+{#                                <tr>#}
+{#                                    <td class="person__table_data">АТРМОАЛ</td>#}
+{#                                    <td class="person__table_data">26.07.2005</td>#}
+{#                                    <td class="person__table_data">14.02.2008</td>#}
+{#                                    <td class="person__table_data">5 мес 156 дней</td>#}
+{#                                </tr>#}
+{#                                <tr>#}
+{#                                    <td class="person__table_data">ТЬЛАП</td>#}
+{#                                    <td class="person__table_data">26.07.2005</td>#}
+{#                                    <td class="person__table_data">14.02.2008</td>#}
+{#                                    <td class="person__table_data">5 мес 156 дней</td>#}
+{#                                </tr>#}
+{#                                <tr>#}
+{#                                    <td class="person__table_data">Электробезопасность</td>#}
+{#                                    <td class="person__table_data">26.07.2005</td>#}
+{#                                    <td class="person__table_data">14.02.2008</td>#}
+{#                                    <td class="person__table_data">5 мес 156 дней</td>#}
+{#                                </tr>#}
+{##}
+{#                            </table>#}
+{##}
+{#                        </div>#}
 {#                    {% endif %}#}
-                </div>
+{#                </div>#}
 
 
                 <div class="person_trips">
-{#                    {% if career_list %}#}
+                    {% if employee_business_trips %}
                         <div class="person__block">
 
                             <table class="person__table">
@@ -140,57 +147,30 @@
                                     <th class="person__table_head">Командировки</th>
                                     <th class="person__table_head">с</th>
                                     <th class="person__table_head">по</th>
-                                    <th class="person__table_head">продолжительность</th>
+                                    <th class="person__table_head">статус</th>
+{#                                    <th class="person__table_head">продолжительность</th>#}
                                 </tr>
-{#                              {% for career in career_list %}#}
+                              {% for employee_bt in employee_business_trips %}
                                  <tr class="person__table_row">
-                                    <td class="person__table_data">Гусиноозерская ТЭЦ</td>
-                                    <td class="person__table_data">26.07.2005</td>
-                                    <td class="person__table_data">
-                                         {% if career.end_date %}
-                                            {{ career.end_date }}
-                                        {% else %}
-                                            по настоящее время
-                                        {% endif %}
+                                    <td class="person__table_data">{{ employee_bt.place}}</td>
+                                    <td class="person__table_data">{{ employee_bt.start|date:'d.m.Y'}}</td>
+                                    <td class="person__table_data">{{ employee_bt.end|date:'d.m.Y'}}
+{#                                         {% if career.end_date %}#}
+{#                                            {{ career.end_date }}#}
+{#                                        {% else %}#}
+{#                                            по настоящее время#}
+{#                                        {% endif %}#}
                                     </td>
-                                    <td class="person__table_data">20лет 5 мес</td>
+                                    <td class="person__table_data">{{ employee_bt.status }}</td>
                                 </tr>
-{#                              {% endfor %}#}
-                                <tr class="person__table_row">
-                                    <td class="person__table_data">Гусиноозерская ТЭЦ</td>
-                                    <td class="person__table_data">26.07.2005</td>
-                                    <td class="person__table_data">14.02.2008</td>
-                                    <td class="person__table_data">5 мес 156 дней</td>
-                                </tr>
-                                <tr class="person__table_row">
-                                    <td class="person__table_data">Гусиноозерская ТЭЦ</td>
-                                    <td class="person__table_data">26.07.2005</td>
-                                    <td class="person__table_data">14.02.2008</td>
-                                    <td class="person__table_data">5 мес 156 дней</td>
-                                </tr>
-                                <tr class="person__table_row">
-                                    <td class="person__table_data">Гусиноозерская ТЭЦ</td>
-                                    <td class="person__table_data">26.07.2005</td>
-                                    <td class="person__table_data">14.02.2008</td>
-                                    <td class="person__table_data">5 мес 156 дней</td>
-                                </tr>
-                                <tr class="person__table_row">
-                                    <td class="person__table_data">Гусиноозерская ТЭЦ</td>
-                                    <td class="person__table_data">26.07.2005</td>
-                                    <td class="person__table_data">14.02.2008</td>
-                                    <td class="person__table_data">5 мес 156 дней</td>
-                                </tr>
-                                <tr class="person__table_row">
-                                    <td class="person__table_data">Гусиноозерская ТЭЦ</td>
-                                    <td class="person__table_data">26.07.2005</td>
-                                    <td class="person__table_data">14.02.2008</td>
-                                    <td class="person__table_data">5 мес 156 дней</td>
-                                </tr>
+                              {% endfor %}
+
                             </table>
 
                         </div>
-{#                    {% endif %}#}
+                    {% endif %}
                 </div>
+
                 {% if career_list %}
                 <div class="person_career">
 
