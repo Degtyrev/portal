@@ -31,7 +31,8 @@ h1{
     position: relative;
 }
 .nav{
-    position: fixed;
+    position: absolute;
+    /*position: fixed;*/
     top: 0;
     left: 0;
     width: 130px;
@@ -41,8 +42,8 @@ h1{
     padding-right: 10px;
     padding-top: 10px;
     align-items: center;
-    height: 100%;
-    overflow: auto;
+    /*height: 100%;*/
+    /*overflow: auto;*/
 }
 .auth_user{
     font-size: 12px;
@@ -70,21 +71,44 @@ h1{
 
 }
 .nav__menu_link{
-    z-index: 5;
 }
 .nav__menu_item{
     text-align: center;
     margin: 20px 0;
+    position: relative;
+
 }
 .nav__menu_img{
     width: 60px;
     height: 60px;
     /*object-fit: cover;*/
 }
-.nav__menu_img:hover{
- background-color: #eeeeee;
+/*.nav__menu_img:hover{*/
+/* background-color: #eeeeee;*/
+/*}*/
 
+.nav__menu_prompt{
+    position: absolute;
+    height: 102px;
+    padding: 0 30px;
+    top: -20px;
+    left: 0;
+    background-color: #007264;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+     transition: .5s;
+    z-index: -1;
 }
+.prompt_text{
+    font-size: 20px;
+}
+.nav__menu_item:hover~.nav__menu_prompt{
+    left:116px;
+    opacity: 1;
+    z-index: 10;
+}
+
 .exit__link{
     display: inline-block;
     margin-bottom: 10px;
@@ -630,6 +654,7 @@ td>input{
     border-bottom: 2px solid #c0c0c0;
     border-right: 2px solid #c0c0c0;
     align-items: center;
+    max-height: 42px;
 }
 .block__add__content{
 

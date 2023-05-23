@@ -659,7 +659,7 @@ def employee_update(request, pk):
 
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=user)
-        profile_form = UpdateProfileForm(request.POST,  instance=user.profile)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=user.profile)
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()

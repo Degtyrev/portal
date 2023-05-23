@@ -137,9 +137,9 @@
 {#                    {% endif %}#}
 {#                </div>#}
 
-
+{% if employee_business_trips %}
                 <div class="person_trips">
-                    {% if employee_business_trips %}
+
                         <div class="person__block">
 
                             <table class="person__table">
@@ -168,9 +168,9 @@
                             </table>
 
                         </div>
-                    {% endif %}
-                </div>
 
+                </div>
+{% endif %}
                 {% if career_list %}
                 <div class="person_career">
 
