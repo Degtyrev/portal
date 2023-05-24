@@ -50,6 +50,22 @@ def change_status_trip(request):
 
     request.session['change_status'] = 1
 
+#установка статуса несоответствия
+
+def change_status_mismatch(request):
+    mismatchs = Mismatch.objects.all()
+    for mismatch in mismatchs:
+
+        if Letter.objects.filter(mismatch=mismatch.pk) and mismatch.status_id != 4:
+            Mismatch.objects.filter(pk=mismatch.pk).update(status_id=2)# запрос в отдел
+
+        if Letter.objects.filter(mismatch=mismatch.pk) and Solution.objects.filter(mismatch=mismatch.pk) and mismatch.status_id != 4:
+            Mismatch.objects.filter(pk=mismatch.pk).update(status_id=3)# Выдано Тех.решение
+
+        if not Letter.objects.filter(mismatch=mismatch.pk) and not Solution.objects.filter(mismatch=mismatch.pk) and mismatch.status_id != 4:
+            Mismatch.objects.filter(pk=mismatch.pk).update(status_id=1)# новое
+
+
 
 #----------- Главная Main -----------
 def index(request):
@@ -58,6 +74,11 @@ def index(request):
     session_check = request.session.get('change_status', 0)
     if session_check == 0:
         change_status_trip(request)
+
+
+# проверка и изменение статуса несоответствия
+    change_status_mismatch(request)
+
 
 
     num_employeer = User.objects.filter(is_active=1).count()
@@ -282,6 +303,8 @@ class BusinessTripDelete(DeleteView):
 
 def mismatch_list(request):
     global mismatches_place
+    change_status_mismatch(request)
+
     mismatches = Mismatch.objects.all()
 
     place = Place.objects.filter(status__exact=2)
@@ -311,9 +334,10 @@ def mismatch_list(request):
 
 def mismatch_detail(request, pk):
     mismatch = Mismatch.objects.get(pk=pk)
-    statuses = Status.objects.all()
+    statuses = Status.objects.all().order_by('id')
     letters = Letter.objects.filter(mismatch=mismatch.pk)
     solutions = Solution.objects.filter(mismatch=mismatch.pk)
+    activ_status = mismatch.status.pk
 
     return render(
             request,
@@ -324,6 +348,7 @@ def mismatch_detail(request, pk):
                 'statuses': statuses,
                 'letters': letters,
                 'solutions': solutions,
+                'activ_status': activ_status,
             },
         )
 
@@ -361,6 +386,10 @@ class MismatchDelete(DeleteView):
     success_url = reverse_lazy('mismatch')
 
 
+def mismatch_close(request, pk):
+    Mismatch.objects.filter(pk=pk).update(status_id=4)  # Закрыто
+
+    return HttpResponseRedirect(reverse('mismatch_list'))
 
 #--------------- Объекты----------------
 
@@ -720,6 +749,7 @@ def letter_create(request):
             # print(form.cleaned_data)
             try:
                 form.save()
+                change_status_mismatch(request)
                 return redirect('letter_list')
             except:
                 form.add_error(None, "Ошибка добавления Служебного письма")
@@ -784,6 +814,7 @@ def solution_create(request):
             # print(form.cleaned_data)
             try:
                 form.save()
+                change_status_mismatch(request)
                 return redirect('solution_list')
             except:
                 form.add_error(None, "Ошибка добавления Технического решения")

@@ -13,6 +13,7 @@ urlpatterns = [
 urlpatterns += [
     path('mismatch/', views.mismatch_list, name='mismatch_list'),
     path('mismatch/<int:pk>/', views.mismatch_detail, name='mismatch_detail'),
+    path('mismatch/<int:pk>/close', views.mismatch_close, name='close_mismatch'),
     path('mismatch/create/', views.mismatch_create, name='mismatch_create'),
     # path('mismatch/create/', views.MismatchCreate.as_view(), name='mismatch_create'),
     path('mismatch/<int:pk>/update/', views.MismatchUpdate.as_view(), name='mismatch_update'),

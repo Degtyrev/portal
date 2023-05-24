@@ -42,7 +42,7 @@ h1{
     padding-right: 10px;
     padding-top: 10px;
     align-items: center;
-    /*height: 100%;*/
+    height: 100vh;
     /*overflow: auto;*/
 }
 .auth_user{
@@ -63,6 +63,9 @@ h1{
     object-fit: cover;
     border-radius: 40px;
     margin-bottom: 10px;
+}
+.auth_liner{
+    margin-top: 15px;
 }
 .nav__menu{
 
@@ -130,7 +133,7 @@ h1{
     padding-bottom: 60px;
 }
 .content{
-    margin-left: 100px;
+    margin-left: 130px;
     color: #333;
 }
 .content_title{
@@ -251,6 +254,14 @@ text-align: right;
     min-width: 250px;
     padding: 5px 3px;
 }
+/*.form_input::before{*/
+/*    display: block;*/
+/*    content: "rrr";*/
+/*    width: 15px;*/
+/*    height: 15px;*/
+/*    background-image: url("../icon/calendar.png");*/
+/*}*/
+
 .radio_input{
     min-width: 10px;
 }
@@ -586,13 +597,7 @@ td>input{
 .mismatch_edit>a{
     display: inline-block;
 }
-.form_input::before{
-    display: block;
-    content: "rrr";
-    width: 15px;
-    height: 15px;
-    background-image: url("../icon/calendar.png");
-}
+
 /*------------------ несоответстия фильтр------  */
 .mismatch_filter__block{
     margin-top: 20px;
@@ -634,6 +639,10 @@ td>input{
     margin-right: 10px;
     /*font-size: 12px;*/
  }
+.close_mismatch{
+    margin-top: 30px;
+ }
+
 .non_flex{
     display: block;
 }

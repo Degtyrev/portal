@@ -36,6 +36,11 @@
                     <div class="auth_user__name">
                         <p class="auth_user__info">{{ user.first_name }}</p>
                         <p class="auth_user__info">{{ user.last_name }}</p>
+                        {% if user.profile.is_liner == 1 %}
+                            <p class="auth_user__info auth_liner">линейный сотрудник</p>
+                        {% else %}
+                            <p class="auth_user__info auth_liner">менеджер</p>
+                        {% endif %}
                     </div>
                     <a class="exit__link" href="{% url 'logout'%}">выйти</a>
                 </div>

@@ -22,13 +22,22 @@
             <div class="mismatch_status">
                 <div class="status_track">
                     Статус:
-                    <div class="status__done">&nbsp;&nbsp;новое&nbsp;</div>
-                    <div class="status__activ"> -->&nbsp;не решённое&nbsp;</div>
-                    <div class="status__progress"> -->&nbsp;закрыто</div>
+                    {% for status in statuses %}
+                        {% if status.pk < activ_status %}
+                            <div class="status__done">&nbsp;&nbsp;{{ status }}&nbsp;</div>
+                        {% elif status.pk == activ_status %}
+                         <div class="status__activ"> -->&nbsp;{{ status }}&nbsp;</div>
+                        {% elif status.pk > activ_status %}
+                            <div class="status__progress"> -->&nbsp;{{ status }}</div>
+                        {% endif %}
+
+                    {% endfor %}
                 </div>
+                {% if mismatch.status_id != 4 %}
                 <div class="mismatch_edit">
                     <a href="{% url 'mismatch_update' mismatch.pk %}?mismatch_id={{ mismatch.pk }}&place_id={{ mismatch.place_id }}" class="btn">Редактировать</a>
                 </div>
+                {% endif %}
             </div>
             <div class="detail__block">
                 {% if mismatch %}
@@ -121,7 +130,9 @@
                             <p>Служебные письма</p>
 
                             {% if user.profile.is_liner == 1 %}
+                                {% if mismatch.status_id != 4 %}
                                 <a href="{% url 'letter_create' %}?mismatch_id={{ mismatch.pk }}&place_id={{ mismatch.place_id }}" class="btn">+ Добавить</a>
+                                {% endif %}
                             {% endif %}
                         </div>
                         <div class="block__add__content">
@@ -167,8 +178,11 @@
                     <div class="block__add">
                         <div class="block__add__title">
                             <p>Технические решения</p>
+                            {% if mismatch.status_id != 4 %}
+                         <a href="{% url 'solution_create' %}?mismatch_id={{ mismatch.pk }}&place_id={{ mismatch.place_id }}" class="btn">+ Добавить</a>
+                            {% endif %}
 {#                            {% if user.profile.is_liner == 1 %}#}
-                                <a href="{% url 'solution_create' %}?mismatch_id={{ mismatch.pk }}&place_id={{ mismatch.place_id }}" class="btn">+ Добавить</a>
+
 {#                            {% endif %}#}
                         </div>
                         <div class="block__add__content">
@@ -206,10 +220,19 @@
                     </div>
 
 
+
+
             {% else %}
                 <p>Несоответствие не составлялось</p>
             {% endif %}
             </div>
+
+         {% if mismatch.status_id == 3 %}
+            <div class="close_mismatch">
+             <a href="{% url 'close_mismatch' mismatch.pk %}" class="btn">Закрыть несоответстиве</a>
+            </div>
+        {% endif %}
+
         </section>
 
 

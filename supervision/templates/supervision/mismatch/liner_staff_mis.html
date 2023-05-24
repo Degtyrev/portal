@@ -1,5 +1,8 @@
 {% load static %}
 <section class="mismatch">
+
+    {% if place %}
+
     {% if mismatches_place %}
     <div class="content_title">
          <h1 class="title">{{ title }}</h1>
@@ -34,14 +37,21 @@
         {% endfor %}
         </div>
 
-    {% elif mismatches %}
+        {% else %}
+            <div class="content_title">
+                 <h1 class="title">{{ title }}</h1>
+                <div class="new_btn">
+                    <a href="{% url 'mismatch_create' %}" class="new_link">+ Добавить</a>
+                </div>
+            </div>
+            <p>Несоответствий не выявленно</p>
+        {% endif %}
+
+    {% else %}
     {% comment %}
     если нет действующей коммандировки выводятся все коомандировки как у менеджера
     {% endcomment %}
         {% include 'supervision/mismatch/manager_staff_mis.html' %}
-
-    {% else %}
-        <p>Несоответствий не выявленно</p>
     {% endif %}
 
 </section>

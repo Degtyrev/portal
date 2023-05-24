@@ -199,9 +199,9 @@ class CreateSolutionForm(forms.ModelForm):
             'date': forms.DateInput(attrs={'class': 'form_input'}),
             'title': forms.TextInput(attrs={'class': 'form_input'}),
             'text': forms.Textarea(attrs={'class': 'form_input', 'cols': 80, 'rows': 5}),
-            'user': forms.Select(attrs={'class': 'form_input', 'disabled': True}),
+            'user': forms.Select(attrs={'class': 'form_input'}), #, 'disabled': True
             'to': forms.TextInput(attrs={'class': 'form_input'}),
-            'mismatch': forms.Select(attrs={'class': 'form_input', 'disabled': True}),
+            'mismatch': forms.Select(attrs={'class': 'form_input'}),
             'file': forms.FileInput(attrs={'class': 'form_input'}),
         }
 
