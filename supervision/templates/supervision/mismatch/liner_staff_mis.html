@@ -10,12 +10,18 @@
             <a href="{% url 'mismatch_create' %}" class="new_link">+ Добавить</a>
         </div>
     </div>
-     <div class="list__filter">
-       <ul class="list__filter_list">
-           <li class="list__filter_item selected_item">Нерешенные</li>
-           <li class="list__filter_item"><a class="list__filter_link" href="">Показать все</a></li>
-        </ul>
-    </div>
+
+        <div class="list__filter">
+           <ul class="list__filter_list">
+               {% if select == 1 %}
+               <li class="list__filter_item selected_item">Нерешенные</li>
+               <li class="list__filter_item"><a class="list__filter_link" href="{% url 'mismatch_filter' %}?select=2">Показать все</a></li>
+               {% elif select == 2 %}
+               <li class="list__filter_item "><a class="list__filter_link" href="{% url 'mismatch_filter' %}?select=1">Нерешенные</a></li>
+               <li class="list__filter_item selected_item">Показать все</li>
+               {% endif %}
+            </ul>
+        </div>
     <hr>
     <div class="mismatches">
 
@@ -53,6 +59,23 @@
     {% endcomment %}
         {% include 'supervision/mismatch/manager_staff_mis.html' %}
     {% endif %}
+
+
+{#<div class="pagination">#}
+{#     <span class="step-links">#}
+{#        {% if page.has_previous %}#}
+{#         <a href="?page={{ page.previous_page_number }}">Пред.</a>#}
+{#         {% endif %}#}
+{#         <span class="current">#}
+{#            Страница {{ page.number }} из {{ page.paginator_l.num_pages }}.#}
+{#         </span>#}
+{#         {% if page.has_next %}#}
+{#         <a href="?page={{ page.next_page_number }}">След.</a>#}
+{#         {% endif %}#}
+{#     </span>#}
+{##}
+{#</div>#}
+
 
 </section>
 

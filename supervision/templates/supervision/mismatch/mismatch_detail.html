@@ -24,13 +24,15 @@
                     Статус:
                     {% for status in statuses %}
                         {% if status.pk < activ_status %}
-                            <div class="status__done">&nbsp;&nbsp;{{ status }}&nbsp;</div>
+                            <div class="status__done">{{ status }}</div>
                         {% elif status.pk == activ_status %}
-                         <div class="status__activ"> -->&nbsp;{{ status }}&nbsp;</div>
+                         <div class="status__activ">{{ status }}</div>
                         {% elif status.pk > activ_status %}
-                            <div class="status__progress"> -->&nbsp;{{ status }}</div>
+                            <div class="status__progress">{{ status }}</div>
                         {% endif %}
-
+                        {% if status.pk != 4 %}
+                        -->&nbsp;
+                        {% endif %}
                     {% endfor %}
                 </div>
                 {% if mismatch.status_id != 4 %}

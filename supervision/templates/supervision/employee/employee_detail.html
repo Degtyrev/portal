@@ -30,8 +30,8 @@
                 <div class="person_info">
                     <div class="profile__photo">
 
-                        {% if user.profile.photo %}
-                        <img class="user__photo" src="{{ user.profile.photo.url }}" alt="">
+                        {% if employee_detail.profile.photo %}
+                        <img class="user__photo" src="{{ employee_detail.profile.photo.url }}" alt="">
                         {% else %}
                         <img class="user__photo" src="{% static 'supervision/image/user.png' %}" alt="">
                         {% endif %}
@@ -68,15 +68,15 @@
 
                         <div class="detail__item">
                             <div class="detail__label">Должность</div>
-                            <div class="detail__text">{{ current_position.position}}</div>
+                            <div class="detail__text">{{ career_list|first }}</div>
                         </div>
-                    {% if career_list %}
-                        {% for career in career_list %}
-                        <div class="detail__item">
-                            <div class="detail__text">{{ career.position.name }}</div>
-                        </div>
-                        {% endfor %}
-                        {% endif %}
+{#                    {% if career_list %}#}
+{#                        {% for career in career_list%}#}
+{#                        <div class="detail__item">#}
+{#                            <div class="detail__text">{{ career.position }}</div>#}
+{#                        </div>#}
+{#                        {% endfor %}#}
+{#                        {% endif %}#}
                      </div>
 
                     <div class="detail__item detail__block">
@@ -106,30 +106,7 @@
 {#                                    <td class="person__table_data">45 мес</td>#}
 {#                                </tr>#}
 {#                              {% endfor %}#}
-{#                                <tr>#}
-{#                                    <td class="person__table_data">БП</td>#}
-{#                                    <td class="person__table_data">26.07.2005</td>#}
-{#                                    <td class="person__table_data">14.02.2008</td>#}
-{#                                    <td class="person__table_data">156 дней</td>#}
-{#                                </tr>#}
-{#                                <tr>#}
-{#                                    <td class="person__table_data">АТРМОАЛ</td>#}
-{#                                    <td class="person__table_data">26.07.2005</td>#}
-{#                                    <td class="person__table_data">14.02.2008</td>#}
-{#                                    <td class="person__table_data">5 мес 156 дней</td>#}
-{#                                </tr>#}
-{#                                <tr>#}
-{#                                    <td class="person__table_data">ТЬЛАП</td>#}
-{#                                    <td class="person__table_data">26.07.2005</td>#}
-{#                                    <td class="person__table_data">14.02.2008</td>#}
-{#                                    <td class="person__table_data">5 мес 156 дней</td>#}
-{#                                </tr>#}
-{#                                <tr>#}
-{#                                    <td class="person__table_data">Электробезопасность</td>#}
-{#                                    <td class="person__table_data">26.07.2005</td>#}
-{#                                    <td class="person__table_data">14.02.2008</td>#}
-{#                                    <td class="person__table_data">5 мес 156 дней</td>#}
-{#                                </tr>#}
+{##}
 {##}
 {#                            </table>#}
 {##}
@@ -152,7 +129,7 @@
                                 </tr>
                               {% for employee_bt in employee_business_trips %}
                                  <tr class="person__table_row">
-                                    <td class="person__table_data">{{ employee_bt.place}}</td>
+                                    <td class="person__table_data"><a href="{% url 'business_trip_detail' employee_bt.pk %}">{{ employee_bt.place}}</a></td>
                                     <td class="person__table_data">{{ employee_bt.start|date:'d.m.Y'}}</td>
                                     <td class="person__table_data">{{ employee_bt.end|date:'d.m.Y'}}
 {#                                         {% if career.end_date %}#}
@@ -183,11 +160,11 @@
                                     <th class="person__table_head">Карьера:</th>
                                     <th class="person__table_head">с</th>
                                     <th class="person__table_head">по</th>
-                                    <th class="person__table_head">стаж</th>
+{#                                    <th class="person__table_head">стаж</th>#}
                                 </tr>
                               {% for career in career_list %}
                                  <tr class="person__table_row">
-                                    <td class="person__table_data">{{ career.user.position.name }}</td>
+                                    <td class="person__table_data">{{ career.position }}</td>
                                     <td class="person__table_data">{{ career.start_date|date:"d.m.Y" }}</td>
                                     <td class="person__table_data">
                                          {% if career.end_date %}
@@ -196,7 +173,7 @@
                                             по настоящее время
                                         {% endif %}
                                     </td>
-                                    <td class="person__table_data">20лет 5 мес</td>
+{#                                    <td class="person__table_data">{{ count_date }}</td>#}
                                 </tr>
 
                               {% endfor %}

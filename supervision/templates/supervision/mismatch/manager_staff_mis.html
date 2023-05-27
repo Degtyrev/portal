@@ -4,16 +4,17 @@
          <h1 class="title">{{ title }}</h1>
     </div>
 
+
     <div class="list__filter">
        <ul class="list__filter_list">
-           {% for condition in conditions %}
-               {% if condition.pk == condition_selected %}
-           <li class="list__filter_item selected_item">{{ condition.name}}</li>
-               {% else %}
-           <li class="list__filter_item"><a class="list__filter_link" href="{% url 'condition' condition.pk %}">{{ condition.name}}</a></li>
-               {% endif %}
-       {% endfor %}
-       </ul>
+           {% if select == 1 %}
+           <li class="list__filter_item selected_item">Нерешенные</li>
+           <li class="list__filter_item"><a class="list__filter_link" href="{% url 'mismatch_filter' %}?select=2">Показать все</a></li>
+           {% elif select == 2 %}
+           <li class="list__filter_item "><a class="list__filter_link" href="{% url 'mismatch_filter' %}?select=1">Нерешенные</a></li>
+           <li class="list__filter_item selected_item">Показать все</li>
+           {% endif %}
+        </ul>
     </div>
 
     <div class="mismatches">
@@ -45,4 +46,20 @@
         <p>Несоответствий не выявленно</p>
     {% endif %}
     </div>
+
+{#    <div class="pagination">#}
+{#         <span class="step-links">#}
+{#            {% if page.has_previous %}#}
+{#             <a href="?page={{ page.previous_page_number }}">Пред.</a>#}
+{#             {% endif %}#}
+{#             <span class="current">#}
+{#                Странница {{ page.number }} из {{ page.paginator_m.num_pages }}.#}
+{#             </span>#}
+{#             {% if page.has_next %}#}
+{#             <a href="?page={{ page.next_page_number }}">След.</a>#}
+{#             {% endif %}#}
+{#         </span>#}
+{##}
+{#    </div>#}
+
 </section>

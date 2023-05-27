@@ -5,8 +5,40 @@
 
    <div class="main_info_block">
 
-        <p class="main_info_item">В отделе {{ num_employeer }} сотрудников</p>
-        <p class="main_info_item">Действующих объектов - {{ num_place }}</p>
+        <p class="main_info_item"><a href="{% url 'employee_list' %}">В отделе {{ num_employeer }} сотрудников</a></p>
+        <p class="main_info_item"><a href="{% url 'place_list' %}">Действующих объектов - {{ num_place }}</a></p>
 
    </div>
+
+
+    <div class="mismatches">
+    {% if mismatches %}
+       <div class="list__section">
+            <div class="list__mismatch">
+                <h2><a href="{% url 'mismatch_list' %}">Нерешенных вопросов ({{ num_mismatches }})</a></h2>
+            </div>
+
+            <table class="list__block">
+                <tr class="list__row">
+                    <th class="list__head">№</th>
+                    <th class="list__head">Объект</th>
+                    <th class="list__head">Описание</th>
+                    <th class="list__head">Статус</th>
+                </tr>
+
+            {% for mismatch in mismatches %}
+                <tr class="list__row">
+                    <td class="list__data">{{ forloop.counter }}</td>
+                    <td class="list__data"><a href="{% url 'mismatch_detail' mismatch.pk %}">{{ mismatch.place.name }}</a></td>
+                    <td class="list__data"><a href="{% url 'mismatch_detail' mismatch.pk %}">{{ mismatch.title}}</a></td>
+                    <td class="list__data ">{{ mismatch.status}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <p>Несоответствий не выявленно</p>
+    {% endif %}
+    </div>
+
 </section>

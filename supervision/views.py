@@ -5,7 +5,7 @@ from django.db.models import Max
 from django.shortcuts import render, redirect
 from .models import *
 import datetime
-
+from django.core.paginator import Paginator
 from django.urls import include
 
 
@@ -79,11 +79,9 @@ def index(request):
 # проверка и изменение статуса несоответствия
     change_status_mismatch(request)
 
-
-
     num_employeer = User.objects.filter(is_active=1).count()
     num_place = Place.objects.filter(status=2).count()  # Метод 'all()' применён по умолчанию.
-
+    date_today = datetime.date.today()
     activ_trip = BusinessTrip.objects.filter(user_id__exact=request.user.pk, status_id__exact=2)
     print(activ_trip)
 
@@ -91,8 +89,18 @@ def index(request):
         request.session['activ_trip'] = activ_trip[0].pk
         request.session['activ_place'] = activ_trip[0].place_id
         activ_trip = activ_trip[0]
+        balanse = activ_trip.end - date_today
+        balanse = balanse.days
+        mismatches_place = Mismatch.objects.filter(place_id__exact=activ_trip.place_id).filter(
+            status__pk__in=[1, 2]).order_by('status_id')
+        num_mismatches_place = Mismatch.objects.filter(place_id__exact=activ_trip.place_id).filter(
+            status__pk__in=[1, 2]).count()
     else:
         activ_trip = False
+        balanse = False
+        mismatches_place = False
+
+
 
     # Отрисовка HTML-шаблона index.html с данными внутри
     # переменной контекста context
@@ -110,12 +118,21 @@ def index(request):
     else:
         activ_plc=False
 
+    mismatches = Mismatch.objects.filter(status__pk__in=[1, 2]).order_by('status_id')
+    num_mismatches = Mismatch.objects.filter(status__pk__in=[1, 2]).count()
+
+
     context = {
         'title': "Портал",
         'num_employeer': num_employeer,
         'num_place': num_place,
         'activ_trip': activ_trip,
-        'pk': activ_plc
+        'pk': activ_plc,
+        'mismatches': mismatches,
+        "num_mismatches": num_mismatches,
+        "num_mismatches_place": num_mismatches_place,
+        'balanse': balanse,
+        'mismatches_place': mismatches_place,
     }
 
     return render(
@@ -147,7 +164,7 @@ def admin_page(request):
 def business_trip(request):
     change_status_trip(request)  # обновление статуса командировки
     date_today = datetime.date.today()
-    trips_user = BusinessTrip.objects.filter(status__exact=2).filter(user_id__exact=request.user.pk)
+    trips_user = BusinessTrip.objects.filter(status_id__exact=2).filter(user_id__exact=request.user.pk)
     trips = BusinessTrip.objects.filter(status__exact=2)
     conditions = ConditionTrip.objects.all()
     # получени остатков командировки
@@ -303,9 +320,10 @@ class BusinessTripDelete(DeleteView):
 
 def mismatch_list(request):
     global mismatches_place
+    global paginator_l
     change_status_mismatch(request)
 
-    mismatches = Mismatch.objects.all()
+    mismatches = Mismatch.objects.filter(status__pk__in=[1, 2]).order_by('status_id')
 
     place = Place.objects.filter(status__exact=2)
     user = request.user
@@ -313,9 +331,18 @@ def mismatch_list(request):
     carent_trip = BusinessTrip.objects.filter(user__exact=user.pk).filter(status__exact=2)
 
     if carent_trip: # выбираем несоответствия для даного объекта
-        mismatches_place = Mismatch.objects.filter(place_id__exact=carent_trip[0].place_id)
+        mismatches_place = Mismatch.objects.filter(place_id__exact=carent_trip[0].place_id).filter(status__pk__in=[1, 2]).order_by('status_id')
     else:
         mismatches_place = False
+
+    # paginator_m = Paginator(mismatches, 3)
+    # page_number = request.GET.get('page', 1)
+    #
+    # if mismatches_place:
+    #     paginator_l = Paginator(mismatches_place, 3)
+    #     mismatches_place = paginator_l.page(page_number)
+    #
+    # mismatches = paginator_m.page(page_number)
 
 
     return render(
@@ -326,6 +353,7 @@ def mismatch_list(request):
             'mismatches': mismatches,
             'place': place,
             'mismatches_place': mismatches_place,
+            'select': 1,
         },
     )
 
@@ -390,6 +418,47 @@ def mismatch_close(request, pk):
     Mismatch.objects.filter(pk=pk).update(status_id=4)  # Закрыто
 
     return HttpResponseRedirect(reverse('mismatch_list'))
+
+
+
+def mismatch_filter(request):
+    mismatches=0
+    mismatches_place=0
+    # paginator_l = None
+
+    place = Place.objects.filter(status__exact=2)
+    user = request.user
+    carent_trip = BusinessTrip.objects.filter(user__exact=user.pk).filter(status__exact=2)
+
+    select = int(request.GET['select'])
+    print(select)
+
+    if select == 2:
+        mismatches = Mismatch.objects.all().order_by('status_id')
+    elif select == 1:
+        mismatches = Mismatch.objects.filter(status__pk__in=[1, 2]).order_by('status_id')
+    print(mismatches)
+
+    if carent_trip:  # выбираем несоответствия для даного объекта
+        if select == 1:
+            mismatches_place = Mismatch.objects.filter(place_id__exact=carent_trip[0].place_id).filter(status__pk__in=[1, 2]).order_by('status_id')
+        elif select == 2:
+            mismatches_place = Mismatch.objects.filter(place_id__exact=carent_trip[0].place_id).order_by('status_id')
+    else:
+        mismatches_place = False
+    print(mismatches_place)
+
+    return render(
+        request,
+        'supervision/mismatch/mismatch.html',
+        context={
+            'title': 'Список несоответствий',
+            'mismatches': mismatches,
+            'place': place,
+            'mismatches_place': mismatches_place,
+            'select': select,
+        },
+    )
 
 #--------------- Объекты----------------
 
@@ -615,37 +684,41 @@ class GroupDelete(DeleteView):
 #--------------- Сотрудники----------------
 def employee_list(request):
     employee_list = User.objects.all()
-
     return render(
         request,
         'supervision/employee/employee_list.html',
         context={
             'title': 'Список Сотрудников',
             'employee_list': employee_list,
-
         },
     )
 
 def employee_detail(request, pk):
     employee_detail = User.objects.get(id=pk)
+    # employee_detail = Profile.objects.get(id=pk)
     # profile_detail = Profile.objects.get(id=pk)
-    career_list = Profile.objects.filter(user_id=pk)
-    current_position = Profile.objects.filter(position__career__user_id__exact=pk, position__career__end_date__exact=None)
+    career_list = Career.objects.filter(profile__user_id=pk).order_by('-start_date')
+    # current_position = Profile.objects.filter(position__career__user_id__exact=pk, position__career__end_date__exact=None)
     # current_position = Career.objects.filter(user_id=pk).last()
-    employee_business_trips = BusinessTrip.objects.filter(user_id__exact=pk)
+    employee_business_trips = BusinessTrip.objects.filter(user_id__exact=pk).order_by('-start')
 
 
     context = {
-        'title': 'Сотрудник', 'employee_detail': employee_detail,
-        'career_list': career_list, 'current_position': current_position,
+        'title': 'Сотрудник',
+        'employee_detail': employee_detail,
+        'career_list': career_list,
+        # 'current_position': current_position,
         'employee_business_trips': employee_business_trips
     }
-    print(current_position.last())
+    # print(current_position.last())
     return render(
         request,
         'supervision/employee/employee_detail.html',
         context=context,
     )
+
+
+
 
 # --------- Редактирование, обновление, удаление  формы сотрудники
 

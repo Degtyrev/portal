@@ -53,8 +53,8 @@ class CreateBusinessTripForm(forms.ModelForm):
         widgets = {
             'place': forms.Select(attrs={'class': 'form_input'}),
             'user': forms.Select(attrs={'class': 'form_input'}),
-            'start': forms.DateInput(attrs={'class': 'form_input'}),
-            'end': forms.DateInput(attrs={'class': 'form_input'}),
+            'start': forms.DateInput(attrs={'class': 'form_input input_date'}),
+            'end': forms.DateInput(attrs={'class': 'form_input input_date'}),
             'purpose': forms.Textarea(attrs={'cols': 80, 'rows': 5, 'class': 'form_input'}),
             'status': forms.Select(attrs={'disabled': True, 'class': 'form_input'}),
         }
@@ -165,7 +165,7 @@ class CreateLetterForm(forms.ModelForm):
                   }
         widgets = {
             'number': forms.NumberInput(attrs={'class': 'form_input'}),
-            'date': forms.DateInput(attrs={'class': 'form_input'}),
+            'date': forms.DateInput(attrs={'class': 'form_input input_date'}),
             'title': forms.TextInput(attrs={'class': 'form_input'}),
             'text': forms.Textarea(attrs={'class': 'form_input', 'cols': 80, 'rows': 5}),
             'user': forms.Select(attrs={'class': 'form_input'}),
@@ -196,7 +196,7 @@ class CreateSolutionForm(forms.ModelForm):
                   }
         widgets = {
             'number': forms.NumberInput(attrs={'class': 'form_input'}),
-            'date': forms.DateInput(attrs={'class': 'form_input'}),
+            'date': forms.DateInput(attrs={'class': 'form_input input_date'}),
             'title': forms.TextInput(attrs={'class': 'form_input'}),
             'text': forms.Textarea(attrs={'class': 'form_input', 'cols': 80, 'rows': 5}),
             'user': forms.Select(attrs={'class': 'form_input'}), #, 'disabled': True

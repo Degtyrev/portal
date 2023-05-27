@@ -6,10 +6,47 @@
 {#    <hr>#}
     <div class="mismatches">
     {% if activ_trip %}
-        <div>Текущая командировка</div>
+        <div class="main_liner_head">Текущая командировка</div>
+        <div class="main_liner_text">
         {{ activ_trip.place}} {{ activ_trip.purpose}} с: {{ activ_trip.start|date:"d.m.Y"}} по: {{ activ_trip.end|date:'d.m.Y'}}
+        </div>
+        <div class="main_liner_text">
+        До окончания командировки осталось: {{ balanse }} день(й)
+        </div>
     {% else %}
+
         <p>У вас сейчас нет Действующей командировки</p>
+    {% endif %}
+    </div>
+
+
+ <div class="mismatches">
+    {% if mismatches_place %}
+       <div class="list__section">
+            <div class="list__mismatch">
+                <h2><a href="{% url 'mismatch_list' %}">Нерешенных вопросов ({{ num_mismatches_place }})</a></h2>
+            </div>
+
+            <table class="list__block">
+                <tr class="list__row">
+                    <th class="list__head">№</th>
+                    <th class="list__head">Объект</th>
+                    <th class="list__head">Описание</th>
+                    <th class="list__head">Статус</th>
+                </tr>
+
+            {% for mismatch in mismatches_place %}
+                <tr class="list__row">
+                    <td class="list__data">{{ forloop.counter }}</td>
+                    <td class="list__data"><a href="{% url 'mismatch_detail' mismatch.pk %}">{{ mismatch.place.name }}</a></td>
+                    <td class="list__data"><a href="{% url 'mismatch_detail' mismatch.pk %}">{{ mismatch.title}}</a></td>
+                    <td class="list__data ">{{ mismatch.status}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <p>Несоответствий не выявленно</p>
     {% endif %}
     </div>
 </section>

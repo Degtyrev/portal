@@ -1,27 +1,19 @@
 window.onload = function() {
-// let input_date = document.querySelector('.input_date')
-//     input_date.onclick = function(){
-//         console.log('gdtrtrgdg')
-//     }
 
-document.getElementById('id_start').onchange = function(){changeDate()}
+    // let form_calendars =  document.querySelectorAll('.form_calendar');
+    //
+    // for(form_calendar of form_calendars){
+    //     form_calendar.addEventListener('click', function (){
+    //        let input = this.previousElementSibling;
+    //        console.log(input)
+    //         input.setAttribute('type', 'date')
+    //     });
+    // }
 
-function changeDate(){
-    var x =document.getElementById('id_start')
-    let condition = document.getElementById('id_status')
-    let val = x.value
-    let a = Date.parse(val)
-   console.log(a)
-   console.log(condition)
+  let input_dates =  document.querySelectorAll('.input_date');
 
-
-    let now = Date.now();
-    console.log(now)
-    if (now < a) {
-        condition.value =2
-    }
+    for(input_date of input_dates){
+        input_date.setAttribute('type', 'date')
+        }
 
 }
-
-
-};

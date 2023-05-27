@@ -35,19 +35,22 @@
                             </div>
                             <div class="card__title_liner">
                                 {% if  employee.profile.is_liner == 0%}
-                                <p>Не линейный</p>
+                                    <p>Менеджер</p>
                                 {% else %}
                                     <p>Линейный</p>
                                 {% endif %}
                             </div>
                         </div>
 
-                        <div class="card__info">
-                            <div class="card__item">
-                                <p class="card__label">Должность</p>
-                                <p class="card__text">{{employee.profile.position.name}}</p>
-                            </div>
-                        </div>
+{#                        <div class="card__info">#}
+{#                            <div class="card__item">#}
+{#                                <p class="card__label">Должность</p>#}
+{#                                <p class="card__text">{{employee.profile.career}}</p>#}
+{#                                {% for e in employee.profile.career %}#}
+{#                                    {{ e.position.name }}#}
+{#                                {% endfor %}#}
+{#                            </div>#}
+{#                        </div>#}
                     </div>
                 {% endfor %}
             {% else %}

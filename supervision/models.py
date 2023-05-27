@@ -36,15 +36,19 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class Career(models.Model):
-    user = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
     position = models.ForeignKey('Position', on_delete=models.SET_NULL, null=True,)
     start_date = models.DateField(help_text="Дата приёма")
     end_date = models.DateField(help_text="Дата увольнения", null=True, blank=True)
 
     def __str__(self):
-        return f'{self.user.user.first_name} {self.user.user.last_name} {self.position}'
+        return f' {self.position}'
     class Meta:
-        unique_together = ('user', 'position')
+        unique_together = ('profile', 'position')
+
+    # def count_date(self):
+    #     count_date = self.end_date - self.end_date
+    #     return count_date.days
 
 
 class Position(models.Model):
