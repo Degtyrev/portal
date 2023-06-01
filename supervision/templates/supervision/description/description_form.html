@@ -1,0 +1,42 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+{% block content %}
+
+    <form action="" method="post" class="form_wrap">
+    {% csrf_token %}
+
+        <div class="form_title">
+            <h2>{{ title }}</h2>
+        </div>
+        <div class="form_error">
+            {{ form.non_field_errors }}
+        </div>
+
+        <div class="form_section">
+            <div class="form_section_name">
+                <h2>данные Наименования</h2>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                    {{ form.description }}
+                </div>
+                <div class="form_error">{{ form.description.errors }}</div>
+            </div>
+        </div>
+
+        <biv class="form_btn">
+          <input type="submit" value="Сохранить" id="create_type_mismatch" class="btn ">
+
+            <a href="{% url 'description_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
+        </biv>
+    </form>
+{% endblock %}

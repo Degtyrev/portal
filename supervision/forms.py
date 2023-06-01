@@ -99,8 +99,8 @@ class CreateMismatchForm(forms.ModelForm):
             'correct': forms.Textarea(attrs={'class': 'form_input', 'required': 'False', 'cols': 80, 'rows': 5}),
             'title': forms.TextInput(attrs={'class': 'form_input'}),
             'text': forms.Textarea(attrs={'class': 'form_input', 'cols': 80, 'rows': 5}),
-            'file': forms.FileInput(attrs={'class': 'form_input'}),
-            'image': forms.FileInput(attrs={'class': 'form_input'}),
+            'file': forms.FileInput(attrs={'class': 'form_input', 'multiple': True}),
+            'image': forms.FileInput(attrs={'class': 'form_input', 'multiple': True}),
             # 'status': forms.Select(attrs={'class': 'form_input', 'disabled': True, 'checked': 1}),
             'status': forms.HiddenInput(),
         }
@@ -171,8 +171,8 @@ class CreateLetterForm(forms.ModelForm):
             'user': forms.Select(attrs={'class': 'form_input'}),
             'to': forms.TextInput(attrs={'class': 'form_input'}),
             'mismatch': forms.Select(attrs={'class': 'form_input'}), # 'disabled': True
-            'file': forms.FileInput(attrs={'class': 'form_input'}),
-            'image': forms.FileInput(attrs={'class': 'form_input'}),
+            'file': forms.FileInput(attrs={'class': 'form_input', 'multiple': True}),
+            'image': forms.FileInput(attrs={'class': 'form_input', 'multiple': True}),
         }
 
 
@@ -202,7 +202,7 @@ class CreateSolutionForm(forms.ModelForm):
             'user': forms.Select(attrs={'class': 'form_input'}), #, 'disabled': True
             'to': forms.TextInput(attrs={'class': 'form_input'}),
             'mismatch': forms.Select(attrs={'class': 'form_input'}),
-            'file': forms.FileInput(attrs={'class': 'form_input'}),
+            'file': forms.FileInput(attrs={'class': 'form_input', 'multiple': True}),
         }
 
 class CreateGroupForm(forms.ModelForm):
@@ -228,30 +228,30 @@ class CreateGroupForm(forms.ModelForm):
 
         }
 
-# class CreateDrawingForm(forms.ModelForm):
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.fields['group'].empty_label = 'Выберите Группу'
-#
-#     class Meta:
-#         model = Drawing
-#         fields = ['group', 'number', 'name', 'mass', 'steel', 'file']
-#         labels = {'group': 'Группа',
-#                   'number': 'Обозначение',
-#                   'name': 'Наименование',
-#                   'mass': 'Масса',
-#                   'steel': 'Материал',
-#                   'file': 'Файлы',
-#                   }
-#         widgets = {
-#             'group': forms.Select(attrs={'class': 'form_input'}),
-#             'number': forms.TextInput(attrs={'class': 'form_input'}),
-#             'name': forms.TextInput(attrs={'class': 'form_input'}),
-#             'mass': forms.NumberInput(attrs={'class': 'form_input'}),
-#             'steel': forms.TextInput(attrs={'class': 'form_input'}),
-#             'file': forms.FileInput(attrs={'class': 'form_input'}),
-#
-#         }
+class CreateDrawingForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['group'].empty_label = 'Выберите Группу'
+
+    class Meta:
+        model = Drawing
+        fields = ['group', 'number', 'description', 'mass', 'material', 'file']
+        labels = {'group': 'Группа',
+                  'number': 'Обозначение',
+                  'description': 'Наименование',
+                  'mass': 'Масса',
+                  'material': 'Материал',
+                  'file': 'Файлы',
+                  }
+        widgets = {
+            'group': forms.Select(attrs={'class': 'form_input'}),
+            'number': forms.TextInput(attrs={'class': 'form_input'}),
+            'description': forms.Select(attrs={'class': 'form_input'}),
+            'mass': forms.NumberInput(attrs={'class': 'form_input'}),
+            'material': forms.Select(attrs={'class': 'form_input'}),
+            'file': forms.FileInput(attrs={'class': 'form_input'}),
+
+        }
 
 class UpdateUserForm(forms.ModelForm):
     class Meta:

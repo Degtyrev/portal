@@ -1,0 +1,51 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+
+{% block content %}
+
+    <form action="" method="post" class="form_wrap">
+    {% csrf_token %}
+
+        <div class="form_title">
+            <h2>{{ title }}</h2>
+        </div>
+        <div class="form_error">
+            {{ form.non_field_errors }}
+        </div>
+
+        <div class="form_section">
+            <div class="form_section_name">
+                <h2>данные материала</h2>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.material.id_for_label }}">{{ form.material.label }}</label>
+                    {{ form.material }}
+                </div>
+                <div class="form_error">{{ form.material.errors }}</div>
+            </div>
+
+            <div class="form_block">
+                <div class="form_content">
+                  <label class="form_label" for="{{ form.gost.id_for_label }}">{{ form.gost.label }}</label>
+                    {{ form.gost }}
+                </div>
+                <div class="form_error">{{ form.gost.errors }}</div>
+            </div>
+
+        </div>
+
+        <biv class="form_btn">
+          <input type="submit" value="Сохранить" id="create_type_mismatch" class="btn ">
+
+            <a href="{% url 'material_list' %}" class="confirm_delete__cancel btn" >Отменить</a>
+        </biv>
+    </form>
+{% endblock %}

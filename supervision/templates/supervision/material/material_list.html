@@ -7,38 +7,40 @@
 
 
 {% block content %}
-        {% if user.profile.is_liner == 0 %}
+        {% if user.profile.is_liner == 1 %}
 
         <section class="section">
             <div class="content_title">
                  <h1 class="title">{{ title }}</h1>
                 <div class="new_btn">
-                    <a href="{% url 'type_mismatch_create' %}" class="new_link">+ Добавить</a>
+                    <a href="{% url 'material_create' %}" class="new_link">+ Добавить</a>
                 </div>
             </div>
 
             <div class="list__card">
-            {% if type_mismatch_list %}
+            {% if material_list %}
 
                      <div class="person__block">
                             <table class="person__table">
                                 <tr>
                                     <th class="person__table_head"></th>
-                                    <th class="person__table_head">Типы несоотетствий</th>
+                                    <th class="person__table_head">Материал</th>
+                                    <th class="person__table_head">ГОСТ/ТУ</th>
                                     <th class="person__table_head"></th>
                                 </tr>
-                     {% for type_mismatch in type_mismatch_list %}
+                     {% for material in material_list %}
                                 <tr>
                                     <td class="person__table_data">{{ forloop.counter }}</td>
-                                    <td class="person__table_data">{{ type_mismatch.name}}</td>
+                                    <td class="person__table_data">{{ material.material}}</td>
+                                    <td class="person__table_data">{{ material.gost}}</td>
                                     <td class="person__table_data">
                                         <div class="list__action_icon">
-                                            <a class="list__link" href="{% url 'type_mismatch_update' type_mismatch.id %}">
+                                            <a class="list__link" href="{% url 'material_update' material.id %}">
                                                 <img class="list__icon" src="{% static 'supervision/icon/edit_icon1.png' %}" alt="редактировать" title="редактировать">
                                             </a>
-                                            <a class="list__link" href="{% url 'type_mismatch_detail' type_mismatch.id %}">
-                                                <img class="list__icon" src="{% static 'supervision/icon/delete_icon.png' %}" alt="уладить" title="удалить">
-                                            </a>
+{#                                            <a class="list__link" href="{% url 'material_delete' material.id %}">#}
+{#                                                <img class="list__icon" src="{% static 'supervision/icon/delete_icon.png' %}" alt="уладить" title="удалить">#}
+{#                                            </a>#}
                                         </div>
                                     </td>
                                 </tr>
@@ -47,7 +49,7 @@
                      </div>
 
             {% else %}
-                <p>Нет типов несоотвествий</p>
+                <p>Нет Наименований</p>
             {% endif %}
             </div>
         </section>

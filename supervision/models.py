@@ -131,22 +131,24 @@ class Group(models.Model):
         return reverse('group_detail', args=[str(self.id)])
 
 
-# class Drawing(models.Model):
-#     group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True, blank=True)
-#     number = models.CharField(max_length=50, verbose_name='Обозначение детали')
-#     name = models.CharField(max_length=250, verbose_name='Наименование детали')
-#     mass = models.DecimalField(verbose_name='Масса', max_digits=11, decimal_places=3, null=True, blank=True)
-#     steel = models.CharField(max_length=250, verbose_name='Марка стали', null=True, blank=True)
-#     file = models.FileField(upload_to='media/detail/', null=True, blank=True, verbose_name='Файлы')
-#
-#     def __str__(self):
-#         return f'{self.number} {self.name}'
-#
-#     def get_absolute_url(self):
-#         return reverse('drawing_detail', args=[str(self.id)])
-#
-#     class Meta:
-#         unique_together = ('number', 'name')
+class Drawing(models.Model):
+    group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True, blank=True)
+    number = models.CharField(max_length=50, verbose_name='Обозначение детали')
+    # name = models.CharField(max_length=250, verbose_name='Наименование детали')
+    description = models.ForeignKey('Description', on_delete=models.SET_NULL, null=True, verbose_name='Наименование детали')
+    mass = models.DecimalField(verbose_name='Масса', max_digits=11, decimal_places=3, null=True, blank=True)
+    # steel = models.CharField(max_length=250, verbose_name='Марка стали', null=True, blank=True)
+    material = models.ForeignKey('Material', on_delete=models.SET_NULL, null=True, verbose_name='Материал')
+    file = models.FileField(upload_to='media/detail/', null=True, blank=True, verbose_name='Файлы')
+
+    def __str__(self):
+        return f'{self.number} {self.description}'
+
+    def get_absolute_url(self):
+        return reverse('drawing_detail', args=[str(self.id)])
+
+    class Meta:
+        unique_together = ('number', 'description')
 
 
 # class Detail(models.Model):
@@ -170,7 +172,7 @@ class Mismatch(models.Model):
     type = models.ForeignKey('TypeMismatch', on_delete=models.SET_NULL, null=True, blank=False, default=1, verbose_name='Тип несоответствия')
     file = models.FileField(upload_to='mismatch/file', null=True, blank=True, verbose_name='Файлы')
     image = models.ImageField(upload_to='mismatch/images/', null=True, blank=True, verbose_name='Фото')
-    # details = models.ManyToManyField('Drawing', through='Irrelevant', verbose_name='Детали')
+    drawing = models.ManyToManyField('Drawing', through='Irrelevant', verbose_name='Детали')
     details = models.TextField(verbose_name='Детали', null=True, blank=True)
     status = models.ForeignKey('Status', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Статус несоответствия') #through='Tracking',
 
@@ -210,13 +212,13 @@ class TypeMismatch(models.Model):
     def get_absolute_url(self):
         return receiver('type_mismatch', args=[int(self.pk)])
 
-# class Irrelevant(models.Model):
-#     mismatch = models.ForeignKey('Mismatch', on_delete=models.CASCADE, null=True, blank=True)
-#     detail = models.ForeignKey('Drawing', on_delete=models.CASCADE, null=True, blank=True)
-#     quantity = models.IntegerField(verbose_name='Количество', null=True, blank=True)
-#
-#     class Meta:
-#         unique_together = ('mismatch', 'detail')
+class Irrelevant(models.Model):
+    mismatch = models.ForeignKey('Mismatch', on_delete=models.CASCADE, null=True, blank=True)
+    drawing = models.ForeignKey('Drawing', on_delete=models.CASCADE, null=True, blank=True)
+    quantity = models.IntegerField(verbose_name='Количество', null=True, blank=True)
+
+    class Meta:
+        unique_together = ('mismatch', 'drawing')
 
 
 class Letter(models.Model):
@@ -253,3 +255,28 @@ class Solution(models.Model):
         return reverse('solution_detail', args=[str(self.id)])
 
 
+class Material(models.Model):
+    material = models.CharField(max_length=250, verbose_name='Материал')
+    gost = models.CharField(max_length=50, verbose_name='ГОСТ/ТУ', null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.material} {self.gost}'
+
+    def get_absolute_url(self):
+        return reverse('material_detail', args=[str(self.id)])
+
+    class Meta:
+        unique_together = ('material', 'gost')
+        ordering =['material']
+
+class Description(models.Model):
+    description = models.CharField(max_length=250, unique=True, verbose_name='Наименование')
+
+    def __str__(self):
+        return self.description
+
+    def get_absolute_url(self):
+        return reverse('description_detail', args=[str(self.id)])
+
+    class Meta:
+        ordering =['description']

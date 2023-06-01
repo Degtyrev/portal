@@ -46,7 +46,7 @@
 
                     <div class="detail__item">
                         <div class="detail__ladel">объект</div>
-                        <div class="detail__text">{{ mismatch.place.name }}</div>
+                        <div class="detail__text"><a href="{% url 'place_detail' mismatch.place.pk %}">{{ mismatch.place.name }}</a></div>
                     </div>
 
 {#                    <div class="detail__item">#}

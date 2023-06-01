@@ -69,6 +69,7 @@ def change_status_mismatch(request):
 
 #----------- Главная Main -----------
 def index(request):
+    num_mismatches_place = 0
 
 # проверка и изменение статуса командировок  если
     session_check = request.session.get('change_status', 0)
@@ -92,9 +93,9 @@ def index(request):
         balanse = activ_trip.end - date_today
         balanse = balanse.days
         mismatches_place = Mismatch.objects.filter(place_id__exact=activ_trip.place_id).filter(
-            status__pk__in=[1, 2]).order_by('status_id')
+            status__pk__in=[1, 2, 3]).order_by('status_id')
         num_mismatches_place = Mismatch.objects.filter(place_id__exact=activ_trip.place_id).filter(
-            status__pk__in=[1, 2]).count()
+            status__pk__in=[1, 2, 3]).count()
     else:
         activ_trip = False
         balanse = False
@@ -118,8 +119,8 @@ def index(request):
     else:
         activ_plc=False
 
-    mismatches = Mismatch.objects.filter(status__pk__in=[1, 2]).order_by('status_id')
-    num_mismatches = Mismatch.objects.filter(status__pk__in=[1, 2]).count()
+    mismatches = Mismatch.objects.filter(status__pk__in=[2]).order_by('status_id')
+    num_mismatches = Mismatch.objects.filter(status__pk__in=[2]).count()
 
 
     context = {
@@ -323,7 +324,7 @@ def mismatch_list(request):
     global paginator_l
     change_status_mismatch(request)
 
-    mismatches = Mismatch.objects.filter(status__pk__in=[1, 2]).order_by('status_id')
+    mismatches = Mismatch.objects.filter(status__pk__in=[2]).order_by('status_id')
 
     place = Place.objects.filter(status__exact=2)
     user = request.user
@@ -331,7 +332,7 @@ def mismatch_list(request):
     carent_trip = BusinessTrip.objects.filter(user__exact=user.pk).filter(status__exact=2)
 
     if carent_trip: # выбираем несоответствия для даного объекта
-        mismatches_place = Mismatch.objects.filter(place_id__exact=carent_trip[0].place_id).filter(status__pk__in=[1, 2]).order_by('status_id')
+        mismatches_place = Mismatch.objects.filter(place_id__exact=carent_trip[0].place_id).filter(status__pk__in=[1, 2, 3]).order_by('status_id')
     else:
         mismatches_place = False
 
@@ -389,7 +390,8 @@ def mismatch_detail(request, pk):
 def mismatch_create(request):
     if request.method == 'POST':
         form = CreateMismatchForm(request.POST, request.FILES)
-
+        my_files = request.FILES.getlist("file")
+        my_images = request.FILES.getlist("image")
         if form.is_valid():
             # print(form.cleaned_data)
             try:
@@ -436,12 +438,12 @@ def mismatch_filter(request):
     if select == 2:
         mismatches = Mismatch.objects.all().order_by('status_id')
     elif select == 1:
-        mismatches = Mismatch.objects.filter(status__pk__in=[1, 2]).order_by('status_id')
+        mismatches = Mismatch.objects.filter(status__pk__in=[2]).order_by('status_id')
     print(mismatches)
 
     if carent_trip:  # выбираем несоответствия для даного объекта
         if select == 1:
-            mismatches_place = Mismatch.objects.filter(place_id__exact=carent_trip[0].place_id).filter(status__pk__in=[1, 2]).order_by('status_id')
+            mismatches_place = Mismatch.objects.filter(place_id__exact=carent_trip[0].place_id).filter(status__pk__in=[1, 2, 3]).order_by('status_id')
         elif select == 2:
             mismatches_place = Mismatch.objects.filter(place_id__exact=carent_trip[0].place_id).order_by('status_id')
     else:
@@ -522,7 +524,7 @@ class PlaceDelete(DeleteView):
 
 #--------------- Группы  ----------------
 def group_list(request):
-    pk = request.session['activ_place']
+    pk = request.session.get('activ_place')
     group_list = Group.objects.filter(place_id__exact=pk).order_by('number')
     place_pk = pk
     return render(
@@ -555,7 +557,7 @@ def group_detail(request, pk):
 #     fields = '__all__'
 
 def group_create(request):
-    activ_place_pk = request.session['activ_place']
+    activ_place_pk = request.session.get('activ_place')
 
     if request.method == 'POST':
         form = CreateGroupForm(request.POST)
@@ -585,58 +587,62 @@ class GroupDelete(DeleteView):
 
 #--------------- Чертежи----------------
 
-# def drawing_list(request):
-#     activ_place_pk = request.session['activ_place']
-#     drawing_list = Drawing.objects.filter(group__place_id=activ_place_pk)
-#
-#     return render(
-#         request,
-#         'supervision/drawing/drawing_list.html',
-#         context={
-#             'title': 'Список Чертежей',
-#             'drawing_list': drawing_list,
-#         },
-#     )
+def drawing_list(request):
+    activ_place_pk = request.session.get('activ_place')
 
-# def drawing_detail(request, pk):
-#     drawing_detail = Drawing.objects.get(pk=pk)
-#
-#     return render(
-#         request,
-#         'supervision/drawing/drawing_detail.html',
-#         context={
-#             'title': 'Чертёж',
-#             'drawing_detail': drawing_detail,
-#         },
-#     )
+    if activ_place_pk:
+        drawing_list = Drawing.objects.filter(group__place_id=activ_place_pk)
+    else:
+        drawing_list=False
+
+    return render(
+        request,
+        'supervision/drawing/drawing_list.html',
+        context={
+            'title': 'Список Чертежей',
+            'drawing_list': drawing_list,
+        },
+    )
+
+def drawing_detail(request, pk):
+    drawing_detail = Drawing.objects.get(pk=pk)
+
+    return render(
+        request,
+        'supervision/drawing/drawing_detail.html',
+        context={
+            'title': 'Чертёж',
+            'drawing_detail': drawing_detail,
+        },
+    )
 
 # --------- Редактирование, обновление, удаление  формы чертеж
 
-# def drawing_create(request):
-#     activ_place_pk = request.session['activ_place']
-#
-#     if request.method == 'POST':
-#         form = CreateDrawingForm(request.POST)
-#
-#         if form.is_valid():
-#             # print(form.cleaned_data)
-#             form.save()
-#             return redirect('drawing_list')
-#         # return HttpResponseRedirect(reverse('mismatch'))
-#     else:
-#         form = CreateDrawingForm()
-#     return render(request, 'supervision/drawing/drawingcreate_form.html',
-#                   {'form': form, 'title': 'Перечень чертежей'})
-#
-# class DrawingUpdate(UpdateView):
-#     model = Drawing
-#     fields = '__all__'
-#     template_name = 'supervision/drawing/drawingcreate_form.html'
-#     success_url = reverse_lazy('drawing_list')
-#
-# class DrawingDelete(DeleteView):
-#     model = Drawing
-#     success_url = reverse_lazy('drawing_list')
+def drawing_create(request):
+    activ_place_pk = request.session.get('activ_place')
+
+    if request.method == 'POST':
+        form = CreateDrawingForm(request.POST)
+
+        if form.is_valid():
+            # print(form.cleaned_data)
+            form.save()
+            return redirect('drawing_list')
+        # return HttpResponseRedirect(reverse('mismatch'))
+    else:
+        form = CreateDrawingForm()
+    return render(request, 'supervision/drawing/drawingcreate_form.html',
+                  {'form': form, 'title': 'Перечень чертежей'})
+
+class DrawingUpdate(UpdateView):
+    model = Drawing
+    fields = '__all__'
+    template_name = 'supervision/drawing/drawingcreate_form.html'
+    success_url = reverse_lazy('drawing_list')
+
+class DrawingDelete(DeleteView):
+    model = Drawing
+    success_url = reverse_lazy('drawing_list')
 
 
 # #--------------- Детали----------------
@@ -1150,3 +1156,93 @@ class StatusMismatchDelete(DeleteView):
     template_name = 'supervision/mismatch/statusmismatch_confirm_delete.html'
     fields = ['name']
     success_url = reverse_lazy('status_mismatch_list')
+
+
+#--------------- Наименования----------------
+
+def description_list(request):
+    description_list = Description.objects.all()
+
+    return render(
+        request,
+        'supervision/description/description_list.html',
+        context={
+            'title': 'Список Наименований',
+            'description_list': description_list,
+        },
+    )
+
+def description_detail(request, pk):
+    description_detail = Description.objects.get(pk=pk)
+
+    return render(
+        request,
+        'supervision/description/description_detail.html',
+        context={
+            'title': 'Наименование',
+            'description_detail': description_detail,
+        },
+    )
+
+# --------- Редактирование, обновление, удаление  формы наименования
+
+class DescriptionCreate(CreateView):
+    model = Description
+    template_name = 'supervision/description/description_form.html'
+    fields = ['description']
+    success_url = reverse_lazy('description_list')
+
+class DescriptionUpdate(UpdateView):
+    model = Description
+    template_name = 'supervision/description/description_form.html'
+    fields = ['description']
+    success_url = reverse_lazy('description_list')
+
+# class DescriptionDelete(DeleteView):
+#     model = Description
+#     success_url = reverse_lazy('description_list')
+
+
+#--------------- Материал----------------
+
+def material_list(request):
+    material_list = Material.objects.all()
+
+    return render(
+        request,
+        'supervision/material/material_list.html',
+        context={
+            'title': 'Список Материалов',
+            'material_list': material_list,
+        },
+    )
+
+def material_detail(request, pk):
+    material_detail = Material.objects.get(pk=pk)
+
+    return render(
+        request,
+        'supervision/material/material_detail.html',
+        context={
+            'title': 'Материал',
+            'material_detail': material_detail,
+        },
+    )
+
+# --------- Редактирование, обновление, удаление  формы материала
+
+class MaterialCreate(CreateView):
+    model = Material
+    template_name = 'supervision/material/material_form.html'
+    fields = ['material', 'gost']
+    success_url = reverse_lazy('material_list')
+
+class MaterialUpdate(UpdateView):
+    model = Material
+    template_name = 'supervision/material/material_form.html'
+    fields = ['material', 'gost']
+    success_url = reverse_lazy('material_list')
+
+# class MaterialDelete(DeleteView):
+#     model = Material
+#     success_url = reverse_lazy('material_list')

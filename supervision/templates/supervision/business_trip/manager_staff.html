@@ -41,7 +41,7 @@
                             {% for trip in trips %}
                             <tr class="list__row">
                                 <td class="list__data">{{ forloop.counter }}</td>
-                                <td class="list__data"><a href="{{ trip.get_absolute_url  }}">{{ trip.place.name }}</a></td>
+                                <td class="list__data"><a href="{{ trip.get_absolute_url  }}">{{ trip.place.name }} (з/з {{ trip.place.order }})</a></td>
                                 <td class="list__data">{{ trip.user.last_name }}</td>
                                 <td class="list__data">{{ trip.start|date:"d.m.Y"}}</td>
                                 <td class="list__data">{{ trip.end|date:"d.m.Y" }}</td>

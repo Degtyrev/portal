@@ -50,13 +50,13 @@ urlpatterns += [
     path('group/<int:pk>/delete/', views.GroupDelete.as_view(), name='group_delete'),
 ]
 
-# urlpatterns += [
-#     path('drawing/', views.drawing_list, name='drawing_list'),
-#     path('drawing/<int:pk>/', views.drawing_detail, name='drawing_detail'),
-#     path('drawing/create/', views.drawing_create, name='drawing_create'),
-#     path('drawing/<int:pk>/update/', views.DrawingUpdate.as_view(), name='drawing_update'),
-#     path('drawing/<int:pk>/delete/', views.DrawingDelete.as_view(), name='drawing_delete'),
-# ]
+urlpatterns += [
+    path('drawing/', views.drawing_list, name='drawing_list'),
+    path('drawing/<int:pk>/', views.drawing_detail, name='drawing_detail'),
+    path('drawing/create/', views.drawing_create, name='drawing_create'),
+    path('drawing/<int:pk>/update/', views.DrawingUpdate.as_view(), name='drawing_update'),
+    path('drawing/<int:pk>/delete/', views.DrawingDelete.as_view(), name='drawing_delete'),
+]
 
 # urlpatterns += [
 #     path('detail/', views.detail_list, name='detail_list'),
@@ -130,4 +130,20 @@ urlpatterns += [
     path('status_mismatch/create/', views.StatusMismatchCreate.as_view(), name='status_mismatch_create'),
     path('status_mismatch/<int:pk>/update/', views.StatusMismatchUpdate.as_view(), name='status_mismatch_update'),
     path('status_mismatch/<int:pk>/delete/', views.StatusMismatchDelete.as_view(), name='status_mismatch_delete'),
+]
+
+urlpatterns += [
+    path('description/', views.description_list, name='description_list'),
+    path('description/<int:pk>/', views.description_detail, name='description_detail'),
+    path('description/create/', views.DescriptionCreate.as_view(), name='description_create'),
+    path('description/<int:pk>/update/', views.DescriptionUpdate.as_view(), name='description_update'),
+    # path('description/<int:pk>/delete/', views.DescriptionDelete.as_view(), name='description_delete'),
+]
+
+urlpatterns += [
+    path('material/', views.material_list, name='material_list'),
+    path('material/<int:pk>/', views.material_detail, name='material_detail'),
+    path('material/create/', views.MaterialCreate.as_view(), name='material_create'),
+    path('material/<int:pk>/update/', views.MaterialUpdate.as_view(), name='material_update'),
+    # path('material/<int:pk>/delete/', views.MaterialDelete.as_view(), name='material_delete'),
 ]
