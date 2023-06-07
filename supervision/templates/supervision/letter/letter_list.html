@@ -30,7 +30,7 @@
                     <th class="list__head">Тема</th>
                     <th class="list__head">по Несоответствию</th>
                 </tr>
-
+{#Если есть письма с объекта командирования #}
                 {% for letter in letter_list_place %}
                 <tr class="list__row">
                     <td class="list__data">{{ forloop.counter }}</td>
@@ -64,7 +64,7 @@
 
 
         {% elif  letter_list %}
-
+{#иначе показать все письма#}
 
         <div class="list__section">
             <div class="list_section_name">

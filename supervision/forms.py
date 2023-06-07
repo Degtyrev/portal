@@ -123,26 +123,39 @@ class CreateMismatchForm(forms.ModelForm):
 
 
 
-class CreatePlaceForm(forms.ModelForm):
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['status'].empty_lable = 'Категория не выбрана'
+class CreateOrderForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['status_order'].empty_lable = 'Категория не выбрана'
+        self.fields['place'].empty_lable = 'Выберите Объект'
+
     class Meta:
-        model = Place
-        fields = ['name', 'equipment', 'equipment_type', 'contract', 'project_manager',
-                  'chief_engineer', 'order', 'status']
+        model = Order
+        fields = ['order', 'contract',  'boiler', 'equipment', 'equipment_type',  'project_manager',
+                  'chief_engineer',  'place', 'status_order']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form_input'}),
+            'order': forms.TextInput(attrs={'class': 'form_input'}),
+            'contract': forms.TextInput(attrs={'class': 'form_input'}),
+            'boiler': forms.NumberInput(attrs={'class': 'form_input'}),
             'equipment': forms.TextInput(attrs={'class': 'form_input'}),
             'equipment_type': forms.TextInput(attrs={'class': 'form_input'}),
-            'contract': forms.TextInput(attrs={'class': 'form_input'}),
             'project_manager': forms.TextInput(attrs={'class': 'form_input'}),
             'chief_engineer': forms.TextInput(attrs={'class': 'form_input'}),
-            'order': forms.NumberInput(attrs={'class': 'form_input'}),
-            'status': forms.Select(attrs={'class': 'form_input'}),
+            'status_order': forms.Select(attrs={'class': 'form_input'}),
+            'place': forms.Select(attrs={'class': 'form_input'}),
         }
 
+class CreatePlaceForm(forms.ModelForm):
 
+    class Meta:
+        model = Place
+        fields = ['name', 'city', 'status', 'country']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form_input'}),
+            'city': forms.TextInput(attrs={'class': 'form_input'}),
+            'country': forms.TextInput(attrs={'class': 'form_input'}),
+            'status': forms.Select(attrs={'class': 'form_input'}),
+        }
 
 class CreateLetterForm(forms.ModelForm):
     # def __init__(self, *args, **kwargs):
@@ -232,6 +245,8 @@ class CreateDrawingForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['group'].empty_label = 'Выберите Группу'
+        self.fields['description'].empty_label = 'Выберите Наименование'
+        self.fields['material'].empty_label = 'Выберите Материал'
 
     class Meta:
         model = Drawing

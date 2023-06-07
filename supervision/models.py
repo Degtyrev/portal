@@ -16,8 +16,6 @@ class Profile(models.Model):
     is_liner = models.BooleanField(default=True, verbose_name='Если линейный специалист')
     photo = models.ImageField(upload_to='users/photo', null=True, blank=True, verbose_name='Фото')
 
-
-
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
 
@@ -60,19 +58,33 @@ class Position(models.Model):
     def get_absolute_url(self):
         return reverse('position_detail', args=[str(self.id)])
 
-
-class Place(models.Model):
-    name = models.CharField(max_length=250, verbose_name='Название объекта')
+class Order(models.Model):
+    order = models.IntegerField(null=True, blank=True, verbose_name='Номер Заказа', unique=True)
+    contract = models.CharField(max_length=250, null=True, blank=True, verbose_name='Номер Договора')
+    boiler = models.IntegerField(null=True, blank=True, verbose_name='Станционный номер Котла', unique=True)
     equipment = models.CharField(max_length=250, null=True, blank=True, verbose_name='Модель оборудования (котла)')
     equipment_type = models.CharField(max_length=250, null=True, blank=True, verbose_name='Тип оборудования (котла)')
-    contract = models.CharField(max_length=250, null=True, blank=True, verbose_name='номер договора')
     project_manager = models.CharField(max_length=100, null=True, blank=True, verbose_name='руководитель проекта')
     chief_engineer = models.CharField(max_length=100, null=True, blank=True, verbose_name='главный инженер проекта')
-    order = models.IntegerField(null=True, blank=True, verbose_name='Номер Заказа', unique=True)
-    status = models.ForeignKey('PlaceStatus', on_delete=models.SET_NULL,  null=True, blank=True, verbose_name='Статус объекта')
+    place = models.ForeignKey('Place', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Объект')
+    status_order = models.ForeignKey('PlaceStatus', on_delete=models.SET_NULL, null=True, blank=True,
+                               verbose_name='Статус Заказа')
 
     def __str__(self):
-        return f'{self.name} з/з({self.order})'
+        return {self.order}
+
+    def get_absolute_url(self):
+        return reverse('order_detail', args=[int(self.id)])
+
+class Place(models.Model):
+    name = models.CharField(max_length=250, verbose_name='Название объекта', unique=True)
+    city = models.CharField(max_length=100, null=True, blank=True, verbose_name='Город')
+    country = models.CharField(max_length=100, null=True, blank=True, verbose_name='Страна')
+    status = models.ForeignKey('PlaceStatus', on_delete=models.SET_NULL, null=True, blank=True,
+                               verbose_name='Статус Объекта')
+
+    def __str__(self):
+        return self.name
 
     def get_absolute_url(self):
         return reverse('place_detail', args=[int(self.id)])
@@ -138,7 +150,7 @@ class Drawing(models.Model):
     description = models.ForeignKey('Description', on_delete=models.SET_NULL, null=True, verbose_name='Наименование детали')
     mass = models.DecimalField(verbose_name='Масса', max_digits=11, decimal_places=3, null=True, blank=True)
     # steel = models.CharField(max_length=250, verbose_name='Марка стали', null=True, blank=True)
-    material = models.ForeignKey('Material', on_delete=models.SET_NULL, null=True, verbose_name='Материал')
+    material = models.ForeignKey('Material', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Материал')
     file = models.FileField(upload_to='media/detail/', null=True, blank=True, verbose_name='Файлы')
 
     def __str__(self):

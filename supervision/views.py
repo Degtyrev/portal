@@ -70,8 +70,9 @@ def change_status_mismatch(request):
 #----------- Главная Main -----------
 def index(request):
     num_mismatches_place = 0
+    num_mismatches_order = 0
 
-# проверка и изменение статуса командировок  если
+# проверка и изменение статуса командировок  если первый вход
     session_check = request.session.get('change_status', 0)
     if session_check == 0:
         change_status_trip(request)
@@ -84,7 +85,7 @@ def index(request):
     num_place = Place.objects.filter(status=2).count()  # Метод 'all()' применён по умолчанию.
     date_today = datetime.date.today()
     activ_trip = BusinessTrip.objects.filter(user_id__exact=request.user.pk, status_id__exact=2)
-    print(activ_trip)
+    # print(activ_trip)
 
     if activ_trip:
         request.session['activ_trip'] = activ_trip[0].pk

@@ -16,4 +16,22 @@ window.onload = function() {
         input_date.setAttribute('type', 'date')
         }
 
+    /*=== получене куки для переключателя объектов ===*/
+
+    if ($.cookie("object") == null) {
+      $.cookie("object", "1");
+      $("#object-1").attr("checked", "checked");
+    }
+    else {
+      $('#object-' + $.cookie("object")).attr("checked", "checked");
+    };
+    /*===  end получене куки для переключателя объектов ===*/
+
 }
+
+function chang_object(){
+  let object = $(".switch_object input:checked").val();
+  jQuery.cookie("object", object);
+  // window.location.reload();
+  window.location.href = path;
+};
